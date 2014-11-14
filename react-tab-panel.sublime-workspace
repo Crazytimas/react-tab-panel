@@ -4,516 +4,516 @@
 		"selected_items":
 		[
 			[
-				"tab",
-				"TabPanel"
+				"arrow",
+				"arrowStyle"
 			],
 			[
-				"titleClassN",
-				"titleClassNames"
+				"ac",
+				"anchorStyle"
 			],
 			[
-				"activeT",
-				"activeTitleClassName"
+				"conta",
+				"containerProps"
 			],
 			[
-				"titleSty",
-				"titleStyle"
+				"con",
+				"containerProps"
+			],
+			[
+				"acti",
+				"activeIndex"
+			],
+			[
+				"act",
+				"activeIndex"
+			],
+			[
+				"active",
+				"activeTitleStyle"
+			],
+			[
+				"dele",
+				"deleteProps"
+			],
+			[
+				"clone",
+				"cloneItems"
+			],
+			[
+				"onMenu",
+				"onMenuClick"
+			],
+			[
+				"window",
+				"windowHideLayerListener"
+			],
+			[
+				"tar",
+				"targetRegion"
+			],
+			[
+				"menu",
+				"menuItems"
+			],
+			[
+				"bor",
+				"borderWidth"
+			],
+			[
+				"scroller",
+				"scrollerArrowColor"
+			],
+			[
+				"ba",
+				"background"
 			],
 			[
 				"sele",
-				"selectedWidget"
+				"selectedIndex"
 			],
 			[
-				"handle",
-				"handleClick"
-			],
-			[
-				"visi",
-				"visibility"
-			],
-			[
-				"wi",
-				"widget"
-			],
-			[
-				"pro",
-				"property"
-			],
-			[
-				"render",
-				"renderOption"
-			],
-			[
-				"style",
-				"styleNewName"
-			],
-			[
-				"sty",
-				"styleNewName"
-			],
-			[
-				"wid",
-				"widgetName"
-			],
-			[
-				"mapper",
-				"mapperFn"
-			],
-			[
-				"str",
-				"stringPath"
-			],
-			[
-				"stt",
-				"stylePath"
-			],
-			[
-				"ma",
-				"mappings"
-			],
-			[
-				"proper",
-				"propertyPath"
-			],
-			[
-				"property",
-				"property-grid"
-			],
-			[
-				"Pro",
-				"PropertyGrid"
-			],
-			[
-				"value",
-				"valueProvider"
-			],
-			[
-				"cla",
-				"classes"
-			],
-			[
-				"expa",
-				"expanderClasses"
-			],
-			[
-				"renderP",
-				"renderParent"
-			],
-			[
-				"get",
-				"getDeep"
-			],
-			[
-				"cl",
-				"cl	console.log"
-			],
-			[
-				"padding-",
-				"padding-left"
-			],
-			[
-				"border",
-				"borderColor"
-			],
-			[
-				"label",
-				"labelWidth"
-			],
-			[
-				"req",
-				"require"
-			],
-			[
-				"fun",
-				"function"
-			],
-			[
-				"class",
-				"className"
+				"slee",
+				"selectedIndex"
 			],
 			[
 				"selec",
-				"selectedWidget"
+				"selectedIndexes"
 			],
 			[
-				"undo",
-				"undoHistory"
+				"acce",
+				"acceptsItems"
 			],
 			[
-				"noti",
-				"notifySelectionChange"
+				"getE",
+				"getRenderProps"
 			],
 			[
-				"state",
-				"stateChange"
+				"isSty",
+				"isStyleProp"
 			],
 			[
-				"push",
-				"pushState"
+				"P",
+				"PROXY_ELEMENTS"
 			],
 			[
-				"ctrl",
-				"ctrlKey"
+				"itemCom",
+				"itemComponent"
 			],
 			[
-				"ct",
-				"ctrlKey"
+				"renderPO",
+				"renderProxy"
 			],
 			[
-				"onWi",
-				"onWindowKeyup"
+				"pro",
+				"proxies"
 			],
 			[
-				"onW",
-				"onWindowKeyup"
+				"Tab",
+				"TabPanel"
 			],
 			[
-				"onWid",
-				"onWidgetDrop"
+				"getRed",
+				"getRenderChildren"
 			],
 			[
-				"dragIni",
-				"dragInitialPos"
+				"getItem",
+				"getItemParent"
 			],
 			[
-				"handleWidget",
-				"handleWidgetDrop"
+				"proper",
+				"properties"
 			],
 			[
-				"handleW",
-				"handleWidgetDragStart"
+				"snapTo",
+				"snapToGridRegion"
 			],
 			[
-				"find",
-				"findById"
+				"initi",
+				"initialRegionInCanvas"
 			],
 			[
-				"tra",
-				"traverseCreateWidget"
+				"ha",
+				"halfWidth"
+			],
+			[
+				"xCe",
+				"xCenters"
+			],
+			[
+				"hori",
+				"horizontalCenter"
+			],
+			[
+				"ver",
+				"verticalCenter"
+			],
+			[
+				"xCenter",
+				"xCenterResults"
+			],
+			[
+				"xC",
+				"xCenterAbsDiff"
+			],
+			[
+				"yCen",
+				"yCenterAbsDiff"
+			],
+			[
+				"itemM",
+				"itemMiddleX"
+			],
+			[
+				"xM",
+				"xMiddle"
+			],
+			[
+				"yM",
+				"yMiddles"
+			],
+			[
+				"dragItem",
+				"dragItem"
+			],
+			[
+				"dropTa",
+				"dropTargetArgs"
+			],
+			[
+				"cons",
+				"constrainRegion"
+			],
+			[
+				"dra",
+				"draggedItems"
+			],
+			[
+				"onItem",
+				"onItemMouseDown"
+			],
+			[
+				"drag",
+				"dragConfig"
+			],
+			[
+				"DRA",
+				"DRAG_ITEM"
+			],
+			[
+				"absD",
+				"absDiff22"
+			],
+			[
+				"sec",
+				"second"
+			],
+			[
+				"firs",
+				"firstAbsDiff"
+			],
+			[
+				"first",
+				"firstSide"
+			],
+			[
+				"fir",
+				"firstDiff"
+			],
+			[
+				"bui",
+				"buildResults"
+			],
+			[
+				"secon",
+				"secondSnapValue"
+			],
+			[
+				"verti",
+				"verticalStyle"
+			],
+			[
+				"ho",
+				"horizontalStyle"
+			],
+			[
+				"snap",
+				"snapInfo"
+			],
+			[
+				"min",
+				"minDiffFor"
+			],
+			[
+				"sna",
+				"snapTo"
+			],
+			[
+				"side1",
+				"side1Value"
+			],
+			[
+				"side",
+				"sideNames"
+			],
+			[
+				"re",
+				"regions"
+			],
+			[
+				"input",
+				"inputStyle"
+			],
+			[
+				"render",
+				"renderProps"
+			],
+			[
+				"old",
+				"oldAnchored"
+			],
+			[
+				"ancho",
+				"anchorArray"
+			],
+			[
+				"Data",
+				"DataManager"
+			],
+			[
+				"getI",
+				"getItemInnerRegionInCanvas"
+			],
+			[
+				"curr",
+				"currentItem"
+			],
+			[
+				"getC",
+				"getConstrainNode"
+			],
+			[
+				"paren",
+				"parentRegion"
+			],
+			[
+				"upa",
+				"updateItemsMap"
+			],
+			[
+				"getITEM",
+				"getItemRegionInCanvas"
+			],
+			[
+				"target",
+				"targetPos"
+			],
+			[
+				"getItemR",
+				"getItemRegionInCanvas"
+			],
+			[
+				"di",
+				"diffTop"
+			],
+			[
+				"getIte",
+				"getItemRegion"
+			],
+			[
+				"DR",
+				"DRAG_TARGET"
+			],
+			[
+				"parent",
+				"parentId"
+			],
+			[
+				"prox",
+				"proxyPos"
+			],
+			[
+				"DRAG",
+				"DRAG_STAR_ITEM"
+			],
+			[
+				"State",
+				"StateManager"
+			],
+			[
+				"Item",
+				"ItemContainerMixin"
+			],
+			[
+				"compo",
+				"componentWillMount"
+			],
+			[
+				"treeNo",
+				"treeNodeProps"
+			],
+			[
+				"onMou",
+				"onMouseUp"
+			],
+			[
+				"position",
+				"positionAndSize"
+			],
+			[
+				"onRei",
+				"onResizeDragStart"
+			],
+			[
+				"onHa",
+				"onHandleDragStart"
+			],
+			[
+				"onItemsD",
+				"onItemsDragStart"
+			],
+			[
+				"getBod",
+				"getBodyStyle"
+			],
+			[
+				"posi",
+				"positionAndSize"
+			],
+			[
+				"refre",
+				"refreshSelector"
+			],
+			[
+				"const",
+				"constrain"
+			],
+			[
+				"syncPro",
+				"syncProxySize"
+			],
+			[
+				"proxyN",
+				"proxyNode"
+			],
+			[
+				"proxy",
+				"proxyNodes"
+			],
+			[
+				"renderItem",
+				"renderItemNodes"
+			],
+			[
+				"renderPro",
+				"renderProxyNodes"
+			],
+			[
+				"itemN",
+				"itemNodes"
 			],
 			[
 				"create",
 				"createWidget"
 			],
 			[
-				"notify",
-				"notifyStateChange"
+				"getProxy",
+				"getProxyPosition"
 			],
 			[
-				"c",
-				"ce	console.error"
+				"rendeRItem",
+				"renderItemNodes"
 			],
 			[
-				"newPa",
-				"newPathParent"
+				"getITem",
+				"getItemId"
 			],
 			[
-				"newP",
-				"newPath"
+				"handle",
+				"handleItemDrop"
 			],
 			[
-				"oldI",
-				"oldIndex"
+				"onM",
+				"onMouseEnter"
 			],
 			[
-				"newI",
-				"newIndex"
-			],
-			[
-				"new",
-				"newArray"
-			],
-			[
-				"old",
-				"oldPathString"
-			],
-			[
-				"ol",
-				"oldPath"
-			],
-			[
-				"dragg",
-				"dragging"
-			],
-			[
-				"oldP",
-				"oldPathParent"
-			],
-			[
-				"prev",
-				"prevParent"
-			],
-			[
-				"path",
-				"pathString"
-			],
-			[
-				"dragNode",
-				"dragNodeClone"
-			],
-			[
-				"mouseDo",
-				"mouseDownTarget"
-			],
-			[
-				"initia",
-				"initialLeft"
-			],
-			[
-				"mou",
-				"mouseDownPoint"
-			],
-			[
-				"dragNo",
-				"dragNodeRegion"
-			],
-			[
-				"dragN",
-				"dragNodeClone"
-			],
-			[
-				"mouseD",
-				"mouseDownEvent"
-			],
-			[
-				"handleNodeDr",
-				"handleNodeDrop"
-			],
-			[
-				"tree",
-				"tree-node"
-			],
-			[
-				"ex",
-				"expand-tool"
-			],
-			[
-				"dragI",
-				"dragInitialRegion"
-			],
-			[
-				"mouse",
-				"mouseUpListener"
-			],
-			[
-				"drag",
-				"dragEnabled"
-			],
-			[
-				"hand",
-				"handleMouseDown"
-			],
-			[
-				"dra",
-				"dragCoords"
-			],
-			[
-				"pre",
-				"preventDefault"
-			],
-			[
-				"onDra",
-				"onDragStart"
-			],
-			[
-				"handleDra",
+				"handleD",
 				"handleDragEnd"
 			],
 			[
-				"widget",
-				"widgetName"
+				"reposition",
+				"repositionDrag"
 			],
 			[
-				"body",
-				"bodyRegion"
+				"property",
+				"propertyValues"
 			],
 			[
-				"tool",
-				"toolbox-item"
+				"propert",
+				"property"
 			],
 			[
-				"hovr",
-				"hoverColor"
+				"Pro",
+				"PropertiesManager"
 			],
 			[
-				"handleDr",
-				"handleDragEnd"
+				"fa",
+				"factory"
 			],
 			[
-				"list-s",
-				"list-style"
+				"sing",
+				"singleSelect"
 			],
 			[
-				"Page",
-				"PageWidget"
+				"selected",
+				"selectedCount"
 			],
 			[
-				"ci",
-				"copyUtils"
-			],
-			[
-				"getIn",
-				"getInputProps"
-			],
-			[
-				"shift",
-				"shiftKey"
-			],
-			[
-				"ste",
-				"stepValue"
-			],
-			[
-				"ha",
-				"handleBlur"
-			],
-			[
-				"num",
-				"numbersOnly"
-			],
-			[
-				"bor",
-				"borderSize"
-			],
-			[
-				"last",
-				"lastSuffixIndex"
-			],
-			[
-				"suf",
-				"suffixLen"
-			],
-			[
-				"stylev",
-				"styleValues"
-			],
-			[
-				"bind",
-				"bindArgs"
-			],
-			[
-				"name",
-				"namePath"
-			],
-			[
-				"obj",
-				"objPath"
-			],
-			[
-				"ob",
-				"objectPath"
-			],
-			[
-				"pad",
-				"padding-left"
-			],
-			[
-				"w",
-				"widgetName"
-			],
-			[
-				"ca",
-				"cachePaths"
-			],
-			[
-				"off",
-				"offsetHeight"
-			],
-			[
-				"desc",
-				"descriptor"
-			],
-			[
-				"des",
-				"descriptor"
-			],
-			[
-				"Tool",
-				"ToolboxItem"
-			],
-			[
-				"entity",
-				"entity-toolbox"
-			],
-			[
-				"po",
+				"pos",
 				"position"
 			],
 			[
-				"r",
-				"return"
+				"layer",
+				"layerRegion"
 			],
 			[
-				"node",
-				"node_modules"
+				"de",
+				"defaultValue"
 			],
 			[
-				"Entit",
-				"EntityGrid"
+				"satu",
+				"saturationConfig"
 			],
 			[
-				"Entity",
-				"EntityPropertiesDataList"
+				"defau",
+				"defaultValue"
 			],
 			[
-				"onLoad",
-				"onLoadSuccess"
+				"default",
+				"defaultColor"
 			],
 			[
-				"toolbar",
-				"toolbarItems"
+				"defa",
+				"defaultValue"
 			],
 			[
-				"prepareT",
-				"prepareToolbarItems"
+				"handleS",
+				"handleSaturationDragStart"
 			],
 			[
-				"user",
-				"username"
+				"C",
+				"COLOR"
 			],
 			[
-				"pr",
-				"primaryKey"
+				"toCo",
+				"toColorValue"
 			],
 			[
-				"prp",
-				"preparedData"
+				"va",
+				"VALIDATE"
 			],
 			[
-				"preparedd",
-				"preparedData"
-			],
-			[
-				"paramete",
-				"parameterized"
-			],
-			[
-				"where",
-				"whereConditions"
-			],
-			[
-				"sql",
-				"sqlQuery"
-			],
-			[
-				"colu",
-				"getInsertColumns"
-			],
-			[
-				"into",
-				"intoToString"
-			],
-			[
-				"crea",
-				"createToString"
-			],
-			[
-				"app",
-				"appConfig"
-			],
-			[
-				"columns",
-				"columnsToString"
+				"si",
+				"sizeDefined"
 			]
 		]
 	},
@@ -523,47 +523,23 @@
 			"file": "src/index.jsx",
 			"settings":
 			{
-				"buffer_size": 2697,
+				"buffer_size": 1190,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "README.md",
+			"file": "build-style.config.js",
 			"settings":
 			{
-				"buffer_size": 2350,
+				"buffer_size": 457,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "webpack.config.js",
+			"file": "index.styl",
 			"settings":
 			{
-				"buffer_size": 294,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "index.jsx",
-			"settings":
-			{
-				"buffer_size": 753,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/Strip.jsx",
-			"settings":
-			{
-				"buffer_size": 2549,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/Container.jsx",
-			"settings":
-			{
-				"buffer_size": 1870,
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		},
@@ -571,7 +547,15 @@
 			"file": "package.json",
 			"settings":
 			{
-				"buffer_size": 1349,
+				"buffer_size": 1711,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.jsx",
+			"settings":
+			{
+				"buffer_size": 1255,
 				"line_ending": "Unix"
 			}
 		}
@@ -583,20 +567,88 @@
 		"selected_items":
 		[
 			[
-				"mark",
-				"Markdown Preview: Preview in Browser"
+				"du",
+				"File: Duplicate"
 			],
 			[
 				"dele",
 				"File: Delete"
 			],
 			[
-				"du",
+				"dup",
 				"File: Duplicate"
 			],
 			[
 				"rena",
 				"File: Rename"
+			],
+			[
+				"enable lin",
+				"SublimeLinter: Enable Linting"
+			],
+			[
+				"disa",
+				"SublimeLinter: Disable Linting"
+			],
+			[
+				"dee",
+				"File: Delete"
+			],
+			[
+				"re",
+				"File: Rename"
+			],
+			[
+				"move",
+				"File: Move"
+			],
+			[
+				"linter",
+				"SublimeLinter: Lint This View"
+			],
+			[
+				"ss javasc",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"lint",
+				"SublimeLinter: Lint This View"
+			],
+			[
+				"lint ",
+				"SublimeLinter: Lint This View"
+			],
+			[
+				"sublime linter li",
+				"SublimeLinter: Lint This View"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"ren",
+				"File: Rename"
+			],
+			[
+				"delete",
+				"File: Delete"
+			],
+			[
+				"mardk",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"ss javas",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"del",
+				"File: Delete"
 			],
 			[
 				"deke",
@@ -607,48 +659,16 @@
 				"Set Syntax: JSON"
 			],
 			[
-				"ss javas",
-				"Set Syntax: JavaScript"
-			],
-			[
-				"dee",
-				"File: Delete"
-			],
-			[
 				"markd",
 				"Markdown Preview: Preview in Browser"
-			],
-			[
-				"move",
-				"File: Move"
-			],
-			[
-				"ren",
-				"File: Rename"
 			],
 			[
 				"markdo",
 				"Markdown Preview: Preview in Browser"
 			],
 			[
-				"re",
-				"File: Rename"
-			],
-			[
-				"dup",
-				"File: Duplicate"
-			],
-			[
 				"renam",
 				"File: Rename"
-			],
-			[
-				"insta",
-				"Package Control: Install Package"
-			],
-			[
-				"instal",
-				"Package Control: Install Package"
 			],
 			[
 				"Rena",
@@ -673,10 +693,6 @@
 			[
 				"update",
 				"Package Control: Upgrade/Overwrite All Packages"
-			],
-			[
-				"del",
-				"File: Delete"
 			],
 			[
 				"ss text",
@@ -727,19 +743,11 @@
 				"Set Syntax: Sass"
 			],
 			[
-				"delete",
-				"File: Delete"
-			],
-			[
 				"ss sty",
 				"Set Syntax: Stylus"
 			],
 			[
 				"ss java",
-				"Set Syntax: JavaScript"
-			],
-			[
-				"ss javasc",
 				"Set Syntax: JavaScript"
 			],
 			[
@@ -751,7 +759,7 @@
 				"Set Syntax: LiveScript"
 			]
 		],
-		"width": 569.0
+		"width": 593.0
 	},
 	"console":
 	{
@@ -772,144 +780,166 @@
 	},
 	"file_history":
 	[
-		"/home/radu/code/react-tab-panel/package.json",
-		"/home/radu/code/react-tab-panel/style/index.styl",
-		"/home/radu/code/react-tab-panel/index.html",
-		"/home/radu/code/react-tab-panel/index.styl",
-		"/home/radu/code/react-tab-panel/node_modules/css-loader/package.json",
-		"/home/radu/code/react-tab-panel/loaders.config.js",
-		"/home/radu/code/react-tab-panel/DIST_FILE_NAME.js",
-		"/home/radu/code/react-tab-panel/build-style.config.js",
-		"/home/radu/code/react-tab-panel/Gulpfile.js",
-		"/home/radu/code/react-tab-panel/dist.config.js",
-		"/home/radu/code/react-tab-panel/dist.min.config.js",
-		"/home/radu/code/region/node_modules/functionally/src/bindArgs.js",
-		"/home/radu/code/region/node_modules/mocha/node_modules/debug/Readme.md",
-		"/home/radu/code/region/node_modules/classy/src/define.js",
-		"/home/radu/code/region/node_modules/copy-utils/LICENSE",
-		"/home/radu/code/region/node_modules/classy/src/utils/copy.js",
-		"/home/radu/code/region/node_modules/classy/src/core/canGetOwnPropertyDescriptor.js",
-		"/home/radu/code/region/node_modules/classy/test/ClassOverrideTests.js",
-		"/home/radu/code/region/node_modules/should/CONTRIBUTING.md",
-		"/home/radu/code/entity-designer/lib/ui/node_modules/browserify/test/standalone_events.js",
-		"/home/radu/code/entity-designer/src/js/Selector.jsx",
-		"/home/radu/code/entity-designer/node_modules/webpack-dev-server/node_modules/socket.io/lib/manager.js",
-		"/home/radu/code/entity-designer/node_modules/jquery/src/manipulation.js",
-		"/home/radu/code/entity-designer/node_modules/functionally/src/maxArgs.js",
-		"/home/radu/code/entity-designer/node_modules/classy/Makefile",
-		"/home/radu/code/entity-designer/node_modules/webpack/buildin/amd-define.js",
-		"/home/radu/code/entity-designer/lib/flux-action/action.js",
-		"/home/radu/code/entity-designer/lib/widget/Manager/traverse.js",
-		"/home/radu/code/entity-designer/src/js/ToolboxItem.jsx",
-		"/home/radu/code/entity-designer/src/js/main.out.js",
-		"/home/radu/code/entity-designer/package.json",
-		"/home/radu/code/entity-designer/lib/widget/getPosition.js",
-		"/home/radu/code/entity-designer/src/js/widgets/props.js",
-		"/home/radu/code/entity-designer/lib/ui/NumberField.jsx",
-		"/home/radu/code/entity-designer/test/PropertyMapperTest.js",
-		"/home/radu/code/entity-designer/src/js/widgets/index.props.js",
-		"/home/radu/code/entity-designer/lib/widget/Manager/index.js",
-		"/home/radu/code/entity-designer/lib/widget/setStyle.js",
-		"/home/radu/code/entity-designer/src/js/widgets/create.js",
-		"/home/radu/code/entity-designer/src/js/Canvas.jsx",
-		"/home/radu/code/entity-designer/lib/ui/common/handleInputChange.js",
-		"/home/radu/code/entity-designer/lib/ui/common/getInputProps.js",
-		"/home/radu/code/entity-designer/lib/ui/common/renderInput.jsx",
-		"/home/radu/code/entity-designer/lib/ui/common/getValue.js",
-		"/home/radu/code/entity-designer/lib/ui/common/getInitialState.js",
-		"/home/radu/code/entity-designer/src/js/actions/PropertyChange.js",
-		"/home/radu/code/entity-designer/loaders.config.js",
-		"/home/radu/code/entity-designer/node_modules/react/lib/getEventKey.js",
-		"/home/radu/code/entity-designer/node_modules/jquery/src/selector.js",
-		"/home/radu/code/entity-designer/src/resources/css/selector.styl",
-		"/home/radu/code/entity-designer/node_modules/property-grid/package.json",
-		"/home/radu/code/entity-designer/README.md",
-		"/home/radu/code/entity-designer/node_modules/react/lib/ReactEmptyComponent.js",
-		"/home/radu/code/entity-designer/lib/property-grid/lib/Property.js",
-		"/home/radu/code/entity-designer/lib/widget/onRender.js",
-		"/home/radu/code/entity-designer/lib/ui/package.json",
-		"/home/radu/code/entity-designer/node_modules/webpack/lib/dependencies/ModuleHotAcceptDependency.js",
-		"/home/radu/code/entity-designer/node_modules/gulp/node_modules/chalk/node_modules/.bin/has-ansi",
-		"/home/radu/code/entity-designer/node_modules/.bin/http-server",
-		"/home/radu/code/entity-designer/node_modules/react/lib/mergeInto.js",
-		"/home/radu/code/entity-designer/node_modules/classy/src/getInstance.js",
-		"/home/radu/code/entity-designer/lib/ui/index.js",
-		"/home/radu/code/entity-designer/lib/ui/common/setValue.js",
-		"/home/radu/code/entity-designer/lib/ui/index.jsx",
-		"/home/radu/code/entity-designer/src/js/utils/PropertyMapper.js",
-		"/home/radu/code/entity-designer/node_modules/webpack/examples/agressive-merging/pageA.js",
-		"/home/radu/code/entity-designer/src/js/widgets/TextField.props.js",
-		"/home/radu/code/entity-designer/src/js/widgets/Page.props.js",
-		"/home/radu/code/entity-designer/src/js/widgets/mapper.js",
-		"/home/radu/code/entity-designer/node_modules/webpack/examples/hybrid-routing/aPage.js",
-		"/home/radu/code/entity-designer/lib/ui/node_modules/browserify/node_modules/browser-pack/test/source-maps-existing.js",
-		"/home/radu/code/entity-designer/lib/property-grid/src/CompositeProperty.jsx",
-		"/home/radu/code/entity-designer/lib/property-grid/lib/CompositeProperty.js",
-		"/home/radu/code/entity-designer/node_modules/functionally/src/compose.js",
-		"/home/radu/code/entity-designer/node_modules/esprima-fb/component.json",
-		"/home/radu/code/entity-designer/node_modules/webpack/bin/config-optimist.js",
-		"/home/radu/code/entity-designer/node_modules/react/lib/copyProperties.js",
-		"/home/radu/code/entity-designer/vendor/react-0.11.1/examples/shared/thirdparty/console-polyfill.js",
-		"/home/radu/code/entity-designer/lib/property-grid/src/Property.jsx",
-		"/home/radu/code/entity-designer/node_modules/mocha/node_modules/glob/test/pause-resume.js",
-		"/home/radu/code/entity-designer/src/js/utils/propertyMapping.js",
-		"/home/radu/code/entity-designer/lib/property-grid/package.json",
-		"/home/radu/code/entity-designer/src/js/main.js",
-		"/home/radu/code/react-flex/package.json",
-		"/home/radu/code/entity-designer/src/js/widgets/index.js",
+		"/home/radu/code/react-basic-tabs/node_modules/webpack/bin/config-optimist.js",
+		"/home/radu/code/react-basic-tabs/lib/index.js",
+		"/home/radu/code/react-basic-tabs/index.jsx",
+		"/home/radu/code/react-basic-tabs/index.html",
+		"/home/radu/code/entity-designer/lib/ui/TabPanel/index.jsx",
+		"/home/radu/code/entity-designer/src/js/widgets/Label/index.jsx",
+		"/home/radu/code/entity-designer/src/js/model/clone.js",
+		"/home/radu/code/entity-designer/src/js/views/items/Canvas.jsx",
+		"/home/radu/code/entity-designer/old.index.html",
+		"/home/radu/code/entity-designer/src/js/render/snapOnMove.js",
+		"/home/radu/code/entity-designer/src/js/model/factories/TabPanel.js",
+		"/home/radu/code/entity-designer/src/resources/css/ItemProxy.styl",
 		"/home/radu/code/entity-designer/index.html",
-		"/home/radu/code/entity-designer/src/resources/css/index.styl",
-		"/home/radu/code/entity-designer/lib/widget/setProperty.js",
-		"/home/radu/code/entity-designer/node_modules/property-grid/lib/Property.js",
-		"/home/radu/code/entity-designer/src/js/widgets/TextField.jsx",
+		"/home/radu/code/entity-designer/lib/widget/Manager/generateId.js",
+		"/home/radu/code/entity-designer/src/js/render/getNodeInnerRegion.js",
+		"/home/radu/code/entity-designer/src/js/render/getSnapRegions.js",
+		"/home/radu/code/entity-designer/src/js/views/items/Tree.jsx",
+		"/home/radu/code/entity-designer/src/js/model/ItemFactory.js",
+		"/home/radu/code/entity-designer/src/js/render/cloneItem.js",
+		"/home/radu/code/entity-designer/src/js/render/render.js",
+		"/home/radu/code/entity-designer/src/js/widgets/Tab/index.js",
+		"/home/radu/code/entity-designer/package.json",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/border.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/width.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/size.js",
+		"/home/radu/code/entity-designer/src/js/render/getItemRegion.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/theLabel.js",
+		"/home/radu/code/entity-designer/lib/property-grid/src/getLabel.js",
+		"/home/radu/code/entity-designer/lib/property-grid/lib/getLabel.js",
+		"/home/radu/code/entity-designer/src/js/model/factories/Label.js",
+		"/home/radu/code/entity-designer/loaders.config.js",
+		"/home/radu/code/entity-designer/src/resources/css/tree.styl",
+		"/home/radu/code/entity-designer/src/js/widgets/TabPanel/index.js",
+		"/home/radu/code/entity-designer/dev.html",
+		"/home/radu/code/entity-designer/src/resources/css/widgets/TabPanel.styl",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/margin.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/position.js",
+		"/home/radu/code/entity-designer/src/resources/css/Item.styl",
+		"/home/radu/code/entity-designer/Roadmap.md",
+		"/home/radu/code/entity-designer/src/resources/css/PositionTip.styl",
+		"/home/radu/code/entity-designer/src/js/main.js",
+		"/home/radu/code/entity-designer/src/js/ToolboxItem.jsx",
+		"/home/radu/code/entity-designer/lib/ui/tree/index.jsx",
+		"/home/radu/code/entity-designer/src/js/ToolArea.jsx",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/borderRadius.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/background.js",
+		"/home/radu/code/entity-designer/bundle.js",
+		"/home/radu/code/entity-designer/src/js/utils/PropertyMapper.js",
+		"/home/radu/code/entity-designer/src/js/render/PropertyManager.js",
+		"/home/radu/code/entity-designer/src/js/state/PROXY_ELEMENTS.js",
+		"/home/radu/code/entity-designer/src/js/widgets/create.js",
+		"/home/radu/code/entity-designer/src/js/widgets/base/define.js",
+		"/home/radu/code/entity-designer/src/js/widgets/base/WidgetMixin.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/height.js",
+		"/home/radu/code/entity-designer/src/js/widgets/Label/props.js",
+		"/home/radu/code/entity-designer/Gulpfile.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/textAlign.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/index.js",
+		"/home/radu/code/entity-designer/src/js/data/SelectionManager.js",
+		"/home/radu/code/entity-designer/src/js/data/ItemsManager.js",
+		"/home/radu/code/entity-designer/src/js/actionsx/AddWidget.js",
+		"/home/radu/code/entity-designer/entity-designer.sublime-project",
+		"/home/radu/code/entity-designer/src/js/actionsx/PropertyChange.js",
+		"/home/radu/code/entity-designer/src/js/actionsx/index.js",
+		"/home/radu/code/entity-designer/src/js/render/createItem.js",
+		"/home/radu/code/entity-designer/src/js/actionsx/UpdateWidgetPosition.js",
+		"/home/radu/code/entity-designer/src/js/render/getItemComponent.js",
+		"/home/radu/code/entity-designer/src/js/state/SelectorManager.js",
+		"/home/radu/code/entity-designer/src/js/views/selected/Selector.jsx",
+		"/home/radu/code/entity-designer/src/js/render/setupDrag.js",
+		"/home/radu/code/entity-designer/src/js/state/SnapManager.js",
+		"/home/radu/code/entity-designer/src/js/model/factories/index.js",
+		"/home/radu/code/entity-designer/vendor/zippyui-1.0.2/font/FontAwesome.otf",
+		"/home/radu/code/entity-designer/src/js/render/mixin.js",
+		"/home/radu/code/entity-designer/src/js/widgets/Line/props.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/id.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/flex.js",
+		"/home/radu/code/entity-designer/src/js/widgets/Container/props.js",
+		"/home/radu/code/entity-designer/src/js/widgets/Tab/props.js",
 		"/home/radu/code/entity-designer/src/js/Designer.jsx",
-		"/home/radu/code/entity-designer/lib/property-grid/property-grid.sublime-project",
-		"/home/radu/code/entity-designer/webpack.config.js",
-		"/home/radu/code/entity-designer/src/js/Toolbox.jsx",
-		"/home/radu/code/entity-designer/src/js/utils/UndoManager.js",
-		"/home/radu/code/entity-designer/index.js",
-		"/home/radu/code/entity-designer/lib/property-grid/style.config.js",
-		"/home/radu/code/entity-designer/lib/property-grid/.gitignore",
-		"/home/radu/code/entity-designer/lib/property-grid/build.config.js",
-		"/home/radu/code/entity-designer/node_modules/ustring/test/TestEndsWith.js",
-		"/home/radu/code/entity-designer/src/js/widgets/Page.jsx",
-		"/home/radu/code/entity-designer/lib/property-grid/index.styl",
-		"/home/radu/code/entity-designer/lib/property-grid/index-no-normalize.styl",
-		"/home/radu/code/entity-designer/src/js/App.jsx",
-		"/home/radu/code/entity-designer/src/js/Properties/index.jsx",
-		"/home/radu/code/entity-designer/node_modules/classy/.idea/modules.xml",
-		"/home/radu/code/entity-designer/lib/ui/node_modules/browserify/node_modules/.bin/module-deps",
-		"/home/radu/code/entity-designer/node_modules/react/lib/mapObject.js",
-		"/home/radu/code/entity-designer/lib/property-grid/loaders.config.js",
-		"/home/radu/code/entity-designer/lib/flux-action/package.json",
-		"/home/radu/code/entity-designer/node_modules/functionally/src/lockArgs.js",
-		"/home/radu/code/entity-designer/node_modules/http-server/node_modules/optimist/example/line_count_options.js",
-		"/home/radu/code/entity-designer/node_modules/classy/LICENSE",
-		"/home/radu/code/entity-designer/lib/property-grid/index.html",
-		"/home/radu/code/entity-designer/lib/property-grid/webpack.config.js",
-		"/home/radu/code/entity-designer/lib/property-grid/index.css",
-		"/home/radu/code/entity-designer/lib/property-grid/README.md",
-		"/home/radu/code/entity-designer/lib/property-grid/index.js",
-		"/home/radu/code/entity-designer/lib/property-grid/value.js",
-		"/home/radu/code/entity-designer/lib/property-grid/props.js",
-		"/home/radu/code/entity-designer/lib/property-grid/index-no-normalize.css",
-		"/home/radu/code/entity-designer/node_modules/react/lib/isNode.js",
-		"/home/radu/code/entity-designer/lib/property-grid/resources/style/index.styl",
-		"/home/radu/code/entity-designer/build.config.js",
-		"/home/radu/code/entity-designer/lib/property-grid/Gulpfile.js",
-		"/home/radu/code/entity-designer/lib/property-grid/buildlib.js",
-		"/home/radu/code/entity-designer/lib/property-grid/src/index.jsx",
-		"/home/radu/code/entity-designer/.gitignore"
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/padding.js",
+		"/home/radu/code/entity-designer/lib/ui/NumberFieldConfig.jsx",
+		"/home/radu/code/entity-designer/src/js/widgets/props/index.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/zIndex.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/wrapText.js",
+		"/home/radu/code/entity-designer/test/PropertyMapperTest.js",
+		"/home/radu/code/entity-designer/src/js/utils/RegionTip.jsx",
+		"/home/radu/code/entity-designer/src/js/widgets/props/anchor.js",
+		"/home/radu/code/entity-designer/src/js/widgets/index.js",
+		"/home/radu/code/entity-designer/src/js/widgets/mapper.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/dock.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/display.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/overflow.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/activeIndex.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/ellipsis.js",
+		"/home/radu/code/entity-designer/src/js/widgets/props/style/font.js",
+		"/home/radu/code/entity-designer/src/js/views/items/ProxyContainer.jsx",
+		"/home/radu/code/entity-designer/src/js/widgets/config.js",
+		"/home/radu/code/entity-designer/src/js/render/handleItemAnchor.js",
+		"/home/radu/code/entity-designer/src/js/widgets/Line/index.jsx",
+		"/home/radu/code/entity-designer/lib/ui/TextField.jsx",
+		"/home/radu/code/entity-designer/test.html",
+		"/home/radu/code/entity-designer/src/js/views/items/ItemProxy.jsx",
+		"/home/radu/code/entity-designer/src/js/widgets/Container/index.js",
+		"/home/radu/code/entity-designer/src/js/render/getProxyPositionFromItemNode.js",
+		"/home/radu/code/entity-designer/src/js/render/getItemAnchor.js",
+		"/home/radu/code/entity-designer/src/js/render/getAbsoluteItemInnerRegion.js",
+		"/home/radu/code/entity-designer/src/resources/css/widgets/index.styl",
+		"/home/radu/code/entity-designer/src/resources/css/index.styl",
+		"/home/radu/code/entity-designer/src/resources/css/ProxyContainer.styl",
+		"/home/radu/code/entity-designer/lib/ui/TabPanel/index.styl",
+		"/home/radu/code/entity-designer/src/resources/css/widgets.styl",
+		"/home/radu/code/entity-designer/src/js/render/createProxy.js",
+		"/home/radu/code/entity-designer/src/js/state/ProxyManager.js",
+		"/home/radu/code/entity-designer/src/js/render/getAbsoluteItemRegion.js",
+		"/home/radu/code/entity-designer/src/js/state/ITEM_ELEMENTS.js",
+		"/home/radu/code/entity-designer/.idea/misc.xml",
+		"/home/radu/code/entity-designer/node_modules/react/lib/ReactElement.js",
+		"/home/radu/code/entity-designer/node_modules/react-flex/node_modules/webpack/lib/EntryModuleNotFoundError.js",
+		"/home/radu/code/entity-designer/node_modules/webpack/lib/removeAndDo.js",
+		"/home/radu/code/entity-designer/node_modules/react/lib/ReactEventEmitterMixin.js",
+		"/home/radu/code/entity-designer/src/js/render/getConstrainRegion.js",
+		"/home/radu/code/entity-designer/src/js/render/getItemRegionInCanvas.js",
+		"/home/radu/code/entity-designer/src/js/render/getRegionInCanvas.js",
+		"/home/radu/code/entity-designer/src/resources/css/properties.styl",
+		"/home/radu/code/entity-designer/node_modules/mocha/node_modules/glob/test/pause-resume.js",
+		"/home/radu/code/entity-designer/node_modules/react/lib/isTextNode.js",
+		"/home/radu/code/entity-designer/node_modules/react/lib/getEventTarget.js"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 26.0
 	},
 	"find_in_files":
 	{
 		"height": 90.0,
 		"where_history":
 		[
+			"/home/radu/code/entity-designer/src,*.jsx, *.js",
+			"/home/radu/code/entity-designer/lib,*.jsx, *.js",
+			"/home/radu/code/entity-designer/src,*.jsx, *.js",
+			"/home/radu/code/entity-designer/node_modules/traceur-loader,*.jsx, *.js",
+			"/home/radu/code/entity-designer/node_modules/traceur-runtime,*.jsx, *.js",
+			"/home/radu/code/entity-designer/node_modules/traceur-*,*.jsx, *.js",
+			"/home/radu/code/entity-designer/src,*.jsx, *.js",
+			"/home/radu/code/entity-designer/lib,*.jsx, *.js",
+			"/home/radu/code/entity-designer/src,*.jsx, *.js",
+			"/home/radu/code/entity-designer/,*.jsx, *.js",
+			"/home/radu/code/entity-designer/lib,*.jsx, *.js",
+			"/home/radu/code/entity-designer/,*.jsx, *.js",
+			"/home/radu/code/entity-designer/src,*.jsx, *.js",
+			"/home/radu/code/entity-designer/,*.jsx, *.js",
+			"/home/radu/code/entity-designer/src,*.jsx, *.js",
+			"/home/radu/code/entity-designer/lib/ui/,*.jsx, *.js",
+			"/home/radu/code/entity-designer/lib/ui/**.*",
+			"/home/radu/code/entity-designer/lib/ui/*.*",
+			"/home/radu/code/entity-designer/lib/ui",
+			"/home/radu/code/entity-designer/src",
+			"/home/radu/code/entity-designer/",
+			"/home/radu/code/entity-designer/src",
 			"/home/radu/code/entity-designer/lib",
 			"/home/radu/code/entity-designer/src/js",
 			"/home/radu/code/entity-designer/",
@@ -938,134 +968,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"activeClassName",
-			"LIST_ITEM_STYLE",
-			"stripli",
-			"stripListStyle",
-			"listStyle",
-			"activeStyle",
-			"LIST_STYLE",
-			"itemClassName",
-			"activeItemStyle",
-			"itemStyle",
-			"ItemStyle",
-			"itemStyle",
-			"itemClassName",
-			"itemStyle",
-			"activeStyle",
-			"title",
-			"this.props",
-			"props",
-			"Strip",
-			"this.",
-			"class=",
-			"Region.",
-			"getregion",
-			"getregion:",
-			"getRegion",
-			"from:",
-			"getregion",
-			"align",
-			"align:",
-			"aligntoregion",
-			"_before",
-			"right",
-			"validate",
-			"init:",
-			"classy",
-			"PropertyChange",
-			"selector.align",
-			"align",
-			"alignSizeTo",
-			"Manager",
-			"onPropertyChange",
-			"onrender",
-			"createWidget",
-			"addItem",
-			"traverseCreateItem",
-			"addItem",
-			"register",
-			"additem",
-			"data",
-			"handleClick",
-			"onWidgetSelect",
-			"Manager.selected =",
-			"Manager.selected",
-			"notifySelectionChange",
-			"onWidgetSelect",
-			"saveState",
-			"event",
-			"handleWidgetDragStart",
-			"handleSelection",
-			"Manager.selected",
-			"Manager.selected = ",
-			"Manager.selected",
-			"selectedWidget",
+			"baseStyle",
+			"baseClassNameArray",
+			"baseClassName",
+			"titleClassName",
+			"baseClassName",
+			"baseStyle",
+			"BASE_CLASS_NAME",
+			"basic-tabs",
+			"stripFactory",
+			"defaultStyle",
+			"activeTitleStyle",
+			"props.titleStyle",
+			"props.",
+			"copyList",
+			"StripFactory",
+			"tab-panel",
+			"react-tab-panel",
+			"ids'",
+			"cmp.props.onTreeContextMenu",
+			"item",
+			"exportedFn",
+			"top",
+			"getItemComponent",
+			"ItemsManager",
+			"onMouseDown",
+			"onDoubleClick",
+			"ItemsManager",
+			"remove",
+			"onMenuClick",
+			"AppState",
+			"getItemComponent",
+			"onNodeClick",
+			"handleNodeMouseDown",
+			"titleStyle",
+			"styleTarget",
+			"mapping:",
+			"styleTarget",
 			"size",
-			"state.",
-			"toStyle",
-			"setPropertiesFor",
-			"selector.alignTo",
-			"widget",
-			"alignTo",
-			"onWidgetSelect",
-			"handleStateChange",
-			"undoHistory",
-			"getStepValue",
-			"isvalid",
-			"numbersOnly",
-			"requireFocusOnStep",
-			"toStyle",
-			"handleChange",
-			"TextField",
-			"item[idName]",
-			"properties",
-			"style.top",
-			"dragInitialPos",
-			"t",
+			"height",
+			"size",
+			"height",
+			"flux-action'",
+			"addwidget'",
+			"flux-action'",
+			"reacty'",
+			"move:",
+			"move",
+			"ItemsManager.move([item]).to(info.parent)",
+			"DRAG_TARGET",
+			"isDragging",
 			"numeric",
-			"stepto",
-			"setva",
-			"handleChange",
-			"getValue",
-			"stepto",
-			"NumberField",
-			"stepTo",
-			"handlechange",
-			"target",
-			"/NumberField'",
-			"/NumberField",
+			"console",
+			"getElementById",
+			"getItemById",
+			"DRAG_TARGET",
+			"setupdrag",
+			"defaultProps",
+			"this.props.",
+			"return false",
+			"style.position",
+			"activeIndex",
 			"obj",
-			"setPropertiesFor",
-			"onPropertyChange",
-			"PropertyChange",
-			"value",
-			"data",
-			"refs.properties",
-			"selectedWidget",
-			"strPath",
-			"props",
-			"window.",
-			"mappings",
-			"getMappings",
-			"valueProvider",
-			"onPropertyChange",
-			"setProperty",
-			"setStyle",
-			"PropertyGrid",
-			"onPropertyChange",
+			"tostyle",
+			"createitem",
+			"visible",
+			"setupDrag",
+			"setupdrag",
+			"resizable",
+			"'fill'",
+			"dock == 'fill'",
+			"onUnmount",
+			"p",
+			"onMount",
+			"proxy_elements",
+			"onUnmount",
+			"proxyNode.setState({",
+			"getNodeInnerRegion(getConstrainNode())",
+			"left",
+			"getItemRegionInCanvas",
+			"getAbsoluteItemRegion",
 			"toStyle",
-			"onKeyUp",
-			"removeEventListener",
-			"restoreState",
-			"onPropertyChange",
-			"document",
-			"onPropertyChange",
-			".sty",
-			"onSelect",
-			"loaders.config",
-			"loaders",
-			"require"
+			"StateManager",
+			"PROXY_ELEMENTS",
+			"AlignToolbox",
+			"acceptsItems",
+			"renderChildren:",
+			"renderChildren",
+			"parentId",
+			"Label",
+			"var styleMappings = styleMap(props)",
+			"render:",
+			"renderChildren:",
+			"renderChildren",
+			"onItemSetParent",
+			"deleteIds",
+			"onitem",
+			"Container",
+			"getItemsMap",
+			"config",
+			"getSnapRegions",
+			"getProperty(name)",
+			"getProperty(name).showGrid",
+			"validSnap",
+			"beforeSnap",
+			"positionAndSize",
+			"top",
+			"left",
+			"width",
+			"positionAndSize",
+			"snapRegion.width",
+			"left",
+			"validsnap",
+			"6to",
+			"right",
+			"positionAndSize",
+			"region",
+			"left",
+			".at",
+			"at:",
+			"width",
+			"Region",
+			"region",
+			"Region",
+			"region",
+			"Region",
+			"region",
+			"initialRegionInCanvas",
+			"Region"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1083,7 +1113,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -1092,82 +1122,50 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2697,
+						"buffer_size": 1190,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								827,
-								827
+								976,
+								976
 							]
 						],
 						"settings":
 						{
-							"open_with_edit": true,
 							"syntax": "Packages/SublimeLinter-jsxhint/JavaScript (JSX).tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 199.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "README.md",
+					"file": "build-style.config.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2350,
+						"buffer_size": 457,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1071,
-								1071
+								219,
+								219
 							]
 						],
 						"settings":
 						{
-							"parser": "markdown",
-							"syntax": "Packages/Markdown/Markdown.tmLanguage",
-							"tab_size": 4,
-							"target": "disk",
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 162.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "webpack.config.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 294,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								224,
-								224
-							]
-						],
-						"settings":
-						{
+							"open_with_edit": true,
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
@@ -1176,37 +1174,31 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
+				},
 				{
-					"buffer": 3,
-					"file": "index.jsx",
+					"buffer": 2,
+					"file": "index.styl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 753,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								38,
-								38
+								0,
+								0
 							]
 						],
 						"settings":
 						{
 							"open_with_edit": true,
-							"syntax": "Packages/SublimeLinter-jsxhint/JavaScript (JSX).tmLanguage",
-							"tab_size": 4,
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
@@ -1217,82 +1209,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "src/Strip.jsx",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2549,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								239,
-								239
-							]
-						],
-						"settings":
-						{
-							"open_with_edit": true,
-							"syntax": "Packages/SublimeLinter-jsxhint/JavaScript (JSX).tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "src/Container.jsx",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1870,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								753,
-								753
-							]
-						],
-						"settings":
-						{
-							"open_with_edit": true,
-							"syntax": "Packages/SublimeLinter-jsxhint/JavaScript (JSX).tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 756.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
+					"buffer": 3,
 					"file": "package.json",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1349,
+						"buffer_size": 1711,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								441,
-								441
+								570,
+								570
 							]
 						],
 						"settings":
@@ -1301,11 +1231,41 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 90.0,
+						"translation.x": 21.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "index.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1255,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								80,
+								80
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimeLinter-jsxhint/JavaScript (JSX).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1328,18 +1288,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.497340425531,
 			1.0
 		],
 		"rows":
@@ -1381,512 +1334,512 @@
 				"package.json"
 			],
 			[
-				"index.j",
-				"index.jsx"
-			],
-			[
-				"index.",
-				"index.html"
+				"conta",
+				"src/Container.jsx"
 			],
 			[
 				"index",
-				"index.js"
+				"src/index.jsx"
 			],
 			[
-				"copy",
-				"node_modules/classy/src/utils/copy.js"
+				"tabpa",
+				"src/resources/css/widgets/TabPanel.styl"
 			],
 			[
-				"sele",
-				"src/js/Selector.jsx"
+				"clonei",
+				"src/js/render/cloneItem.js"
 			],
 			[
-				"canva",
-				"src/js/Canvas.jsx"
+				"itemsm",
+				"src/js/data/ItemsManager.js"
 			],
 			[
-				"manager",
-				"lib/widget/Manager/index.js"
+				"genera",
+				"src/js/model/item/generateId.js"
 			],
 			[
-				"addwid",
-				"src/js/actions/AddWidget.js"
+				"itemfa",
+				"src/js/model/ItemFactory.js"
 			],
 			[
-				"tree",
-				"src/js/Tree.jsx"
-			],
-			[
-				"canvas",
-				"src/js/Canvas.jsx"
-			],
-			[
-				"getposi",
-				"lib/widget/getPosition.js"
-			],
-			[
-				"selec",
-				"src/js/Selector.jsx"
-			],
-			[
-				"number",
-				"lib/ui/NumberField.jsx"
-			],
-			[
-				"read",
-				"README.md"
-			],
-			[
-				"propertyc",
-				"src/js/actions/PropertyChange.js"
-			],
-			[
-				"hadnlec",
-				"lib/ui/common/handleInputChange.js"
-			],
-			[
-				"getin",
-				"lib/ui/common/getInputProps.js"
-			],
-			[
-				"renderin",
-				"lib/ui/common/renderInput.jsx"
-			],
-			[
-				"getva",
-				"lib/ui/common/getValue.js"
-			],
-			[
-				"geiniti",
-				"lib/ui/common/getInitialState.js"
-			],
-			[
-				"setvalue",
-				"lib/ui/common/setValue.js"
-			],
-			[
-				"mapper",
-				"src/js/widgets/mapper.js"
-			],
-			[
-				"compositep",
-				"lib/property-grid/src/CompositeProperty.jsx"
-			],
-			[
-				"proper",
-				"lib/property-grid/lib/Property.js"
-			],
-			[
-				"props.",
-				"src/js/widgets/props.js"
-			],
-			[
-				"setpro",
-				"lib/widget/setProperty.js"
-			],
-			[
-				"desig",
-				"src/js/Designer.jsx"
-			],
-			[
-				"sets",
-				"lib/widget/setStyle.js"
-			],
-			[
-				"toolb",
-				"src/js/Toolbox.jsx"
-			],
-			[
-				"textf",
-				"src/js/widgets/TextField.jsx"
-			],
-			[
-				"page",
-				"src/js/widgets/Page.jsx"
-			],
-			[
-				"desi",
-				"src/js/Designer.jsx"
-			],
-			[
-				"des",
-				"src/js/Designer.jsx"
-			],
-			[
-				"design",
-				"src/js/Designer.jsx"
-			],
-			[
-				"loader",
-				"lib/property-grid/loaders.config.js"
-			],
-			[
-				"index-no",
-				"lib/property-grid/index-no-normalize.css"
-			],
-			[
-				"buid",
-				"build.config.js"
-			],
-			[
-				"packa",
-				"package.json"
-			],
-			[
-				".giti",
-				".gitignore"
-			],
-			[
-				"cp",
-				"lib/property-grid/src/CompositeProperty.jsx"
-			],
-			[
-				"index.jsx",
-				"lib/property-grid/src/index.jsx"
-			],
-			[
-				"webpa",
-				"webpack.config.js"
-			],
-			[
-				".git",
-				".gitignore"
-			],
-			[
-				"cprop",
-				"lib/property-grid/src/CompositeProperty.jsx"
-			],
-			[
-				"cava",
-				"src/js/Canvas.jsx"
-			],
-			[
-				"designe",
-				"src/js/Designer.jsx"
-			],
-			[
-				"build.",
-				"lib/property-grid/build.config.js"
-			],
-			[
-				"web",
-				"lib/property-grid/webpack.config.js"
-			],
-			[
-				"propertymapping",
-				"lib/property-grid/propertyMapping.js"
-			],
-			[
-				"main",
-				"src/js/main.jsx"
-			],
-			[
-				"preven",
-				"src/js/utils/preventDefault.js"
-			],
-			[
-				"propertiesindex",
-				"src/js/Properties/index.jsx"
-			],
-			[
-				"properm",
-				"src/js/utils/propertyMapping.js"
-			],
-			[
-				"setst",
-				"lib/widget/setStyle.js"
-			],
-			[
-				"widget",
-				"lib/widget/WidgetMixin.js"
-			],
-			[
-				"wmi",
-				"lib/widget/WidgetMixin.js"
-			],
-			[
-				"propertym",
-				"src/js/utils/propertyMapping.js"
-			],
-			[
-				"prop",
-				"src/js/Properties.jsx"
+				"getitemco",
+				"src/js/render/getItemComponent.js"
 			],
 			[
 				"label",
-				"src/js/widgets/Label.jsx"
+				"src/js/widgets/Label/index.jsx"
 			],
 			[
-				"props",
-				"src/js/widgets/props.js"
+				"clone",
+				"src/js/model/clone.js"
 			],
 			[
-				"managerinde",
-				"lib/widget/Manager/index.js"
+				"render",
+				"src/js/render/render.js"
 			],
 			[
-				"page.pro",
-				"src/js/widgets/Page.props.js"
+				"position",
+				"src/js/widgets/props/style/position.js"
 			],
 			[
-				"updatew",
-				"src/js/actions/UpdateWidgetPosition.js"
+				"marg",
+				"src/js/widgets/props/style/margin.js"
 			],
 			[
-				"update",
-				"src/js/actions/UpdateWidgetPosition.js"
+				"tabp",
+				"src/resources/css/widgets/TabPanel.styl"
 			],
 			[
-				"getde",
-				"lib/widget/getDefaultState.js"
-			],
-			[
-				"addw",
-				"src/js/actions/AddWidget.js"
-			],
-			[
-				"handlese",
-				"lib/widget/handleSelection.js"
-			],
-			[
-				"managerindex",
-				"lib/widget/Manager/index.js"
-			],
-			[
-				"onrender",
-				"lib/widget/onRender.js"
-			],
-			[
-				"getiniti",
-				"lib/ui/common/getInitialState.js"
-			],
-			[
-				"widgetm",
-				"lib/widget/WidgetMixin.js"
-			],
-			[
-				"trave",
-				"lib/widget/Manager/traverse.js"
-			],
-			[
-				"manaindex",
-				"lib/widget/Manager/index.js"
-			],
-			[
-				"updatewidgetposition",
-				"src/js/actions/UpdateWidgetPosition.js"
-			],
-			[
-				"propert",
-				"src/js/actions/PropertyChange.js"
-			],
-			[
-				"propertc",
-				"src/js/actions/PropertyChange.js"
-			],
-			[
-				"updaetw",
-				"src/js/actions/UpdateWidget.js"
-			],
-			[
-				"style.",
-				"src/resources/css/style.styl"
-			],
-			[
-				"pack",
-				"package.json"
-			],
-			[
-				"select",
-				"src/js/Selector.jsx"
-			],
-			[
-				"propertychange",
-				"src/js/actions/PropertyChange.js"
-			],
-			[
-				"handle",
-				"lib/widget/handleSelection.js"
-			],
-			[
-				"wid",
-				"src/resources/css/widget.styl"
-			],
-			[
-				"style",
-				"src/resources/css/style.styl"
-			],
-			[
-				"manage",
-				"lib/widget/Manager/index.js"
-			],
-			[
-				"handles",
-				"lib/widget/handleSelection.js"
-			],
-			[
-				"manager/in",
-				"lib/widget/Manager/index.js"
-			],
-			[
-				"selector",
-				"src/js/Selector.jsx"
-			],
-			[
-				"regis",
-				"lib/widget/Manager/register.js"
-			],
-			[
-				"regi",
-				"lib/widget/Manager/register.js"
-			],
-			[
-				"register",
-				"lib/widget/Manager/register.js"
-			],
-			[
-				"tra",
-				"lib/widget/Manager/traverse.js"
-			],
-			[
-				"traver",
-				"lib/widget/Manager/traverse.js"
-			],
-			[
-				"designer",
-				"src/js/Designer.jsx"
-			],
-			[
-				"isreg",
-				"lib/widget/Manager/isRegistered.js"
-			],
-			[
-				"make",
-				"node_modules/classy/Makefile"
-			],
-			[
-				"manager/index",
-				"lib/widget/Manager/index.js"
-			],
-			[
-				"registerw",
-				"lib/widget/Manager/registerWidget.js"
-			],
-			[
-				"proepr.d",
-				"src/resources/css/properties.design.styl"
-			],
-			[
-				"tite",
-				"src/js/ToolboxItem.jsx"
-			],
-			[
-				"pro.de",
-				"src/resources/css/properties.design.styl"
-			],
-			[
-				"proper.str",
-				"src/resources/css/properties.structure.styl"
-			],
-			[
-				"toolbo",
-				"src/resources/css/toolbox.styl"
-			],
-			[
-				"proper.",
-				"src/resources/css/properties.design.styl"
-			],
-			[
-				"pro.st",
-				"src/resources/css/properties.structure.styl"
-			],
-			[
-				"proper.de",
-				"src/resources/css/properties.design.styl"
+				"tree",
+				"src/resources/css/tree.styl"
 			],
 			[
 				"tool",
-				"src/js/Toolbox.jsx"
+				"src/js/ToolboxItem.jsx"
 			],
 			[
-				"treeindex",
-				"lib/ui/tree/index.jsx"
+				"border",
+				"src/js/widgets/props/style/border.js"
 			],
 			[
-				"style.s",
-				"src/resources/css/style.styl"
+				"back",
+				"src/js/widgets/props/style/background.js"
 			],
 			[
-				"getdefa",
-				"lib/widget/getDefaultState.js"
+				"propertym",
+				"src/js/utils/PropertyMapper.js"
+			],
+			[
+				"tabpan",
+				"src/resources/css/widgets/TabPanel.styl"
+			],
+			[
+				"canv",
+				"src/js/views/items/Canvas.jsx"
+			],
+			[
+				"loader",
+				"loaders.config.js"
+			],
+			[
+				"itemsma",
+				"src/js/data/ItemsManager.js"
+			],
+			[
+				"createi",
+				"src/js/render/createItem.js"
+			],
+			[
+				"canvas",
+				"src/js/views/items/Canvas.jsx"
+			],
+			[
+				"selec",
+				"src/js/data/SelectionManager.js"
+			],
+			[
+				"factories",
+				"src/js/model/factories/TabPanel.js"
+			],
+			[
+				"define",
+				"src/js/widgets/base/define.js"
+			],
+			[
+				"wmi",
+				"src/js/widgets/base/WidgetMixin.js"
+			],
+			[
+				"defi",
+				"src/js/widgets/base/define.js"
 			],
 			[
 				"create",
 				"src/js/widgets/create.js"
 			],
 			[
-				"defin",
-				"lib/widget/define.js"
+				"mapper",
+				"src/js/widgets/mapper.js"
 			],
 			[
-				"handlem",
-				"lib/widget/handleMouseDown.js"
+				"texta",
+				"src/js/widgets/props/style/textAlign.js"
 			],
 			[
-				"toolboxi",
-				"src/js/ToolboxItem.jsx"
+				"createite",
+				"src/js/render/createItem.js"
 			],
 			[
-				"toolboxite",
-				"src/js/ToolboxItem.jsx"
+				"thela",
+				"src/js/widgets/props/theLabel.js"
 			],
 			[
-				"text",
-				"src/js/widgets/TextField.jsx"
+				"itempr",
+				"src/resources/css/ItemProxy.styl"
 			],
 			[
-				"define",
-				"lib/widget/define.js"
+				"itempro",
+				"src/js/views/items/ItemProxy.jsx"
 			],
 			[
-				"creaet",
+				"mixin",
+				"src/js/render/mixin.js"
+			],
+			[
+				"tabindex",
+				"lib/ui/TabPanel/index.jsx"
+			],
+			[
+				"createpr",
+				"src/js/render/createProxy.js"
+			],
+			[
+				"proxym",
+				"src/js/state/ProxyManager.js"
+			],
+			[
+				"createpro",
+				"src/js/render/createProxy.js"
+			],
+			[
+				"prox",
+				"src/js/state/PROXY_ELEMENTS.js"
+			],
+			[
+				"itemele",
+				"src/js/state/ITEM_ELEMENTS.js"
+			],
+			[
+				"getregioni",
+				"src/js/render/getRegionInCanvas.js"
+			],
+			[
+				"getnodeinner",
+				"src/js/render/getNodeInnerRegion.js"
+			],
+			[
+				"getnodeinnerregion",
+				"src/js/render/getNodeInnerRegion.js"
+			],
+			[
+				"getitemre",
+				"src/js/render/getItemRegionInCanvas.js"
+			],
+			[
+				"getabsolutei",
+				"src/js/render/getAbsoluteItemRegion.js"
+			],
+			[
+				"itemprox",
+				"src/js/views/items/ItemProxy.jsx"
+			],
+			[
+				"proxycon",
+				"src/js/views/items/ProxyContainer.jsx"
+			],
+			[
+				"getsnapitems",
+				"src/js/render/getSnapItems.js"
+			],
+			[
+				"itemfac",
+				"src/js/model/ItemFactory.js"
+			],
+			[
+				"desi",
+				"src/js/Designer.jsx"
+			],
+			[
+				"selectionmanager",
+				"src/js/data/SelectionManager.js"
+			],
+			[
+				"desing",
+				"src/js/Designer.jsx"
+			],
+			[
+				"getitemparent",
+				"src/js/render/getItemParent.js"
+			],
+			[
+				"getitemsm",
+				"src/js/render/getItemsMap.js"
+			],
+			[
+				"data",
+				"src/js/data/DataManager.js"
+			],
+			[
+				"getsnapr",
+				"src/js/render/getSnapRegions.js"
+			],
+			[
+				"appda",
+				"src/js/data/AppData.js"
+			],
+			[
+				"datam",
+				"src/js/data/DataManager.js"
+			],
+			[
+				"main",
+				"src/js/main.js"
+			],
+			[
+				"snapper",
+				"src/resources/css/Snapper.styl"
+			],
+			[
+				"itemp",
+				"src/resources/css/ItemProxy.styl"
+			],
+			[
+				"packa",
+				"package.json"
+			],
+			[
+				"web",
+				"webpack.config.js"
+			],
+			[
+				"appsta",
+				"src/js/state/AppState.js"
+			],
+			[
+				"appdata",
+				"src/js/data/AppData.js"
+			],
+			[
+				"snaponm",
+				"src/js/render/snapOnMove.js"
+			],
+			[
+				"getsna",
+				"src/js/render/getSnapRegions.js"
+			],
+			[
+				"snapm",
+				"src/js/state/SnapManager.js"
+			],
+			[
+				"snapindex",
+				"src/js/render/snap/index.js"
+			],
+			[
+				"snapo",
+				"src/js/render/snapOnResize.js"
+			],
+			[
+				"canva",
+				"src/js/views/items/Canvas.jsx"
+			],
+			[
+				"snapto",
+				"src/js/render/snapToGrid.js"
+			],
+			[
+				"createitem",
+				"src/js/render/createItem.js"
+			],
+			[
+				"cprox",
+				"src/js/render/createProxy.js"
+			],
+			[
+				"snaponre",
+				"src/js/render/snapOnResize.js"
+			],
+			[
+				"handleitema",
+				"src/js/render/handleItemAnchor.js"
+			],
+			[
+				"main.j",
+				"src/js/main.js"
+			],
+			[
+				"createproxy",
+				"src/js/render/createProxy.js"
+			],
+			[
+				"getconst",
+				"src/js/render/getConstrainRegion.js"
+			],
+			[
+				"setup",
+				"src/js/render/drag/setup.js"
+			],
+			[
+				"setu",
+				"src/js/render/drag/setup.js"
+			],
+			[
+				"getuni",
+				"src/js/render/getUnionRegion.js"
+			],
+			[
+				"setupdra",
+				"src/js/render/setupDrag.js"
+			],
+			[
+				"getunion",
+				"src/js/render/getUnionRegion.js"
+			],
+			[
+				"getsnapre",
+				"src/js/render/getSnapRegions.js"
+			],
+			[
+				"selectormanager",
+				"src/js/state/SelectorManager.js"
+			],
+			[
+				"designer",
+				"src/js/Designer.jsx"
+			],
+			[
+				"selector",
+				"src/js/views/selected/Selector.jsx"
+			],
+			[
+				"road",
+				"Roadmap.md"
+			],
+			[
+				"propertiesm",
+				"src/js/data/PropertiesManager.js"
+			],
+			[
+				"snaptog",
+				"src/js/render/snapToGrid.js"
+			],
+			[
+				"snapon",
+				"src/js/render/snapOnResize.js"
+			],
+			[
+				"datama",
+				"src/js/data/DataManager.js"
+			],
+			[
+				"itemsmana",
+				"src/js/data/ItemsManager.js"
+			],
+			[
+				"getitemr",
+				"src/js/render/getItemRegion.js"
+			],
+			[
+				"getabsoluteiteminnerregion",
+				"src/js/render/getAbsoluteItemInnerRegion.js"
+			],
+			[
+				"getiteminner",
+				"src/js/render/getItemInnerRegionInCanvas.js"
+			],
+			[
+				"snaponr",
+				"src/js/render/snapOnResize.js"
+			],
+			[
+				"setupd",
+				"src/js/render/setupDrag.js"
+			],
+			[
+				"hia",
+				"src/js/render/handleItemAnchor.js"
+			],
+			[
+				"createprox",
+				"src/js/render/createProxy.js"
+			],
+			[
+				"snapt",
+				"src/js/render/snapToGrid.js"
+			],
+			[
+				"getdiff",
+				"src/js/render/snap/getDiffBetween.js"
+			],
+			[
+				"rendersnapindex",
+				"src/js/render/snap/index.js"
+			],
+			[
+				"mindiff",
+				"src/js/render/snap/minDiffFor.js"
+			],
+			[
+				"atool",
+				"src/js/views/items/AlignToolbox.jsx"
+			],
+			[
+				"statem",
+				"src/js/state/StateManager.js"
+			],
+			[
+				"getcons",
+				"src/js/render/getConstrainRegion.js"
+			],
+			[
+				"getconstrain",
+				"src/js/render/getConstrainRegion.js"
+			],
+			[
+				"wm",
+				"src/js/widgets/base/WidgetMixin.js"
+			],
+			[
+				"widgets/create",
 				"src/js/widgets/create.js"
 			],
 			[
-				"toolbox",
-				"src/resources/css/toolbox.styl"
+				"getregion",
+				"src/js/render/getRegionInCanvas.js"
 			],
 			[
-				"main.",
-				"node_modules/react-tools/main.js"
+				"appstate",
+				"src/js/state/AppState.js"
 			],
 			[
-				"style.st",
-				"src/resources/css/style.styl"
+				"appd",
+				"src/js/data/AppData.js"
 			],
 			[
-				"ti",
-				"src/js/ToolboxItem.jsx"
+				"canvasp",
+				"src/js/views/properties/CanvasProperties.jsx"
 			],
 			[
-				"toolboxitem",
-				"src/js/ToolboxItem.jsx"
+				"prepareprop",
+				"src/js/widgets/prepareProperties.js"
 			],
 			[
-				"widget.st",
-				"src/resources/css/widget.styl"
+				"propertiesmana",
+				"src/js/data/PropertiesManager.js"
+			],
+			[
+				"toolarea",
+				"src/js/ToolArea.jsx"
+			],
+			[
+				"canvaspro",
+				"src/js/views/properties/CanvasProperties.jsx"
+			],
+			[
+				"createp",
+				"src/js/render/createProxy.js"
+			],
+			[
+				"properties.sty",
+				"src/resources/css/properties.styl"
 			],
 			[
 				"prepare",
-				"lib/define/prepare.js"
+				"src/js/widgets/prepareProperties.js"
 			],
 			[
-				"getpos",
-				"lib/widget/getPosition.js"
-			],
-			[
-				"getsi",
-				"lib/widget/getSize.js"
+				"handlei",
+				"src/js/render/handleItemAnchor.js"
 			]
 		],
 		"width": 0.0
@@ -1897,7 +1850,19 @@
 		"selected_items":
 		[
 			[
-				"react-da",
+				"zi",
+				"~/code/ZippyUI/zippyui.sublime-project"
+			],
+			[
+				"react-ta",
+				"~/code/react-tab-panel/react-tab-panel.sublime-project"
+			],
+			[
+				"react",
+				"~/code/react-date-picker/react-date-picker.sublime-project"
+			],
+			[
+				"date",
 				"~/code/react-date-picker/react-date-picker.sublime-project"
 			],
 			[
@@ -1905,36 +1870,28 @@
 				"~/code/react-date-picker/react-date-picker.sublime-project"
 			],
 			[
-				"e",
-				"~/code/entity-designer/entity-designer.sublime-project"
+				"i-",
+				"~/code/i-s/is.sublime-project"
 			],
 			[
-				"ent",
-				"~/code/entity-designer/entity-designer.sublime-project"
+				"reg",
+				"~/code/region/region.sublime-project"
 			],
 			[
-				"re",
-				"~/code/region-align/region-align.sublime-project"
+				"css",
+				"~/code/css-utils/css-utils.sublime-project"
 			],
 			[
-				"region",
-				"~/code/region-align/region-align.sublime-project"
-			],
-			[
-				"zi",
-				"~/code/ZippyUI/zippyui.sublime-project"
-			],
-			[
-				"Z",
-				"~/code/ZippyUI/zippyui.sublime-project"
+				"ca",
+				"~/code/project-radu-brehar/calorie-warn.sublime-project"
 			],
 			[
 				"func",
 				"~/code/functionally/functionally.sublime-project"
 			],
 			[
-				"blog",
-				"~/code/blog/blog-posts.sublime-project"
+				"Z",
+				"~/code/ZippyUI/zippyui.sublime-project"
 			],
 			[
 				"react-f",
@@ -1949,16 +1906,16 @@
 				"~/code/blog/blog-posts.sublime-project"
 			],
 			[
+				"blog",
+				"~/code/radubrehar.github.io/blog-posts.sublime-workspace"
+			],
+			[
 				"blo",
 				"~/code/blog/blog-posts.sublime-project"
 			],
 			[
 				"f",
 				"~/code/functionally/functionally.sublime-project"
-			],
-			[
-				"css",
-				"~/code/css-utils/css-utils.sublime-project"
 			],
 			[
 				"z",
@@ -1998,7 +1955,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 416.0,
+	"side_bar_width": 415.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

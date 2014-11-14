@@ -56,123 +56,121 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/** @jsx React.DOM */'use strict';
 
-	var React     = __webpack_require__(1)
+	var React = __webpack_require__(1)
+	var Tabs  = __webpack_require__(3)
+	var copy  = __webpack_require__(2).copy
+	var TabsFactory = React.createFactory(Tabs)
 
-	var Strip     = __webpack_require__(2)
-	var Container = __webpack_require__(3)
+	var ARROW_DEFAULTS = {
+	    color : 'rgb(237, 227, 227)',
+	    width : 6,
+	    height: 6
+	}
 
 	function emptyFn(){}
 
-	var TabPanel = React.createClass({displayName: 'TabPanel',
+	var TabPanel = React.createClass({
 
-	    propTypes: {
-	        activeIndex         : React.PropTypes.number,
+	    displayName: 'TabPanel',
 
-	        activeStyle         : React.PropTypes.object,
-	        activeClassName     : React.PropTypes.string,
+	    getDefaultProps: function() {
+	        return {
+	            defaultStripStyle: {
+	                textOverflow: 'ellipsis',
+	                overflow    : 'hidden',
+	                whiteSpace  : 'nowrap'
+	            },
 
-	        defaultStyle        : React.PropTypes.object,
-	        defaultClassName    : React.PropTypes.string,
+	            scrollerFactory: function(props, side) {
+	                var style = copy(props.style)
+	                var borderWidth = style.borderWidth
 
-	        titleStyle          : React.PropTypes.object,
-	        titleClassName      : React.PropTypes.string,
-	        activeTitleStyle    : React.PropTypes.object,
-	        activeTitleClassName: React.PropTypes.string,
+	                style.borderWidth = 0
+	                style.borderStyle = 'solid'
+	                style['border' + (side=='left'? 'Right': 'Left') + 'Width'] = borderWidth
 
-	        onChange            : React.PropTypes.func,
+	                var arrowStyle  = props.arrowStyle? copy(props.arrowStyle): {}
+	                var arrowWidth  = props.arrowWidth  ||  arrowStyle.width || ARROW_DEFAULTS.width
+	                var arrowHeight = props.arrowHeight || arrowStyle.height || ARROW_DEFAULTS.height
+	                var arrowColor  = props.arrowColor || arrowStyle.color || ARROW_DEFAULTS.color
 
-	        stripListStyle      : React.PropTypes.object
+	                copy({
+	                    borderTop   : arrowHeight + 'px solid transparent',
+	                    borderBottom: arrowHeight + 'px solid transparent',
+	                    borderLeftWidth  : arrowWidth,
+	                    borderRightWidth : arrowWidth
+	                }, arrowStyle)
+
+	                if (side == 'right'){
+	                    arrowStyle.borderLeftColor = arrowColor
+	                }
+
+	                if (side == 'left'){
+	                    arrowStyle.borderRightColor = arrowColor
+	                }
+
+	                delete arrowStyle.width
+	                delete arrowStyle.height
+
+	                return (
+	                    React.createElement("div", React.__spread({},  props), 
+	                        React.createElement("div", {className: "arrow", 'data-side': side, style: arrowStyle})
+	                    )
+	                )
+	            },
+
+	            stripFactory: function(props, Strip) {
+	                return (
+	                    React.createElement("div", {key: "stripWrap", style: {overflow: 'hidden'}}, 
+	                        Strip(props)
+	                    )
+	                )
+	            }
+	        }
 	    },
 
-	    getDefaultProps: function(){
+	    getInitialState: function() {
 	        return {
-	            activeIndex: 0,
-
-	            activeStyle: {},
-	            activeClassName: 'active',
-
-	            titleStyle: {},
-	            titleClassName: '',
-	            activeTitleStyle: {},
-	            activeTitleClassName: 'active',
-
-	            defaultStyle: {},
-	            defaultClassName: '',
 
 	        }
 	    },
 
-	    getInitialState: function(){
-	        return {}
+	    render: function() {
+	        var props = copy(this.props)
+
+	        props.onChange = this.handleChange
+	        this.prepareIndex(props, this.state)
+
+	        if (props.arrowColor){
+	            props.scrollerProps = props.scrollerProps || {}
+	            props.scrollerProps.arrowColor = props.arrowColor
+	        }
+
+	        props.stripStyle = copy(props.stripStyle, props.defaultStripStyle)
+
+	        return TabsFactory(props)
 	    },
 
-	    render: function(){
-
-	        var props = this.props
-
-	        props.children = props.children || []
-
-	        var activeIndex = props.activeIndex || 0
-
-	        activeIndex = Math.min(activeIndex, props.children.length - 1)
-
-	        props.className = props.className || ''
-
-	        props.className += ' tab-panel'
-
-	        var StripComponent = React.createElement(Strip, {key: "strip", onChange: this.handleChange, 
-
-	                    enableScroll: props.enableScroll, 
-	                    scrollerStyle: props.scrollerStyle, 
-	                    scrollerFactory: props.scrollerFactory, 
-	                    scrollerWidth: props.scrollerWidth, 
-
-	                    activeIndex: activeIndex, 
-
-	                    activeStyle: props.activeTitleStyle, 
-	                    activeClassName: props.activeTitleClassName, 
-
-	                    titleStyle: props.titleStyle, 
-	                    titleClassName: props.titleClassName, 
-
-	                    style: props.stripStyle
-	                }, 
-	                    props.children
-	                )
-
-	        var ContainerComponent = React.createElement(Container, {key: "container", 
-	                    activeIndex: activeIndex, 
-
-	                    activeClassName: props.activeClassName, 
-	                    activeStyle: props.activeStyle, 
-
-	                    defaultStyle: props.defaultStyle, 
-	                    defaultClassName: props.defaultClassName, 
-
-	                    hiddenStyle: props.hiddenStyle}, 
-
-	                    this.props.children
-	                )
-
-
-	        var Content = props.stripPosition == 'bottom'?
-	                            [ContainerComponent, StripComponent]:
-	                            [StripComponent, ContainerComponent]
-
-	        return (
-	            React.createElement("div", React.__spread({},  props), 
-	                Content
-	            )
-	        )
+	    prepareIndex: function(props, state) {
+	        if (props.hasOwnProperty('defaultActiveIndex')){
+	            props.activeIndex = props.defaultActiveIndex
+	            if (typeof state.activeIndex != 'undefined'){
+	                props.activeIndex = state.activeIndex
+	            }
+	        }
 	    },
 
-	    handleChange: function(index){
+	    handleChange: function(index) {
+	        if (this.props.hasOwnProperty('defaultActiveIndex')){
+	            this.setState({
+	                activeIndex: index
+	            })
+	        }
+
 	        ;(this.props.onChange || emptyFn)(index)
 	    }
-	})
 
-	TabPanel.Strip     = Strip
-	TabPanel.Container = Container
+	})
 
 	module.exports = TabPanel
 
@@ -184,455 +182,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */'use strict';
-
-	var React  = __webpack_require__(1)
-	var copy   = __webpack_require__(4).copy
-	var buffer = __webpack_require__(5).buffer
-
-	var LIST_ITEM_STYLE = {
-	    display: 'inline-block'
-	}
-
-	var LIST_STYLE = {
-	    margin   : 0,
-	    padding  : 0,
-	    listStyle: 'none',
-	    position : 'relative',
-	    display  : 'inline-block'
-	}
-
-	var SCROLLER_STYLE = {
-	    top       : 0,
-	    position  : 'absolute',
-	    display   : 'inline-block',
-	    height    : '100%',
-	    cursor    : 'pointer'
-	}
-
-	var Scroller = React.createClass({displayName: 'Scroller',
-
-	    display: 'Scroller',
-
-	    getDefaultProps: function(){
-	        return {
-	            width: 5
-	        }
-	    },
-
-	    render: function(){
-	        var props = this.props
-	        var side = this.props.side
-
-	        props.className = props.className || ''
-	        props.className += ' tab-panel-scroller ' + side
-
-	        if (props.active && props.visible){
-	            props.className += ' active'
-	        }
-
-	        var scrollerStyle = copy(SCROLLER_STYLE)
-	        scrollerStyle.width = props.width
-
-	        props.style = copy(props.style, scrollerStyle)
-
-	        props.style[side] = 0
-
-	        if (!props.visible){
-	            props.style.display = 'none'
-	        }
-
-	        return props.factory?
-	                    props.factory(props):
-	                    React.createElement("div", React.__spread({},  props))
-	    }
-	})
-
-	var ScrollerFactory = React.createFactory(Scroller)
-
-	module.exports = React.createClass({displayName: 'exports',
-
-	    display: 'TabPanel.Strip',
-
-	    propTypes: {
-	        activeIndex    : React.PropTypes.number,
-	        activeStyle    : React.PropTypes.object,
-	        activeClassName: React.PropTypes.string,
-
-	        titleStyle    : React.PropTypes.object,
-	        titleClassName: React.PropTypes.string,
-
-	        anchorStyle   : React.PropTypes.object,
-	        scrollerStyle : React.PropTypes.object,
-	        scrollerWidth : React.PropTypes.number,
-
-	        scrollStep    : React.PropTypes.number,
-	        scrollSpeed   : React.PropTypes.number
-
-	        //each item in the TabPanel can also specify a titleStyle
-	        //and a titleClassName, which are added to the values in props
-	    },
-
-	    getInitialState: function(){
-	        return {
-	            adjustScroll: true,
-	            scrollPos   : 0
-	        }
-	    },
-
-	    componentWillUnmount: function(){
-	        if (this.props.enableScroll){
-	            window.removeEventListener('resize', this.onResizeListener)
-	        }
-	    },
-
-	    componentDidMount: function(){
-	        if (this.props.enableScroll){
-	            this.adjustScroll()
-
-	            window.addEventListener('resize', this.onResizeListener = buffer(this.onWindowResize, this.props.onWindowResizeBuffer, this))
-	        }
-	    },
-
-	    componentDidUpdate: function(){
-	        this.props.enableScroll && this.adjustScroll()
-	    },
-
-	    onWindowResize: function(){
-	        this.adjustScroll()
-	        this.doScroll(0)
-	    },
-
-	    adjustScroll: function(){
-	        if (!this.props.enableScroll){
-	            return
-	        }
-
-	        if (!this.state.adjustScroll){
-	            this.state.adjustScroll = true
-	            return
-	        }
-
-	        var availableWidth = this.getAvailableStripWidth()
-	        var listWidth      = this.getCurrentListWidth()
-
-	        var state = {
-	            adjustScroll  : false,
-	            hasLeftScroll : false,
-	            hasRightScroll: false
-	        }
-
-	        if (listWidth > availableWidth){
-	            state.maxScrollPos = listWidth - availableWidth + this.props.scrollerWidth
-	            state.hasLeftScroll = this.state.scrollPos !== 0
-	            state.hasRightScroll = this.state.scrollPos != state.maxScrollPos
-	        } else {
-	            state.maxScrollPos = 0
-	            state.scrollPos    = 0
-	        }
-
-	        this.setState(state)
-	    },
-
-	    getCurrentListWidth: function(){
-	        return this.refs.list.getDOMNode().offsetWidth
-	    },
-
-	    getAvailableStripWidth: function(){
-	        var dom     = this.getDOMNode()
-	        var domComputedStyle = window.getComputedStyle(dom)
-
-	        var leftPadding = parseInt(domComputedStyle.left, 10)
-	        var rightPadding = parseInt(domComputedStyle.right, 10)
-
-	        if (isNaN(leftPadding)){
-	            leftPadding = 0
-	        }
-	        if (isNaN(rightPadding)){
-	            rightPadding = 0
-	        }
-
-	        return dom.clientWidth - leftPadding - rightPadding
-	    },
-
-	    handleScrollLeft: function(event){
-	        event.preventDefault()
-	        this.handleScroll(-1)
-	    },
-
-	    handleScrollRight: function(event){
-	        event.preventDefault()
-	        this.handleScroll(1)
-	    },
-
-	    handleScrollLeftMax: function(event){
-	        event.preventDefault()
-	        this.handleScrollMax(-1)
-	    },
-
-	    handleScrollRightMax: function(event){
-	        event.preventDefault()
-	        this.handleScrollMax(1)
-	    },
-
-	    handleScrollMax: function(direction){
-	        var maxPos = direction == -1?
-	                        0:
-	                        this.state.maxScrollPos
-
-	        this.setScrollPosition(maxPos)
-	    },
-
-	    handleScroll: function(direction /*1 to right, -1 to left*/){
-	        var mouseUpListener = function(){
-	            this.stopScroll()
-	            window.removeEventListener('mouseup', mouseUpListener)
-	        }.bind(this)
-
-	        window.addEventListener('mouseup', mouseUpListener)
-
-	        this.scrollInterval = setInterval(this.doScroll.bind(this, direction), this.props.scrollSpeed)
-	    },
-
-	    doScroll: function(direction){
-	        this.setState({
-	            scrollDirection: direction
-	        })
-
-	        var newScrollPos = this.state.scrollPos + direction * this.props.scrollStep
-
-	        this.setScrollPosition(newScrollPos)
-	    },
-
-	    setScrollPosition: function(scrollPos){
-	        if (scrollPos > this.state.maxScrollPos){
-	            scrollPos = this.state.maxScrollPos
-	        }
-
-	        if (scrollPos < 0){
-	            scrollPos = 0
-	        }
-
-	        this.setState({
-	            scrollPos: scrollPos,
-	            scrolling : true
-	        })
-	    },
-
-	    stopScroll: function(){
-	        clearInterval(this.scrollInterval)
-
-	        this.setState({
-	            scrolling: false
-	        })
-	    },
-
-	    getDefaultProps: function(){
-	        return {
-	            onWindowResizeBuffer: 50,
-	            scrollStep  : 5,
-	            scrollSpeed : 50,
-	            scrollerWidth : 5,
-
-	            enableScroll: false,
-	            hasLeftScroll: false,
-	            hasRightScroll: false,
-	            activeClassName: '',
-	            activeStyle: {},
-
-	            anchorStyle: {
-	                color         : 'inherit',
-	                textDecoration: 'inherit'
-	            }
-	        }
-	    },
-
-	    render: function(){
-	        var props = copy(this.props)
-
-	        var activeIndex = props.activeIndex || 0
-
-	        var anchorStyle     = props.anchorStyle
-	        var activeStyle     = props.activeStyle
-	        var activeClassName = props.activeClassName
-
-	        var baseStyle = copy(LIST_ITEM_STYLE)
-	        copy(props.titleStyle, baseStyle)
-
-	        var baseClassName = [props.titleClassName || '', 'tab-panel-item-title']
-
-	        var nodes = props.children.map(function(child, index){
-	            var props = child.props
-	            var title = props.tabTitle || props.title
-
-	            var titleStyle = copy(baseStyle)
-
-	            //ALLOW each item to also specify a titleStyle
-	            copy(props.titleStyle, titleStyle)
-
-	            //and a titleClassName
-	            var titleClassName = baseClassName.concat(props.titleClassName || '')
-
-	            if (index == activeIndex){
-	                copy(activeStyle, titleStyle)
-	                titleClassName.push(activeClassName || '')
-	            }
-
-	            return (
-	                React.createElement("li", {key: index, onClick: this.handleChange.bind(this, index), 
-	                    style: titleStyle, 
-	                    className: titleClassName.join(' ')}, 
-	                    React.createElement("a", {href: "#", style: anchorStyle}, title)
-	                )
-	            )
-	        }, this)
-
-	        props.className = props.className || ''
-	        props.className += ' tab-panel-strip'
-
-	        props.style = props.style || {}
-	        props.style.position = 'relative'
-
-	        var listStyle = copy(LIST_STYLE)
-	        if (this.state.scrollPos){
-	            listStyle.left = -this.state.scrollPos
-	        }
-
-	        var scrollerLeft = this.renderScroller(-1)
-	        var scrollerRight= this.renderScroller(1)
-
-	        return (
-	            React.createElement("nav", React.__spread({},  props), 
-	                React.createElement("ul", {ref: "list", style: listStyle}, 
-	                nodes
-	                ), 
-	                scrollerLeft, 
-	                scrollerRight
-	            )
-	        )
-	    },
-
-	    handleChange: function(index, event){
-	        event.preventDefault()
-	        this.props.onChange(index)
-	    },
-
-	    renderScroller: function(direction){
-
-	        if (!this.props.enableScroll){
-	            return
-	        }
-
-	        var onDoubleClick = direction == -1?
-	                                this.handleScrollLeftMax:
-	                                this.handleScrollRightMax
-
-	        var onMouseDown = direction == -1?
-	                            this.handleScrollLeft:
-	                            this.handleScrollRight
-
-	        var side = direction == -1? 'left': 'right'
-	        var visible = direction == -1?
-	                            this.state.hasLeftScroll:
-	                            this.state.hasRightScroll
-
-	        return ScrollerFactory({
-	            factory      : this.props.scrollerFactory,
-	            active       : this.state.scrollDirection==direction && this.state.scrolling,
-	            onDoubleClick: onDoubleClick,
-	            onMouseDown  : onMouseDown,
-	            style        : this.props.scrollerStyle,
-	            side         : side,
-	            width        : this.props.scrollerWidth,
-	            visible      : visible
-	        })
-	    }
-	})
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */'use strict';
-
-	var React = __webpack_require__(1)
-	var copy  = __webpack_require__(4).copy
-
-	module.exports = React.createClass({
-
-	    displayName: 'TabPanel.Container',
-
-	    propTypes: {
-	        activeIndex     : React.PropTypes.number,
-
-	        defaultClassName: React.PropTypes.string,
-	        defaultStyle    : React.PropTypes.object,
-
-	        hiddenStyle     : React.PropTypes.object,
-
-	        activeClassName : React.PropTypes.string,
-	        activeStyle     : React.PropTypes.object
-	    },
-
-	    getDefaultProps: function(){
-	        return {
-	            activeIndex: 0,
-	            hiddenStyle: {
-	                display: 'none'
-	            }
-	        }
-	    },
-
-	    render: function(){
-
-	        return (
-	            React.createElement("section", {className: "tab-panel-container"}, 
-	                this.props.children.map(this.renderItem, this)
-	            )
-	        )
-	    },
-
-	    renderItem: function(item, index, array){
-	        var props = this.props
-
-	        var hiddenStyle = props.hiddenStyle
-	        var activeIndex = props.activeIndex || 0
-
-	        //make sure the wrapping article gets the correct style
-	        //if it is the active item
-	        var style = {}
-	        var className = 'tab-panel-item '
-
-	        if (index !== activeIndex){
-	            copy(hiddenStyle, style)
-	        } else {
-	            copy(props.activeStyle, style)
-	            className += props.activeClassName || ''
-	        }
-
-	        //default style for items
-	        if (props.defaultStyle){
-	            item.props.style = copy(props.defaultStyle, item.props.style)
-	        }
-
-	        //default className for items
-	        if (props.defaultClassName){
-	            item.props.className = item.props.className || ''
-	            item.props.className += ' ' + props.defaultClassName
-	        }
-
-	        return (
-	            React.createElement("article", {key: index, style: style, className: className}, 
-	                item
-	            )
-	        )
-	    }
-	})
-
-/***/ },
-/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(){
@@ -656,7 +205,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copy: __webpack_require__(6),
+	        copy: __webpack_require__(4),
 
 	        /**
 	         * Copies all properties from source to destination, if the property does not exist into the destination
@@ -669,7 +218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyIf: __webpack_require__(7),
+	        copyIf: __webpack_require__(5),
 
 	        /**
 	         * Copies all properties from source to a new object, with the given value. This object is returned
@@ -711,7 +260,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyList: __webpack_require__(8),
+	        copyList: __webpack_require__(6),
 
 	        /**
 	         * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
@@ -725,7 +274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyListIf: __webpack_require__(9),
+	        copyListIf: __webpack_require__(7),
 
 	        /**
 	         * Copies all properties named in the namedKeys, from source to destination
@@ -739,7 +288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyKeys: __webpack_require__(10),
+	        copyKeys: __webpack_require__(8),
 
 	        /**
 	         * Copies all properties named in the namedKeys, from source to destination,
@@ -754,7 +303,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyKeysIf: __webpack_require__(11),
+	        copyKeysIf: __webpack_require__(9),
 
 	        copyExceptKeys: function(source, destination, exceptKeys){
 	            destination = destination || {}
@@ -833,7 +382,1397 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()
 
 /***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React     = __webpack_require__(1)
+	var copy      = __webpack_require__(13).copy
+	var copyList  = __webpack_require__(13).copyList
+	var copyKeys  = __webpack_require__(13).copyKeys
+	var copyExceptKeys  = __webpack_require__(13).copyExceptKeys
+	var Strip     = __webpack_require__(10)
+	var Container = __webpack_require__(11)
+
+	var StripFactory     = React.createFactory(Strip)
+	var ContainerFactory = React.createFactory(Container)
+
+	var BASE_CLASS_NAME = __webpack_require__(12)
+
+	function emptyFn(){}
+
+	var TabPanel = React.createClass({displayName: 'TabPanel',
+
+	    propTypes: {
+	        activeIndex         : React.PropTypes.number,
+
+	        //for panels
+	        activeStyle         : React.PropTypes.object,
+	        activeClassName     : React.PropTypes.string,
+	        defaultStyle        : React.PropTypes.object,
+	        defaultClassName    : React.PropTypes.string,
+
+	        //for titles
+	        titleStyle          : React.PropTypes.object,
+	        titleClassName      : React.PropTypes.string,
+	        activeTitleStyle    : React.PropTypes.object,
+	        activeTitleClassName: React.PropTypes.string,
+
+	        onChange            : React.PropTypes.func,
+
+	        stripListStyle  : React.PropTypes.object,
+	        stripFactory    : React.PropTypes.func,
+	        containerFactory: React.PropTypes.func,
+
+	        //specify 'bottom' if you want to render the strip after the container
+	        tabVerticalPosition   : React.PropTypes.string
+	    },
+
+	    getDefaultProps: function(){
+	        return {
+	            activeIndex: 0,
+
+	            //for panels
+	            activeStyle: {},
+	            activeClassName: 'active',
+	            defaultStyle: {},
+	            defaultClassName: '',
+
+	            //for titles
+	            titleStyle: {},
+	            titleClassName: '',
+	            activeTitleStyle: {},
+	            activeTitleClassName: 'active',
+
+	            tabVerticalPosition: 'top'
+	        }
+	    },
+
+
+	    render: function(){
+
+	        var props = copy(this.props)
+	        props.children = props.children || []
+
+	        var activeIndex = props.activeIndex || 0
+	        props.activeIndex = Math.min(activeIndex, props.children.length - 1)
+
+	        props.className = props.className || ''
+	        props.className += ' ' + BASE_CLASS_NAME
+
+	        var StripComponent     = this.renderStrip(props)
+	        var ContainerComponent = this.renderContainer(props)
+
+	        var Content = props.tabVerticalPosition == 'bottom'?
+	                            [ContainerComponent, StripComponent]:
+	                            [StripComponent, ContainerComponent]
+
+	        var divProps = {
+	            className: props.className,
+	            style    : props.style
+	        }
+
+	        return (
+	            React.createElement("div", React.__spread({},  divProps), 
+	                Content
+	            )
+	        )
+	    },
+
+	    renderContainer: function(props) {
+	        var containerProps = copyList(props, [
+	                'activeIndex',
+	                'activeClassName',
+	                'activeStyle',
+	                'defaultStyle',
+	                'defaultClassName',
+	                'hiddenStyle',
+	                'children'
+	            ])
+
+	        containerProps.key = 'container'
+
+	        if (props.containerFactory){
+	            return props.containerFactory(containerProps, ContainerFactory)
+	        }
+
+	        return ContainerFactory(containerProps)
+	    },
+
+	    renderStrip: function(props){
+	        var stripProps = copyExceptKeys(props, {},{
+	            stripStyle: 1,
+	            activeTitleStyle: 1,
+	            activeTitleClassName: 1
+	        })
+
+	        copyKeys(props, stripProps, {
+	            stripStyle          : 'style',
+	            activeTitleStyle    : 'activeStyle',
+	            activeTitleClassName: 'activeClassName'
+	        })
+
+	        stripProps.key      = 'strip'
+	        stripProps.onChange = this.handleChange || emptyFn
+
+	        if (props.stripFactory){
+	            return props.stripFactory(stripProps, StripFactory)
+	        }
+
+	        return StripFactory(stripProps)
+	    },
+
+	    handleChange: function(index){
+	        this.props.onChange(index)
+	    }
+	})
+
+	TabPanel.Strip     = Strip
+	TabPanel.Container = Container
+
+	module.exports = TabPanel
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+	var STR_OBJECT    = 'object'
+
+	/**
+	 * Copies all properties from source to destination
+	 *
+	 *      copy({name: 'jon',age:5}, this);
+	 *      // => this will have the 'name' and 'age' properties set to 'jon' and 5 respectively
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination){
+
+	    destination = destination || {}
+
+	    if (source != null && typeof source === STR_OBJECT ){
+
+	        for (var i in source) if ( HAS_OWN.call(source, i) ) {
+	            destination[i] = source[i]
+	        }
+
+	    }
+
+	    return destination
+	}
+
+/***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+	var STR_OBJECT    = 'object'
+	var STR_UNDEFINED = 'undefined'
+
+	/**
+	 * Copies all properties from source to destination, if the property does not exist into the destination
+	 *
+	 *      copyIf({name: 'jon',age:5}, {age:7})
+	 *      // => { name: 'jon', age: 7}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination){
+	    destination = destination || {}
+
+	    if (source != null && typeof source === STR_OBJECT){
+
+	        for (var i in source) if ( HAS_OWN.call(source, i) && (typeof destination[i] === STR_UNDEFINED) ) {
+
+	            destination[i] = source[i]
+
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+
+	/**
+	 * Copies all properties named in the list, from source to destination
+	 *
+	 *      copyList({name: 'jon',age:5, year: 2006}, {}, ['name','age'])
+	 *      // => {name: 'jon', age: 5}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Array} list the array with the names of the properties to copy
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, list){
+	    if (arguments.length < 3){
+	        list = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+	    list        = list || Object.keys(source)
+
+	    var i   = 0
+	    var len = list.length
+	    var propName
+
+	    for ( ; i < len; i++ ){
+	        propName = list[i]
+
+	        if ( typeof source[propName] !== STR_UNDEFINED ) {
+	            destination[list[i]] = source[list[i]]
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+
+	/**
+	 * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
+	 *
+	 *      copyListIf({name: 'jon',age:5, year: 2006}, {age: 10}, ['name','age'])
+	 *      // => {name: 'jon', age: 10}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Array} list the array with the names of the properties to copy
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, list){
+	    if (arguments.length < 3){
+	        list = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+	    list        = list || Object.keys(source)
+
+	    var i   = 0
+	    var len = list.length
+	    var propName
+
+	    for ( ; i < len ; i++ ){
+	        propName = list[i]
+	        if (
+	                (typeof source[propName]      !== STR_UNDEFINED) &&
+	                (typeof destination[propName] === STR_UNDEFINED)
+	            ){
+	            destination[propName] = source[propName]
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+	var STR_OBJECT    = 'object'
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+
+	var copyList = __webpack_require__(6)
+
+	/**
+	 * Copies all properties named in the namedKeys, from source to destination
+	 *
+	 *      copyKeys({name: 'jon',age:5, year: 2006, date: '2010/05/12'}, {}, {name:1 ,age: true, year: 'theYear'})
+	 *      // => {name: 'jon', age: 5, theYear: 2006}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, namedKeys){
+	    if (arguments.length < 3 ){
+	        namedKeys = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+
+	    if (!namedKeys || Array.isArray(namedKeys)){
+	        return copyList(source, destination, namedKeys)
+	    }
+
+	    if (
+	           source != null && typeof source    === STR_OBJECT &&
+	        namedKeys != null && typeof namedKeys === STR_OBJECT
+	    ) {
+	        var typeOfNamedProperty
+	        var namedPropertyValue
+
+	        for  (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
+	            namedPropertyValue  = namedKeys[propName]
+	            typeOfNamedProperty = typeof namedPropertyValue
+
+	            if (typeof source[propName] !== STR_UNDEFINED){
+	                destination[typeOfNamedProperty == 'string'? namedPropertyValue : propName] = source[propName]
+	            }
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+	var STR_OBJECT    = 'object'
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+
+	var copyListIf = __webpack_require__(7)
+
+	/**
+	 * Copies all properties named in the namedKeys, from source to destination,
+	 * but only if the property does not already exist in the destination object
+	 *
+	 *      copyKeysIf({name: 'jon',age:5, year: 2006}, {aname: 'test'}, {name:'aname' ,age: true})
+	 *      // => {aname: 'test', age: 5}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, namedKeys){
+	    if (arguments.length < 3 ){
+	        namedKeys = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+
+	    if (!namedKeys || Array.isArray(namedKeys)){
+	        return copyListIf(source, destination, namedKeys)
+	    }
+
+	    if (
+	               source != null && typeof source    === STR_OBJECT &&
+	            namedKeys != null && typeof namedKeys === STR_OBJECT
+	        ) {
+
+	            var typeOfNamedProperty
+	            var namedPropertyValue
+	            var newPropertyName
+
+	            for (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
+
+	                namedPropertyValue  = namedKeys[propName]
+	                typeOfNamedProperty = typeof namedPropertyValue
+	                newPropertyName     = typeOfNamedProperty == 'string'? namedPropertyValue : propName
+
+	                if (
+	                        typeof      source[propName]        !== STR_UNDEFINED &&
+	                        typeof destination[newPropertyName] === STR_UNDEFINED
+	                    ) {
+	                    destination[newPropertyName] = source[propName]
+	                }
+
+	            }
+	        }
+
+	    return destination
+	}
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React  = __webpack_require__(1)
+	var copy   = __webpack_require__(13).copy
+	var F      = __webpack_require__(20)
+	var buffer = F.buffer
+
+	var BASE_CLASS_NAME = __webpack_require__(12)
+
+	function stop(event){
+	    event.preventDefault()
+	    event.stopPropagation()
+	}
+
+	var LIST_ITEM_STYLE = {
+	    display: 'inline-block'
+	}
+
+	var LIST_STYLE = {
+	    margin   : 0,
+	    padding  : 0,
+	    listStyle: 'none',
+	    position : 'relative',
+	    display  : 'inline-block'
+	}
+
+	var SCROLLER_STYLE = {
+	    top       : 0,
+	    position  : 'absolute',
+	    display   : 'inline-block',
+	    height    : '100%',
+	    cursor    : 'pointer'
+	}
+
+	var Scroller = React.createClass({displayName: 'Scroller',
+
+	    display: 'Scroller',
+
+	    getDefaultProps: function(){
+	        return {
+	            width: 5
+	        }
+	    },
+
+	    render: function(){
+	        var props = this.props
+	        var side  = this.props.side
+
+	        props.className = props.className || ''
+	        props.className += ' ' + BASE_CLASS_NAME + '-scroller ' + side
+
+	        if (props.active && props.visible){
+	            props.className += ' active'
+	        }
+
+	        var scrollerStyle = copy(SCROLLER_STYLE)
+
+	        props.style = copy(props.style, scrollerStyle)
+	        props.style.width = props.style.width || props.width
+
+	        props.style[side] = 0
+
+	        if (!props.visible){
+	            props.style.display = 'none'
+	        }
+
+	        return props.factory?
+	                    props.factory(props, side):
+	                    React.createElement("div", React.__spread({},  props))
+	    }
+	})
+
+	var ScrollerFactory = React.createFactory(Scroller)
+
+	module.exports = React.createClass({displayName: 'exports',
+
+	    display: 'TabPanel.Strip',
+
+	    propTypes: {
+	        activeIndex    : React.PropTypes.number,
+	        activeStyle    : React.PropTypes.object,
+	        activeClassName: React.PropTypes.string,
+
+	        titleStyle    : React.PropTypes.object,
+	        titleClassName: React.PropTypes.string,
+
+	        anchorStyle   : React.PropTypes.object,
+	        scrollerStyle : React.PropTypes.object,
+	        scrollerProps : React.PropTypes.object,
+	        scrollerWidth : React.PropTypes.number,
+
+	        scrollStep    : React.PropTypes.number,
+	        scrollSpeed   : React.PropTypes.number
+
+	        //each item in the TabPanel can also specify a titleStyle
+	        //and a titleClassName, which are added to the values in props
+	    },
+
+	    getInitialState: function(){
+	        return {
+	            adjustScroll: true,
+	            scrollPos   : 0
+	        }
+	    },
+
+	    componentWillUnmount: function(){
+	        if (this.props.enableScroll){
+	            window.removeEventListener('resize', this.onResizeListener)
+	        }
+	    },
+
+	    componentDidMount: function(){
+	        if (this.props.enableScroll){
+	            this.adjustScroll()
+
+	            window.addEventListener('resize', this.onResizeListener = buffer(this.onWindowResize, this.props.onWindowResizeBuffer, this))
+	        }
+	    },
+
+	    componentDidUpdate: function(){
+	        this.props.enableScroll && this.adjustScroll()
+	    },
+
+	    onWindowResize: function(){
+	        this.adjustScroll()
+	        this.doScroll(0)
+	    },
+
+	    adjustScroll: function(){
+	        if (!this.props.enableScroll){
+	            return
+	        }
+
+	        if (!this.state.adjustScroll){
+	            this.state.adjustScroll = true
+	            return
+	        }
+
+	        var availableWidth = this.getAvailableStripWidth()
+	        var listWidth      = this.getCurrentListWidth()
+
+	        var state = {
+	            adjustScroll  : false,
+	            hasLeftScroll : false,
+	            hasRightScroll: false
+	        }
+
+	        if (listWidth > availableWidth){
+	            state.maxScrollPos = listWidth - availableWidth// + this.props.scrollerWidth
+	            state.hasLeftScroll  = this.state.scrollPos !== 0
+	            state.hasRightScroll = this.state.scrollPos != state.maxScrollPos
+	        } else {
+	            state.maxScrollPos = 0
+	            state.scrollPos    = 0
+	        }
+
+	        this.setState(state)
+	    },
+
+	    getCurrentListWidth: function(){
+	        return this.refs.list.getDOMNode().offsetWidth
+	    },
+
+	    getAvailableStripWidth: function(){
+	        var dom     = this.getDOMNode()
+	        var domComputedStyle = window.getComputedStyle(dom)
+
+	        var leftPadding  = parseInt(domComputedStyle.left, 10)
+	        var rightPadding = parseInt(domComputedStyle.right, 10)
+
+	        if (isNaN(leftPadding)){
+	            leftPadding = 0
+	        }
+	        if (isNaN(rightPadding)){
+	            rightPadding = 0
+	        }
+
+	        return dom.clientWidth - leftPadding - rightPadding
+	    },
+
+	    handleScrollLeft: function(event){
+	        event.preventDefault()
+	        this.handleScroll(-1)
+	    },
+
+	    handleScrollRight: function(event){
+	        event.preventDefault()
+	        this.handleScroll(1)
+	    },
+
+	    handleScrollLeftMax: function(event){
+	        stop(event)
+	        this.handleScrollMax(-1)
+	    },
+
+	    handleScrollRightMax: function(event){
+	        stop(event)
+	        this.handleScrollMax(1)
+	    },
+
+	    handleScrollMax: function(direction){
+	        var maxPos = direction == -1?
+	                        0:
+	                        this.state.maxScrollPos
+
+	        this.setScrollPosition(maxPos)
+	    },
+
+	    handleScroll: function(direction /*1 to right, -1 to left*/){
+	        var mouseUpListener = function(){
+	            this.stopScroll()
+	            window.removeEventListener('mouseup', mouseUpListener)
+	        }.bind(this)
+
+	        window.addEventListener('mouseup', mouseUpListener)
+
+	        this.scrollInterval = setInterval(this.doScroll.bind(this, direction), this.props.scrollSpeed)
+	    },
+
+	    doScroll: function(direction){
+	        this.setState({
+	            scrollDirection: direction
+	        })
+
+	        var newScrollPos = this.state.scrollPos + direction * this.props.scrollStep
+
+	        this.setScrollPosition(newScrollPos)
+	    },
+
+	    setScrollPosition: function(scrollPos){
+	        if (scrollPos > this.state.maxScrollPos){
+	            scrollPos = this.state.maxScrollPos
+	        }
+
+	        if (scrollPos < 0){
+	            scrollPos = 0
+	        }
+
+	        this.setState({
+	            scrollPos: scrollPos,
+	            scrolling : true
+	        })
+	    },
+
+	    stopScroll: function(){
+	        clearInterval(this.scrollInterval)
+
+	        this.setState({
+	            scrolling: false
+	        })
+	    },
+
+	    getDefaultProps: function(){
+	        return {
+	            onWindowResizeBuffer: 50,
+
+	            scrollStep          : 5,
+	            scrollSpeed         : 50,
+	            scrollerWidth       : 8,
+	            scrollerProps       : {},
+
+	            enableScroll: false,
+	            hasLeftScroll: false,
+	            hasRightScroll: false,
+	            activeClassName: '',
+	            activeStyle: {},
+
+	            anchorStyle: {
+	                color         : 'inherit',
+	                textDecoration: 'inherit'
+	            }
+	        }
+	    },
+
+	    renderTitle: F.curry(function(parentProps, classNameArray, titleStyle, child, index){
+	        var anchorStyle     = parentProps.anchorStyle
+	        var activeStyle     = parentProps.activeStyle
+	        var activeClassName = parentProps.activeClassName
+	        var activeIndex     = parentProps.activeIndex || 0
+
+	        var childProps = child.props
+	        var title      = childProps.tabTitle || childProps.title
+
+	        titleStyle = copy(titleStyle)
+
+	        //ALLOW each item to also specify a titleStyle
+	        copy(childProps.titleStyle, titleStyle)
+
+	        //and a titleClassName
+	        var titleClassName = classNameArray.concat(childProps.titleClassName || '')
+
+	        if (index == activeIndex){
+	            copy(activeStyle, titleStyle)
+	            titleClassName.push(activeClassName || '')
+	        }
+
+	        return (
+	            React.createElement("li", {
+	                key: index, 
+	                onClick: this.handleChange.bind(this, index), 
+	                style: titleStyle, 
+	                className: titleClassName.join(' ')
+	            }, 
+	                React.createElement("a", {href: "#", style: anchorStyle}, title)
+	            )
+	        )
+	    }),
+
+	    render: function(){
+	        var props = copy(this.props)
+
+	        var titleStyle = copy(LIST_ITEM_STYLE)
+	        copy(props.titleStyle, titleStyle)
+
+	        var titleClassName = [props.titleClassName || '', BASE_CLASS_NAME + '-item-title']
+
+	        var nodes = props.children.map(this.renderTitle(props, titleClassName, titleStyle), this)
+
+	        props.className = props.className || ''
+	        props.className += ' ' + BASE_CLASS_NAME + '-strip'
+
+	        props.style          = props.style || {}
+	        props.style.position = 'relative'
+
+	        var listStyle = copy(LIST_STYLE)
+
+	        if (this.state.scrollPos){
+	            listStyle.left = -this.state.scrollPos
+	        }
+
+	        var scrollerLeft = this.renderScroller(-1)
+	        var scrollerRight= this.renderScroller(1)
+
+	        return (
+	            React.createElement("nav", React.__spread({},  props), 
+	                React.createElement("ul", {ref: "list", style: listStyle}, 
+	                nodes
+	                ), 
+	                scrollerLeft, 
+	                scrollerRight
+	            )
+	        )
+	    },
+
+	    handleChange: function(index, event){
+	        event.preventDefault()
+	        this.props.onChange(index)
+	    },
+
+	    renderScroller: function(direction){
+
+	        if (!this.props.enableScroll){
+	            return
+	        }
+
+	        var onDoubleClick = direction == -1?
+	                                this.handleScrollLeftMax:
+	                                this.handleScrollRightMax
+
+	        var onMouseDown = direction == -1?
+	                            this.handleScrollLeft:
+	                            this.handleScrollRight
+
+	        var side    = direction == -1? 'left': 'right'
+	        var visible = direction == -1?
+	                            this.state.hasLeftScroll:
+	                            this.state.hasRightScroll
+
+	        return ScrollerFactory(copy(this.props.scrollerProps, {
+	            factory      : this.props.scrollerFactory,
+	            active       : this.state.scrollDirection==direction && this.state.scrolling,
+	            onDoubleClick: onDoubleClick,
+	            onMouseDown  : onMouseDown,
+	            style        : this.props.scrollerStyle,
+	            side         : side,
+	            width        : this.props.scrollerWidth,
+	            visible      : visible
+	        }))
+	    }
+	})
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1)
+	var copy  = __webpack_require__(13).copy
+
+	var BASE_CLASS_NAME = __webpack_require__(12)
+
+	module.exports = React.createClass({
+
+	    displayName: 'TabPanel.Container',
+
+	    propTypes: {
+	        activeIndex     : React.PropTypes.number,
+
+	        defaultClassName: React.PropTypes.string,
+	        defaultStyle    : React.PropTypes.object,
+
+	        hiddenStyle     : React.PropTypes.object,
+
+	        activeClassName : React.PropTypes.string,
+	        activeStyle     : React.PropTypes.object
+	    },
+
+	    getDefaultProps: function(){
+	        return {
+	            activeIndex: 0,
+	            hiddenStyle: {
+	                display: 'none'
+	            }
+	        }
+	    },
+
+	    render: function(){
+
+	        return (
+	            React.createElement("section", {className: BASE_CLASS_NAME + "-container"}, 
+	                this.props.children.map(this.renderItem, this)
+	            )
+	        )
+	    },
+
+	    renderItem: function(item, index, array){
+	        var props = this.props
+
+	        var hiddenStyle = props.hiddenStyle
+	        var activeIndex = props.activeIndex || 0
+
+	        //make sure the wrapping article gets the correct style
+	        //if it is the active item
+	        var style = {}
+	        var className = BASE_CLASS_NAME + '-item '
+
+	        if (index !== activeIndex){
+	            copy(hiddenStyle, style)
+	        } else {
+	            copy(props.activeStyle, style)
+	            className += props.activeClassName || ''
+	        }
+
+	        //default style for items
+	        if (props.defaultStyle){
+	            item.props.style = copy(props.defaultStyle, item.props.style)
+	        }
+
+	        //default className for items
+	        if (props.defaultClassName){
+	            item.props.className = item.props.className || ''
+	            item.props.className += ' ' + props.defaultClassName
+	        }
+
+	        return (
+	            React.createElement("article", {key: index, style: style, className: className}, 
+	                item
+	            )
+	        )
+	    }
+	})
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = 'basic-tabs'
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(){
+
+	    'use strict'
+
+	    var HAS_OWN       = Object.prototype.hasOwnProperty,
+	        STR_OBJECT    = 'object',
+	        STR_UNDEFINED = 'undefined'
+
+	    return {
+
+	        /**
+	         * Copies all properties from source to destination
+	         *
+	         *      copy({name: 'jon',age:5}, this);
+	         *      // => this will have the 'name' and 'age' properties set to 'jon' and 5 respectively
+	         *
+	         * @param {Object} source
+	         * @param {Object} destination
+	         *
+	         * @return {Object} destination
+	         */
+	        copy: __webpack_require__(14),
+
+	        /**
+	         * Copies all properties from source to destination, if the property does not exist into the destination
+	         *
+	         *      copyIf({name: 'jon',age:5}, {age:7})
+	         *      // => { name: 'jon', age: 7}
+	         *
+	         * @param {Object} source
+	         * @param {Object} destination
+	         *
+	         * @return {Object} destination
+	         */
+	        copyIf: __webpack_require__(15),
+
+	        /**
+	         * Copies all properties from source to a new object, with the given value. This object is returned
+	         *
+	         *      copyAs({name: 'jon',age:5})
+	         *      // => the resulting object will have the 'name' and 'age' properties set to 1
+	         *
+	         * @param {Object} source
+	         * @param {Object/Number/String} [value=1]
+	         *
+	         * @return {Object} destination
+	         */
+	        copyAs: function(source, value){
+
+	            var destination = {}
+
+	            value = value || 1
+
+	            if (source != null && typeof source === STR_OBJECT ){
+
+	                for (var i in source) if ( HAS_OWN.call(source, i) ) {
+	                    destination[i] = value
+	                }
+
+	            }
+
+	            return destination
+	        },
+
+	        /**
+	         * Copies all properties named in the list, from source to destination
+	         *
+	         *      copyList({name: 'jon',age:5, year: 2006}, {}, ['name','age'])
+	         *      // => {name: 'jon', age: 5}
+	         *
+	         * @param {Object} source
+	         * @param {Object} destination
+	         * @param {Array} list the array with the names of the properties to copy
+	         *
+	         * @return {Object} destination
+	         */
+	        copyList: __webpack_require__(16),
+
+	        /**
+	         * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
+	         *
+	         *      copyListIf({name: 'jon',age:5, year: 2006}, {age: 10}, ['name','age'])
+	         *      // => {name: 'jon', age: 10}
+	         *
+	         * @param {Object} source
+	         * @param {Object} destination
+	         * @param {Array} list the array with the names of the properties to copy
+	         *
+	         * @return {Object} destination
+	         */
+	        copyListIf: __webpack_require__(17),
+
+	        /**
+	         * Copies all properties named in the namedKeys, from source to destination
+	         *
+	         *      copyKeys({name: 'jon',age:5, year: 2006, date: '2010/05/12'}, {}, {name:1 ,age: true, year: 'theYear'})
+	         *      // => {name: 'jon', age: 5, theYear: 2006}
+	         *
+	         * @param {Object} source
+	         * @param {Object} destination
+	         * @param {Object} namedKeys an object with keys denoting the properties to be copied
+	         *
+	         * @return {Object} destination
+	         */
+	        copyKeys: __webpack_require__(18),
+
+	        /**
+	         * Copies all properties named in the namedKeys, from source to destination,
+	         * but only if the property does not already exist in the destination object
+	         *
+	         *      copyKeysIf({name: 'jon',age:5, year: 2006}, {aname: 'test'}, {name:'aname' ,age: true})
+	         *      // => {aname: 'test', age: 5}
+	         *
+	         * @param {Object} source
+	         * @param {Object} destination
+	         * @param {Object} namedKeys an object with keys denoting the properties to be copied
+	         *
+	         * @return {Object} destination
+	         */
+	        copyKeysIf: __webpack_require__(19),
+
+	        copyExceptKeys: function(source, destination, exceptKeys){
+	            destination = destination || {}
+	            exceptKeys  = exceptKeys  || {}
+
+	            if (source != null && typeof source === STR_OBJECT ){
+
+	                for (var i in source) if ( HAS_OWN.call(source, i) && !HAS_OWN.call(exceptKeys, i) ) {
+
+	                    destination[i] = source[i]
+	                }
+
+	            }
+
+	            return destination
+	        },
+
+	        /**
+	         * Copies the named keys from source to destination.
+	         * For the keys that are functions, copies the functions bound to the source
+	         *
+	         * @param  {Object} source      The source object
+	         * @param  {Object} destination The target object
+	         * @param  {Object} namedKeys   An object with the names of the keys to copy The values from the keys in this object
+	         *                              need to be either numbers or booleans if you want to copy the property under the same name,
+	         *                              or a string if you want to copy the property under a different name
+	         * @return {Object}             Returns the destination object
+	         */
+	        bindCopyKeys: function(source, destination, namedKeys){
+	            if (arguments.length == 2){
+	                namedKeys = destination
+	                destination = null
+	            }
+
+	            destination = destination || {}
+
+	            if (
+	                       source != null && typeof source    === STR_OBJECT &&
+	                    namedKeys != null && typeof namedKeys === STR_OBJECT
+	                ) {
+
+
+	                var typeOfNamedProperty,
+	                    namedPropertyValue,
+
+	                    typeOfSourceProperty,
+	                    propValue
+
+
+	                for(var propName in namedKeys) if (HAS_OWN.call(namedKeys, propName)) {
+
+	                    namedPropertyValue = namedKeys[propName]
+	                    typeOfNamedProperty = typeof namedPropertyValue
+
+	                    propValue = source[propName]
+	                    typeOfSourceProperty = typeof propValue
+
+
+	                    if ( typeOfSourceProperty !== STR_UNDEFINED ) {
+
+	                        destination[
+	                            typeOfNamedProperty == 'string'?
+	                                            namedPropertyValue :
+	                                            propName
+	                            ] = typeOfSourceProperty == 'function' ?
+	                                            propValue.bind(source):
+	                                            propValue
+	                    }
+	                }
+	            }
+
+	            return destination
+	        }
+	    }
+
+	}()
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+	var STR_OBJECT    = 'object'
+
+	/**
+	 * Copies all properties from source to destination
+	 *
+	 *      copy({name: 'jon',age:5}, this);
+	 *      // => this will have the 'name' and 'age' properties set to 'jon' and 5 respectively
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination){
+
+	    destination = destination || {}
+
+	    if (source != null && typeof source === STR_OBJECT ){
+
+	        for (var i in source) if ( HAS_OWN.call(source, i) ) {
+	            destination[i] = source[i]
+	        }
+
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+	var STR_OBJECT    = 'object'
+	var STR_UNDEFINED = 'undefined'
+
+	/**
+	 * Copies all properties from source to destination, if the property does not exist into the destination
+	 *
+	 *      copyIf({name: 'jon',age:5}, {age:7})
+	 *      // => { name: 'jon', age: 7}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination){
+	    destination = destination || {}
+
+	    if (source != null && typeof source === STR_OBJECT){
+
+	        for (var i in source) if ( HAS_OWN.call(source, i) && (typeof destination[i] === STR_UNDEFINED) ) {
+
+	            destination[i] = source[i]
+
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+
+	/**
+	 * Copies all properties named in the list, from source to destination
+	 *
+	 *      copyList({name: 'jon',age:5, year: 2006}, {}, ['name','age'])
+	 *      // => {name: 'jon', age: 5}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Array} list the array with the names of the properties to copy
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, list){
+	    if (arguments.length < 3){
+	        list = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+	    list        = list || Object.keys(source)
+
+	    var i   = 0
+	    var len = list.length
+	    var propName
+
+	    for ( ; i < len; i++ ){
+	        propName = list[i]
+
+	        if ( typeof source[propName] !== STR_UNDEFINED ) {
+	            destination[list[i]] = source[list[i]]
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+
+	/**
+	 * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
+	 *
+	 *      copyListIf({name: 'jon',age:5, year: 2006}, {age: 10}, ['name','age'])
+	 *      // => {name: 'jon', age: 10}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Array} list the array with the names of the properties to copy
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, list){
+	    if (arguments.length < 3){
+	        list = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+	    list        = list || Object.keys(source)
+
+	    var i   = 0
+	    var len = list.length
+	    var propName
+
+	    for ( ; i < len ; i++ ){
+	        propName = list[i]
+	        if (
+	                (typeof source[propName]      !== STR_UNDEFINED) &&
+	                (typeof destination[propName] === STR_UNDEFINED)
+	            ){
+	            destination[propName] = source[propName]
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+	var STR_OBJECT    = 'object'
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+
+	var copyList = __webpack_require__(16)
+
+	/**
+	 * Copies all properties named in the namedKeys, from source to destination
+	 *
+	 *      copyKeys({name: 'jon',age:5, year: 2006, date: '2010/05/12'}, {}, {name:1 ,age: true, year: 'theYear'})
+	 *      // => {name: 'jon', age: 5, theYear: 2006}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, namedKeys){
+	    if (arguments.length < 3 ){
+	        namedKeys = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+
+	    if (!namedKeys || Array.isArray(namedKeys)){
+	        return copyList(source, destination, namedKeys)
+	    }
+
+	    if (
+	           source != null && typeof source    === STR_OBJECT &&
+	        namedKeys != null && typeof namedKeys === STR_OBJECT
+	    ) {
+	        var typeOfNamedProperty
+	        var namedPropertyValue
+
+	        for  (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
+	            namedPropertyValue  = namedKeys[propName]
+	            typeOfNamedProperty = typeof namedPropertyValue
+
+	            if (typeof source[propName] !== STR_UNDEFINED){
+	                destination[typeOfNamedProperty == 'string'? namedPropertyValue : propName] = source[propName]
+	            }
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+	var STR_OBJECT    = 'object'
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+
+	var copyListIf = __webpack_require__(17)
+
+	/**
+	 * Copies all properties named in the namedKeys, from source to destination,
+	 * but only if the property does not already exist in the destination object
+	 *
+	 *      copyKeysIf({name: 'jon',age:5, year: 2006}, {aname: 'test'}, {name:'aname' ,age: true})
+	 *      // => {aname: 'test', age: 5}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, namedKeys){
+	    if (arguments.length < 3 ){
+	        namedKeys = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+
+	    if (!namedKeys || Array.isArray(namedKeys)){
+	        return copyListIf(source, destination, namedKeys)
+	    }
+
+	    if (
+	               source != null && typeof source    === STR_OBJECT &&
+	            namedKeys != null && typeof namedKeys === STR_OBJECT
+	        ) {
+
+	            var typeOfNamedProperty
+	            var namedPropertyValue
+	            var newPropertyName
+
+	            for (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
+
+	                namedPropertyValue  = namedKeys[propName]
+	                typeOfNamedProperty = typeof namedPropertyValue
+	                newPropertyName     = typeOfNamedProperty == 'string'? namedPropertyValue : propName
+
+	                if (
+	                        typeof      source[propName]        !== STR_UNDEFINED &&
+	                        typeof destination[newPropertyName] === STR_UNDEFINED
+	                    ) {
+	                    destination[newPropertyName] = source[propName]
+	                }
+
+	            }
+	        }
+
+	    return destination
+	}
+
+/***/ },
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	    var setImmediate = function(fn){
@@ -913,7 +1852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var SLICE = Array.prototype.slice
 
-	    var curry = __webpack_require__(12),
+	    var curry = __webpack_require__(21),
 
 	        findFn = function(fn, target, onFound){
 	            // if (typeof target.find == 'function'){
@@ -984,19 +1923,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return the result of the first function in the enumeration
 	         */
-	        compose = __webpack_require__(13),
+	        compose = __webpack_require__(22),
 
-	        chain = __webpack_require__(14),
+	        chain = __webpack_require__(23),
 
-	        once = __webpack_require__(15),
+	        once = __webpack_require__(24),
 
-	        bindArgsArray = __webpack_require__(16),
+	        bindArgsArray = __webpack_require__(25),
 
-	        bindArgs = __webpack_require__(17),
+	        bindArgs = __webpack_require__(26),
 
-	        lockArgsArray = __webpack_require__(18),
+	        lockArgsArray = __webpack_require__(27),
 
-	        lockArgs = __webpack_require__(19),
+	        lockArgs = __webpack_require__(28),
 
 	        skipArgs = function(fn, count){
 	            return function(){
@@ -1354,11 +2293,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 
-	    map: __webpack_require__(20),
+	    map: __webpack_require__(29),
 
-	    dot: __webpack_require__(21),
+	    dot: __webpack_require__(30),
 
-	    maxArgs: __webpack_require__(22),
+	    maxArgs: __webpack_require__(31),
 
 	    /**
 	     * @method compose
@@ -1477,293 +2416,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    findIndex: findIndex,
 
-	    newify: __webpack_require__(23)
+	    newify: __webpack_require__(32)
 	}
 
 /***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-	var STR_OBJECT    = 'object'
-
-	/**
-	 * Copies all properties from source to destination
-	 *
-	 *      copy({name: 'jon',age:5}, this);
-	 *      // => this will have the 'name' and 'age' properties set to 'jon' and 5 respectively
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination){
-
-	    destination = destination || {}
-
-	    if (source != null && typeof source === STR_OBJECT ){
-
-	        for (var i in source) if ( HAS_OWN.call(source, i) ) {
-	            destination[i] = source[i]
-	        }
-
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-	var STR_OBJECT    = 'object'
-	var STR_UNDEFINED = 'undefined'
-
-	/**
-	 * Copies all properties from source to destination, if the property does not exist into the destination
-	 *
-	 *      copyIf({name: 'jon',age:5}, {age:7})
-	 *      // => { name: 'jon', age: 7}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination){
-	    destination = destination || {}
-
-	    if (source != null && typeof source === STR_OBJECT){
-
-	        for (var i in source) if ( HAS_OWN.call(source, i) && (typeof destination[i] === STR_UNDEFINED) ) {
-
-	            destination[i] = source[i]
-
-	        }
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var STR_UNDEFINED = 'undefined'
-
-	/**
-	 * Copies all properties named in the list, from source to destination
-	 *
-	 *      copyList({name: 'jon',age:5, year: 2006}, {}, ['name','age'])
-	 *      // => {name: 'jon', age: 5}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Array} list the array with the names of the properties to copy
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, list){
-	    if (arguments.length < 3){
-	        list = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-	    list        = list || Object.keys(source)
-
-	    var i   = 0
-	    var len = list.length
-	    var propName
-
-	    for ( ; i < len; i++ ){
-	        propName = list[i]
-
-	        if ( typeof source[propName] !== STR_UNDEFINED ) {
-	            destination[list[i]] = source[list[i]]
-	        }
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var STR_UNDEFINED = 'undefined'
-
-	/**
-	 * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
-	 *
-	 *      copyListIf({name: 'jon',age:5, year: 2006}, {age: 10}, ['name','age'])
-	 *      // => {name: 'jon', age: 10}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Array} list the array with the names of the properties to copy
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, list){
-	    if (arguments.length < 3){
-	        list = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-	    list        = list || Object.keys(source)
-
-	    var i   = 0
-	    var len = list.length
-	    var propName
-
-	    for ( ; i < len ; i++ ){
-	        propName = list[i]
-	        if (
-	                (typeof source[propName]      !== STR_UNDEFINED) &&
-	                (typeof destination[propName] === STR_UNDEFINED)
-	            ){
-	            destination[propName] = source[propName]
-	        }
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var STR_UNDEFINED = 'undefined'
-	var STR_OBJECT    = 'object'
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-
-	var copyList = __webpack_require__(8)
-
-	/**
-	 * Copies all properties named in the namedKeys, from source to destination
-	 *
-	 *      copyKeys({name: 'jon',age:5, year: 2006, date: '2010/05/12'}, {}, {name:1 ,age: true, year: 'theYear'})
-	 *      // => {name: 'jon', age: 5, theYear: 2006}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, namedKeys){
-	    if (arguments.length < 3 ){
-	        namedKeys = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-
-	    if (!namedKeys || Array.isArray(namedKeys)){
-	        return copyList(source, destination, namedKeys)
-	    }
-
-	    if (
-	           source != null && typeof source    === STR_OBJECT &&
-	        namedKeys != null && typeof namedKeys === STR_OBJECT
-	    ) {
-	        var typeOfNamedProperty
-	        var namedPropertyValue
-
-	        for  (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
-	            namedPropertyValue  = namedKeys[propName]
-	            typeOfNamedProperty = typeof namedPropertyValue
-
-	            if (typeof source[propName] !== STR_UNDEFINED){
-	                destination[typeOfNamedProperty == 'string'? namedPropertyValue : propName] = source[propName]
-	            }
-	        }
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var STR_UNDEFINED = 'undefined'
-	var STR_OBJECT    = 'object'
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-
-	var copyListIf = __webpack_require__(9)
-
-	/**
-	 * Copies all properties named in the namedKeys, from source to destination,
-	 * but only if the property does not already exist in the destination object
-	 *
-	 *      copyKeysIf({name: 'jon',age:5, year: 2006}, {aname: 'test'}, {name:'aname' ,age: true})
-	 *      // => {aname: 'test', age: 5}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, namedKeys){
-	    if (arguments.length < 3 ){
-	        namedKeys = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-
-	    if (!namedKeys || Array.isArray(namedKeys)){
-	        return copyListIf(source, destination, namedKeys)
-	    }
-
-	    if (
-	               source != null && typeof source    === STR_OBJECT &&
-	            namedKeys != null && typeof namedKeys === STR_OBJECT
-	        ) {
-
-	            var typeOfNamedProperty
-	            var namedPropertyValue
-	            var newPropertyName
-
-	            for (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
-
-	                namedPropertyValue  = namedKeys[propName]
-	                typeOfNamedProperty = typeof namedPropertyValue
-	                newPropertyName     = typeOfNamedProperty == 'string'? namedPropertyValue : propName
-
-	                if (
-	                        typeof      source[propName]        !== STR_UNDEFINED &&
-	                        typeof destination[newPropertyName] === STR_UNDEFINED
-	                    ) {
-	                    destination[newPropertyName] = source[propName]
-	                }
-
-	            }
-	        }
-
-	    return destination
-	}
-
-/***/ },
-/* 12 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1801,7 +2458,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = curry
 
 /***/ },
-/* 13 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1834,7 +2491,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 14 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1859,7 +2516,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = chain
 
 /***/ },
-/* 15 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use once'
@@ -1883,7 +2540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = once
 
 /***/ },
-/* 16 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1903,20 +2560,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 17 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
 	var SLICE = Array.prototype.slice
-	var bindArgsArray = __webpack_require__(16)
+	var bindArgsArray = __webpack_require__(25)
 
 	module.exports = function(fn){
 	    return bindArgsArray(fn, SLICE.call(arguments,1))
 	}
 
 /***/ },
-/* 18 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1935,25 +2592,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 19 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
 	var SLICE = Array.prototype.slice
-	var lockArgsArray = __webpack_require__(18)
+	var lockArgsArray = __webpack_require__(27)
 
 	module.exports = function(fn){
 	    return lockArgsArray(fn, SLICE.call(arguments, 1))
 	}
 
 /***/ },
-/* 20 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var curry = __webpack_require__(12)
+	var curry = __webpack_require__(21)
 
 	module.exports = curry(function(fn, value){
 	    return value != undefined && typeof value.map?
@@ -1962,25 +2619,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	})
 
 /***/ },
-/* 21 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var curry = __webpack_require__(12)
+	var curry = __webpack_require__(21)
 
 	module.exports = curry(function(prop, value){
 	    return value != undefined? value[prop]: undefined
 	})
 
 /***/ },
-/* 22 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
 	var SLICE = Array.prototype.slice
-	var curry = __webpack_require__(12)
+	var curry = __webpack_require__(21)
 
 	module.exports = function(fn, count){
 	    return function(){
@@ -1989,28 +2646,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 23 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var newify = __webpack_require__(24)
-	var curry  = __webpack_require__(12)
+	var newify = __webpack_require__(33)
+	var curry  = __webpack_require__(21)
 
 	module.exports = curry(newify)
 
 /***/ },
-/* 24 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getInstantiatorFunction = __webpack_require__(25)
+	var getInstantiatorFunction = __webpack_require__(34)
 
 	module.exports = function(fn, args){
 		return getInstantiatorFunction(args.length)(fn, args)
 	}
 
 /***/ },
-/* 25 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(){

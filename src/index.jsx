@@ -1,121 +1,119 @@
 'use strict';
 
-var React     = require('react')
+var React = require('react')
+var Tabs  = require('react-basic-tabs')
+var copy  = require('copy-utils').copy
+var TabsFactory = React.createFactory(Tabs)
 
-var Strip     = require('./Strip')
-var Container = require('./Container')
+var ARROW_DEFAULTS = {
+    color : 'rgb(237, 227, 227)',
+    width : 6,
+    height: 6
+}
 
 function emptyFn(){}
 
 var TabPanel = React.createClass({
 
-    propTypes: {
-        activeIndex         : React.PropTypes.number,
+    displayName: 'TabPanel',
 
-        activeStyle         : React.PropTypes.object,
-        activeClassName     : React.PropTypes.string,
+    getDefaultProps: function() {
+        return {
+            defaultStripStyle: {
+                textOverflow: 'ellipsis',
+                overflow    : 'hidden',
+                whiteSpace  : 'nowrap'
+            },
 
-        defaultStyle        : React.PropTypes.object,
-        defaultClassName    : React.PropTypes.string,
+            scrollerFactory: function(props, side) {
+                var style = copy(props.style)
+                var borderWidth = style.borderWidth
 
-        titleStyle          : React.PropTypes.object,
-        titleClassName      : React.PropTypes.string,
-        activeTitleStyle    : React.PropTypes.object,
-        activeTitleClassName: React.PropTypes.string,
+                style.borderWidth = 0
+                style.borderStyle = 'solid'
+                style['border' + (side=='left'? 'Right': 'Left') + 'Width'] = borderWidth
 
-        onChange            : React.PropTypes.func,
+                var arrowStyle  = props.arrowStyle? copy(props.arrowStyle): {}
+                var arrowWidth  = props.arrowWidth  ||  arrowStyle.width || ARROW_DEFAULTS.width
+                var arrowHeight = props.arrowHeight || arrowStyle.height || ARROW_DEFAULTS.height
+                var arrowColor  = props.arrowColor || arrowStyle.color || ARROW_DEFAULTS.color
 
-        stripListStyle      : React.PropTypes.object
+                copy({
+                    borderTop   : arrowHeight + 'px solid transparent',
+                    borderBottom: arrowHeight + 'px solid transparent',
+                    borderLeftWidth  : arrowWidth,
+                    borderRightWidth : arrowWidth
+                }, arrowStyle)
+
+                if (side == 'right'){
+                    arrowStyle.borderLeftColor = arrowColor
+                }
+
+                if (side == 'left'){
+                    arrowStyle.borderRightColor = arrowColor
+                }
+
+                delete arrowStyle.width
+                delete arrowStyle.height
+
+                return (
+                    <div {...props}>
+                        <div className="arrow" data-side={side} style={arrowStyle} />
+                    </div>
+                )
+            },
+
+            stripFactory: function(props, Strip) {
+                return (
+                    <div key="stripWrap" style={{overflow: 'hidden'}}>
+                        {Strip(props)}
+                    </div>
+                )
+            }
+        }
     },
 
-    getDefaultProps: function(){
+    getInitialState: function() {
         return {
-            activeIndex: 0,
-
-            activeStyle: {},
-            activeClassName: 'active',
-
-            titleStyle: {},
-            titleClassName: '',
-            activeTitleStyle: {},
-            activeTitleClassName: 'active',
-
-            defaultStyle: {},
-            defaultClassName: '',
 
         }
     },
 
-    getInitialState: function(){
-        return {}
+    render: function() {
+        var props = copy(this.props)
+
+        props.onChange = this.handleChange
+        this.prepareIndex(props, this.state)
+
+        if (props.arrowColor){
+            props.scrollerProps = props.scrollerProps || {}
+            props.scrollerProps.arrowColor = props.arrowColor
+        }
+
+        props.stripStyle = copy(props.stripStyle, props.defaultStripStyle)
+
+        return TabsFactory(props)
     },
 
-    render: function(){
-
-        var props = this.props
-
-        props.children = props.children || []
-
-        var activeIndex = props.activeIndex || 0
-
-        activeIndex = Math.min(activeIndex, props.children.length - 1)
-
-        props.className = props.className || ''
-
-        props.className += ' tab-panel'
-
-        var StripComponent = <Strip key="strip" onChange={this.handleChange}
-
-                    enableScroll    ={props.enableScroll}
-                    scrollerStyle   ={props.scrollerStyle}
-                    scrollerFactory ={props.scrollerFactory}
-                    scrollerWidth   ={props.scrollerWidth}
-
-                    activeIndex={activeIndex}
-
-                    activeStyle={props.activeTitleStyle}
-                    activeClassName={props.activeTitleClassName}
-
-                    titleStyle={props.titleStyle}
-                    titleClassName={props.titleClassName}
-
-                    style={props.stripStyle}
-                >
-                    {props.children}
-                </Strip>
-
-        var ContainerComponent = <Container key="container"
-                    activeIndex={activeIndex}
-
-                    activeClassName={props.activeClassName}
-                    activeStyle={props.activeStyle}
-
-                    defaultStyle={props.defaultStyle}
-                    defaultClassName={props.defaultClassName}
-
-                    hiddenStyle={props.hiddenStyle}>
-
-                    {this.props.children}
-                </Container>
-
-
-        var Content = props.stripPosition == 'bottom'?
-                            [ContainerComponent, StripComponent]:
-                            [StripComponent, ContainerComponent]
-
-        return (
-            <div {...props} >
-                {Content}
-            </div>
-        )
+    prepareIndex: function(props, state) {
+        if (props.hasOwnProperty('defaultActiveIndex')){
+            props.activeIndex = props.defaultActiveIndex
+            if (typeof state.activeIndex != 'undefined'){
+                props.activeIndex = state.activeIndex
+            }
+        }
     },
 
-    handleChange: function(index){
+    handleChange: function(index) {
+        if (this.props.hasOwnProperty('defaultActiveIndex')){
+            this.setState({
+                activeIndex: index
+            })
+        }
+
         ;(this.props.onChange || emptyFn)(index)
     }
-})
 
-TabPanel.Strip     = Strip
-TabPanel.Container = Container
+})
 
 module.exports = TabPanel

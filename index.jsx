@@ -4,6 +4,8 @@
 var React    = require('react')
 var TabPanel = require('./src')
 
+require('./index.styl')
+
 var App = React.createClass({
 
     getInitialState: function(){
@@ -12,24 +14,25 @@ var App = React.createClass({
     },
 
     handleChange: function(index){
-        this.setState({
-            activeIndex: index
-        })
+        // this.setState({
+        //     activeIndex: index
+        // })
     },
 
     render: function() {
+        var activeIndex = this.state.activeIndex
+
         return <TabPanel
             enableScroll={true}
-            scrollerStyle={{background: 'gray'}}
+            scrollStep={5}
+            scrollSpeed={20}
+            tabVerticalPosition={'bottom'}
             style={{width: '100%', border: '1px solid blue'}}
-            activeIndex={this.state.activeIndex}
+            defaultActiveIndex={activeIndex}
             onChange={this.handleChange}
             titleStyle={{padding: 10, border: '1px solid red'}}
             defaultStyle={{padding: 10}}
             stripStyle={{
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
-                whiteSpace: 'nowrap'
             }}
         >
             <div title="One">first</div>
