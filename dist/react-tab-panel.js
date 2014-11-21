@@ -146,7 +146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            props.scrollerProps.arrowColor = props.arrowColor
 	        }
 
-	        props.stripStyle = copy(props.stripStyle, props.defaultStripStyle)
+	        props.stripStyle = copy(props.stripStyle, copy(props.defaultStripStyle))
 
 	        return TabsFactory(props)
 	    },
@@ -848,7 +848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var SCROLLER_STYLE = {
 	    top       : 0,
 	    position  : 'absolute',
-	    display   : 'inline-block',
+	    // display   : 'inline-block',
 	    height    : '100%',
 	    cursor    : 'pointer'
 	}
@@ -932,9 +932,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    componentDidMount: function(){
 	        if (this.props.enableScroll){
-	            this.adjustScroll()
+	            setTimeout(function(){
+	                this.adjustScroll()
 
-	            window.addEventListener('resize', this.onResizeListener = buffer(this.onWindowResize, this.props.onWindowResizeBuffer, this))
+	                window.addEventListener('resize', this.onResizeListener = buffer(this.onWindowResize, this.props.onWindowResizeBuffer, this))
+	            }.bind(this), 0)
 	        }
 	    },
 
@@ -967,7 +969,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (listWidth > availableWidth){
-	            state.maxScrollPos = listWidth - availableWidth// + this.props.scrollerWidth
+	            state.maxScrollPos = listWidth - availableWidth
 	            state.hasLeftScroll  = this.state.scrollPos !== 0
 	            state.hasRightScroll = this.state.scrollPos != state.maxScrollPos
 	        } else {
