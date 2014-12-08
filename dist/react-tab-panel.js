@@ -391,6 +391,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var copy      = __webpack_require__(2).copy
 	var copyList  = __webpack_require__(2).copyList
 	var copyKeys  = __webpack_require__(2).copyKeys
+	var copyExceptKeys  = __webpack_require__(2).copyExceptKeys
 	var Strip     = __webpack_require__(10)
 	var Container = __webpack_require__(11)
 
@@ -425,7 +426,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        containerFactory: React.PropTypes.func,
 
 	        //specify 'bottom' if you want to render the strip after the container
-	        stripPosition   : React.PropTypes.string
+	        tabVerticalPosition   : React.PropTypes.string
 	    },
 
 	    getDefaultProps: function(){
@@ -444,7 +445,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            activeTitleStyle: {},
 	            activeTitleClassName: 'active',
 
-	            stripPosition: 'top'
+	            tabVerticalPosition: 'top'
 	        }
 	    },
 
@@ -463,7 +464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var StripComponent     = this.renderStrip(props)
 	        var ContainerComponent = this.renderContainer(props)
 
-	        var Content = props.stripPosition == 'bottom'?
+	        var Content = props.tabVerticalPosition == 'bottom'?
 	                            [ContainerComponent, StripComponent]:
 	                            [StripComponent, ContainerComponent]
 
@@ -500,23 +501,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    renderStrip: function(props){
-	        var stripProps = copyKeys(props, {},
-	            {
-	                enableScroll        : 1,
-	                scrollerStyle       : 1,
-	                scrollerFactory     : 1,
-	                scrollerWidth       : 1,
-	                scrollerProps       : 1,
+	        var stripProps = copyExceptKeys(props, {},{
+	            stripStyle: 1,
+	            activeTitleStyle: 1,
+	            activeTitleClassName: 1
+	        })
 
-	                activeIndex         : 1,
-
-	                titleStyle          : 1,
-	                titleClassName      : 1,
-
-	                children            : 1,
-	                stripStyle          : 'style',
-	                activeTitleStyle    : 'activeStyle',
-	                activeTitleClassName: 'activeClassName'
+	        copyKeys(props, stripProps, {
+	            stripStyle          : 'style',
+	            activeTitleStyle    : 'activeStyle',
+	            activeTitleClassName: 'activeClassName'
 	        })
 
 	        stripProps.key      = 'strip'
@@ -854,7 +848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var SCROLLER_STYLE = {
 	    top       : 0,
 	    position  : 'absolute',
-	    display   : 'inline-block',
+	    // display   : 'inline-block',
 	    height    : '100%',
 	    cursor    : 'pointer'
 	}
@@ -883,7 +877,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var scrollerStyle = copy(SCROLLER_STYLE)
 
 	        props.style = copy(props.style, scrollerStyle)
-	        props.style.width = props.width
+	        props.style.width = props.style.width || props.width
 
 	        props.style[side] = 0
 
@@ -938,9 +932,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    componentDidMount: function(){
 	        if (this.props.enableScroll){
-	            this.adjustScroll()
+	            setTimeout(function(){
+	                this.adjustScroll()
 
-	            window.addEventListener('resize', this.onResizeListener = buffer(this.onWindowResize, this.props.onWindowResizeBuffer, this))
+	                window.addEventListener('resize', this.onResizeListener = buffer(this.onWindowResize, this.props.onWindowResizeBuffer, this))
+	            }.bind(this), 0)
 	        }
 	    },
 
@@ -973,7 +969,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (listWidth > availableWidth){
-	            state.maxScrollPos = listWidth - availableWidth// + this.props.scrollerWidth
+	            state.maxScrollPos = listWidth - availableWidth
 	            state.hasLeftScroll  = this.state.scrollPos !== 0
 	            state.hasRightScroll = this.state.scrollPos != state.maxScrollPos
 	        } else {
@@ -1083,7 +1079,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            scrollStep          : 5,
 	            scrollSpeed         : 50,
-	            scrollerWidth       : 5,
+	            scrollerWidth       : 8,
 	            scrollerProps       : {},
 
 	            enableScroll: false,
@@ -1141,7 +1137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var titleClassName = [props.titleClassName || '', BASE_CLASS_NAME + '-item-title']
 
-	        var nodes = props.children.map(this.renderTitle(props, titleClassName, titleStyle), this)
+	        var nodes = React.Children.map(props.children, this.renderTitle(props, titleClassName, titleStyle), this)
 
 	        props.className = props.className || ''
 	        props.className += ' ' + BASE_CLASS_NAME + '-strip'
@@ -1206,6 +1202,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	})
 
+
 /***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
@@ -1246,7 +1243,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return (
 	            React.createElement("section", {className: BASE_CLASS_NAME + "-container"}, 
-	                this.props.children.map(this.renderItem, this)
+	                React.Children.map(this.props.children, this.renderItem, this)
 	            )
 	        )
 	    },
@@ -1287,6 +1284,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        )
 	    }
 	})
+
 
 /***/ },
 /* 12 */
