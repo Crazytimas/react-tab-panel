@@ -60,9 +60,9 @@ React.render(<App />, document.body)
 
 The TabPanel supports the following props:
 
- * activeIndex: Number - the index of the TabPanel children to be rendered as active - NOTE: When setting this option, you have to listen for onChange, and re-render the tabpanel (CONTROLLER behaviour)
+ * activeIndex: Number - the index of the TabPanel children to be rendered as active - NOTE: When setting this option, you have to listen for onChange, and re-render the tabpanel (CONTROLLED behaviour)
 
- * defaultActiveIndex: Number - the index of the TabPanel. When clicking on a tab, the panel manages the active index internally, and you are shown the clicked tab (UNCONTROLLER behaviour)
+ * defaultActiveIndex: Number - the index of the TabPanel. When clicking on a tab, the panel manages the active index internally, and you are shown the clicked tab (UNCONTROLLED behaviour)
 
  * enableScroll: Boolean (defaults to false) - Whether to show scroll to tab titles when they don't have enough space
 
