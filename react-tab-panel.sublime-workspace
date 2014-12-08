@@ -536,18 +536,34 @@
 			}
 		},
 		{
-			"file": "src/index.jsx",
+			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 3426,
+				"buffer_size": 442,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "style/index.styl",
+			"file": "webpack.config.js",
 			"settings":
 			{
-				"buffer_size": 687,
+				"buffer_size": 294,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "loaders.config.js",
+			"settings":
+			{
+				"buffer_size": 515,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "package.json",
+			"settings":
+			{
+				"buffer_size": 1711,
 				"line_ending": "Unix"
 			}
 		},
@@ -556,6 +572,76 @@
 			"settings":
 			{
 				"buffer_size": 193,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/index.jsx",
+			"settings":
+			{
+				"buffer_size": 3432,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "'use strict';\n\nvar React  = require('react')\nvar copy   = require('copy-utils').copy\nvar buffer = require('functionally').buffer\n\nvar LIST_ITEM_STYLE = {\n    display: 'inline-block'\n}\n\nvar LIST_STYLE = {\n    margin   : 0,\n    padding  : 0,\n    listStyle: 'none',\n    position : 'relative',\n    display  : 'inline-block'\n}\n\nvar SCROLLER_STYLE = {\n    top       : 0,\n    position  : 'absolute',\n    display   : 'inline-block',\n    height    : '100%',\n    cursor    : 'pointer'\n}\n\nvar Scroller = React.createClass({displayName: 'Scroller',\n\n    display: 'Scroller',\n\n    getDefaultProps: function(){\n        return {\n            width: 5\n        }\n    },\n\n    render: function(){\n        var props = this.props\n        var side = this.props.side\n\n        props.className = props.className || ''\n        props.className += ' tab-panel-scroller ' + side\n\n        if (props.active && props.visible){\n            props.className += ' active'\n        }\n\n        var scrollerStyle = copy(SCROLLER_STYLE)\n        scrollerStyle.width = props.width\n\n        props.style = copy(props.style, scrollerStyle)\n\n        props.style[side] = 0\n\n        if (!props.visible){\n            props.style.display = 'none'\n        }\n\n        return props.factory?\n                    props.factory(props):\n                    React.createElement(\"div\", React.__spread({},  props))\n    }\n})\n\nvar ScrollerFactory = React.createFactory(Scroller)\n\nmodule.exports = React.createClass({displayName: 'exports',\n\n    display: 'TabPanel.Strip',\n\n    propTypes: {\n        activeIndex    : React.PropTypes.number,\n        activeStyle    : React.PropTypes.object,\n        activeClassName: React.PropTypes.string,\n\n        titleStyle    : React.PropTypes.object,\n        titleClassName: React.PropTypes.string,\n\n        anchorStyle   : React.PropTypes.object,\n        scrollerStyle : React.PropTypes.object,\n        scrollerWidth : React.PropTypes.number,\n\n        scrollStep    : React.PropTypes.number,\n        scrollSpeed   : React.PropTypes.number\n\n        //each item in the TabPanel can also specify a titleStyle\n        //and a titleClassName, which are added to the values in props\n    },\n\n    getInitialState: function(){\n        return {\n            adjustScroll: true,\n            scrollPos   : 0\n        }\n    },\n\n    componentWillUnmount: function(){\n        if (this.props.enableScroll){\n            window.removeEventListener('resize', this.onResizeListener)\n        }\n    },\n\n    componentDidMount: function(){\n        if (this.props.enableScroll){\n            this.adjustScroll()\n\n            window.addEventListener('resize', this.onResizeListener = buffer(this.onWindowResize, this.props.onWindowResizeBuffer, this))\n        }\n    },\n\n    componentDidUpdate: function(){\n        this.props.enableScroll && this.adjustScroll()\n    },\n\n    onWindowResize: function(){\n        this.adjustScroll()\n        this.doScroll(0)\n    },\n\n    adjustScroll: function(){\n        if (!this.props.enableScroll){\n            return\n        }\n\n        if (!this.state.adjustScroll){\n            this.state.adjustScroll = true\n            return\n        }\n\n        var availableWidth = this.getAvailableStripWidth()\n        var listWidth      = this.getCurrentListWidth()\n\n        var state = {\n            adjustScroll  : false,\n            hasLeftScroll : false,\n            hasRightScroll: false\n        }\n\n        if (listWidth > availableWidth){\n            state.maxScrollPos = listWidth - availableWidth + this.props.scrollerWidth\n            state.hasLeftScroll = this.state.scrollPos !== 0\n            state.hasRightScroll = this.state.scrollPos != state.maxScrollPos\n        } else {\n            state.maxScrollPos = 0\n            state.scrollPos    = 0\n        }\n\n        this.setState(state)\n    },\n\n    getCurrentListWidth: function(){\n        return this.refs.list.getDOMNode().offsetWidth\n    },\n\n    getAvailableStripWidth: function(){\n        var dom     = this.getDOMNode()\n        var domComputedStyle = window.getComputedStyle(dom)\n\n        var leftPadding = parseInt(domComputedStyle.left, 10)\n        var rightPadding = parseInt(domComputedStyle.right, 10)\n\n        if (isNaN(leftPadding)){\n            leftPadding = 0\n        }\n        if (isNaN(rightPadding)){\n            rightPadding = 0\n        }\n\n        return dom.clientWidth - leftPadding - rightPadding\n    },\n\n    handleScrollLeft: function(event){\n        event.preventDefault()\n        this.handleScroll(-1)\n    },\n\n    handleScrollRight: function(event){\n        event.preventDefault()\n        this.handleScroll(1)\n    },\n\n    handleScrollLeftMax: function(event){\n        event.preventDefault()\n        this.handleScrollMax(-1)\n    },\n\n    handleScrollRightMax: function(event){\n        event.preventDefault()\n        this.handleScrollMax(1)\n    },\n\n    handleScrollMax: function(direction){\n        var maxPos = direction == -1?\n                        0:\n                        this.state.maxScrollPos\n\n        this.setScrollPosition(maxPos)\n    },\n\n    handleScroll: function(direction /*1 to right, -1 to left*/){\n        var mouseUpListener = function(){\n            this.stopScroll()\n            window.removeEventListener('mouseup', mouseUpListener)\n        }.bind(this)\n\n        window.addEventListener('mouseup', mouseUpListener)\n\n        this.scrollInterval = setInterval(this.doScroll.bind(this, direction), this.props.scrollSpeed)\n    },\n\n    doScroll: function(direction){\n        this.setState({\n            scrollDirection: direction\n        })\n\n        var newScrollPos = this.state.scrollPos + direction * this.props.scrollStep\n\n        this.setScrollPosition(newScrollPos)\n    },\n\n    setScrollPosition: function(scrollPos){\n        if (scrollPos > this.state.maxScrollPos){\n            scrollPos = this.state.maxScrollPos\n        }\n\n        if (scrollPos < 0){\n            scrollPos = 0\n        }\n\n        this.setState({\n            scrollPos: scrollPos,\n            scrolling : true\n        })\n    },\n\n    stopScroll: function(){\n        clearInterval(this.scrollInterval)\n\n        this.setState({\n            scrolling: false\n        })\n    },\n\n    getDefaultProps: function(){\n        return {\n            onWindowResizeBuffer: 50,\n            scrollStep  : 5,\n            scrollSpeed : 50,\n            scrollerWidth : 5,\n\n            enableScroll: false,\n            hasLeftScroll: false,\n            hasRightScroll: false,\n            activeClassName: '',\n            activeStyle: {},\n\n            anchorStyle: {\n                color         : 'inherit',\n                textDecoration: 'inherit'\n            }\n        }\n    },\n\n    render: function(){\n        var props = copy(this.props)\n\n        var activeIndex = props.activeIndex || 0\n\n        var anchorStyle     = props.anchorStyle\n        var activeStyle     = props.activeStyle\n        var activeClassName = props.activeClassName\n\n        var baseStyle = copy(LIST_ITEM_STYLE)\n        copy(props.titleStyle, baseStyle)\n\n        var baseClassName = [props.titleClassName || '', 'tab-panel-item-title']\n\n        var nodes = props.children.map(function(child, index){\n            var props = child.props\n            var title = props.tabTitle || props.title\n\n            var titleStyle = copy(baseStyle)\n\n            //ALLOW each item to also specify a titleStyle\n            copy(props.titleStyle, titleStyle)\n\n            //and a titleClassName\n            var titleClassName = baseClassName.concat(props.titleClassName || '')\n\n            if (index == activeIndex){\n                copy(activeStyle, titleStyle)\n                titleClassName.push(activeClassName || '')\n            }\n\n            return (\n                <li key={index} onClick={this.handleChange.bind(this, index)} style={titleStyle}\n                    className={titleClassName.join(' ')}\n                >\n                    <a href=\"#\" style={anchorStyle}>{title}</a>\n                </li>\n            )\n        }, this)\n\n        props.className = props.className || ''\n        props.className += ' tab-panel-strip'\n\n        props.style = props.style || {}\n        props.style.position = 'relative'\n\n        var listStyle = copy(LIST_STYLE)\n        if (this.state.scrollPos){\n            listStyle.left = -this.state.scrollPos\n        }\n\n        var scrollerLeft = this.renderScroller(-1)\n        var scrollerRight= this.renderScroller(1)\n\n        return (\n            <nav {...props}>\n                <ul ref=\"list\" style={listStyle}>\n                    {nodes}\n                </ul>\n                {scrollerLeft}\n                {scrollerRight}\n            </nav>\n        )\n    },\n\n    handleChange: function(index, event){\n        event.preventDefault()\n\n        this.props.onChange(index)\n    },\n\n    renderScroller: function(direction){\n\n        if (!this.props.enableScroll){\n            return\n        }\n\n        var onDoubleClick = direction == -1?\n                                this.handleScrollLeftMax:\n                                this.handleScrollRightMax\n\n        var onMouseDown = direction == -1?\n                            this.handleScrollLeft:\n                            this.handleScrollRight\n\n        var side = direction == -1? 'left': 'right'\n        var visible = direction == -1?\n                            this.state.hasLeftScroll:\n                            this.state.hasRightScroll\n\n        return ScrollerFactory({\n            factory      : this.props.scrollerFactory,\n            active       : this.state.scrollDirection==direction && this.state.scrolling,\n            onDoubleClick: onDoubleClick,\n            onMouseDown  : onMouseDown,\n            style        : this.props.scrollerStyle,\n            side         : side,\n            width        : this.props.scrollerWidth,\n            visible      : visible\n        })\n    }\n})",
+			"file": "src/Strip.jsx",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 9782,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "'use strict';\n\nvar React  = require('react')\nvar copy   = require('copy-utils').copy\nvar buffer = require('functionally').buffer\n\nvar LIST_ITEM_STYLE = {\n    display: 'inline-block'\n}\n\nvar LIST_STYLE = {\n    margin   : 0,\n    padding  : 0,\n    listStyle: 'none',\n    position : 'relative',\n    display  : 'inline-block'\n}\n\nvar SCROLLER_STYLE = {\n    top       : 0,\n    position  : 'absolute',\n    display   : 'inline-block',\n    height    : '100%',\n    cursor    : 'pointer'\n}\n\nvar Scroller = React.createClass({displayName: 'Scroller',\n\n    display: 'Scroller',\n\n    getDefaultProps: function(){\n        return {\n            width: 5\n        }\n    },\n\n    render: function(){\n        var props = this.props\n        var side = this.props.side\n\n        props.className = props.className || ''\n        props.className += ' tab-panel-scroller ' + side\n\n        if (props.active && props.visible){\n            props.className += ' active'\n        }\n\n        var scrollerStyle = copy(SCROLLER_STYLE)\n        scrollerStyle.width = props.width\n\n        props.style = copy(props.style, scrollerStyle)\n\n        props.style[side] = 0\n\n        if (!props.visible){\n            props.style.display = 'none'\n        }\n\n        return props.factory?\n                    props.factory(props):\n                    React.createElement(\"div\", React.__spread({},  props))\n    }\n})\n\nvar ScrollerFactory = React.createFactory(Scroller)\n\nmodule.exports = React.createClass({displayName: 'exports',\n\n    display: 'TabPanel.Strip',\n\n    propTypes: {\n        activeIndex    : React.PropTypes.number,\n        activeStyle    : React.PropTypes.object,\n        activeClassName: React.PropTypes.string,\n\n        titleStyle    : React.PropTypes.object,\n        titleClassName: React.PropTypes.string,\n\n        anchorStyle   : React.PropTypes.object,\n        scrollerStyle : React.PropTypes.object,\n        scrollerWidth : React.PropTypes.number,\n\n        scrollStep    : React.PropTypes.number,\n        scrollSpeed   : React.PropTypes.number\n\n        //each item in the TabPanel can also specify a titleStyle\n        //and a titleClassName, which are added to the values in props\n    },\n\n    getInitialState: function(){\n        return {\n            adjustScroll: true,\n            scrollPos   : 0\n        }\n    },\n\n    componentWillUnmount: function(){\n        if (this.props.enableScroll){\n            window.removeEventListener('resize', this.onResizeListener)\n        }\n    },\n\n    componentDidMount: function(){\n        if (this.props.enableScroll){\n            this.adjustScroll()\n\n            window.addEventListener('resize', this.onResizeListener = buffer(this.onWindowResize, this.props.onWindowResizeBuffer, this))\n        }\n    },\n\n    componentDidUpdate: function(){\n        this.props.enableScroll && this.adjustScroll()\n    },\n\n    onWindowResize: function(){\n        this.adjustScroll()\n        this.doScroll(0)\n    },\n\n    adjustScroll: function(){\n        if (!this.props.enableScroll){\n            return\n        }\n\n        if (!this.state.adjustScroll){\n            this.state.adjustScroll = true\n            return\n        }\n\n        var availableWidth = this.getAvailableStripWidth()\n        var listWidth      = this.getCurrentListWidth()\n\n        var state = {\n            adjustScroll  : false,\n            hasLeftScroll : false,\n            hasRightScroll: false\n        }\n\n        if (listWidth > availableWidth){\n            state.maxScrollPos = listWidth - availableWidth + this.props.scrollerWidth\n            state.hasLeftScroll = this.state.scrollPos !== 0\n            state.hasRightScroll = this.state.scrollPos != state.maxScrollPos\n        } else {\n            state.maxScrollPos = 0\n            state.scrollPos    = 0\n        }\n\n        this.setState(state)\n    },\n\n    getCurrentListWidth: function(){\n        return this.refs.list.getDOMNode().offsetWidth\n    },\n\n    getAvailableStripWidth: function(){\n        var dom     = this.getDOMNode()\n        var domComputedStyle = window.getComputedStyle(dom)\n\n        var leftPadding = parseInt(domComputedStyle.left, 10)\n        var rightPadding = parseInt(domComputedStyle.right, 10)\n\n        if (isNaN(leftPadding)){\n            leftPadding = 0\n        }\n        if (isNaN(rightPadding)){\n            rightPadding = 0\n        }\n\n        return dom.clientWidth - leftPadding - rightPadding\n    },\n\n    handleScrollLeft: function(event){\n        event.preventDefault()\n        this.handleScroll(-1)\n    },\n\n    handleScrollRight: function(event){\n        event.preventDefault()\n        this.handleScroll(1)\n    },\n\n    handleScrollLeftMax: function(event){\n        event.preventDefault()\n        this.handleScrollMax(-1)\n    },\n\n    handleScrollRightMax: function(event){\n        event.preventDefault()\n        this.handleScrollMax(1)\n    },\n\n    handleScrollMax: function(direction){\n        var maxPos = direction == -1?\n                        0:\n                        this.state.maxScrollPos\n\n        this.setScrollPosition(maxPos)\n    },\n\n    handleScroll: function(direction /*1 to right, -1 to left*/){\n        var mouseUpListener = function(){\n            this.stopScroll()\n            window.removeEventListener('mouseup', mouseUpListener)\n        }.bind(this)\n\n        window.addEventListener('mouseup', mouseUpListener)\n\n        this.scrollInterval = setInterval(this.doScroll.bind(this, direction), this.props.scrollSpeed)\n    },\n\n    doScroll: function(direction){\n        this.setState({\n            scrollDirection: direction\n        })\n\n        var newScrollPos = this.state.scrollPos + direction * this.props.scrollStep\n\n        this.setScrollPosition(newScrollPos)\n    },\n\n    setScrollPosition: function(scrollPos){\n        if (scrollPos > this.state.maxScrollPos){\n            scrollPos = this.state.maxScrollPos\n        }\n\n        if (scrollPos < 0){\n            scrollPos = 0\n        }\n\n        this.setState({\n            scrollPos: scrollPos,\n            scrolling : true\n        })\n    },\n\n    stopScroll: function(){\n        clearInterval(this.scrollInterval)\n\n        this.setState({\n            scrolling: false\n        })\n    },\n\n    getDefaultProps: function(){\n        return {\n            onWindowResizeBuffer: 50,\n            scrollStep  : 5,\n            scrollSpeed : 50,\n            scrollerWidth : 5,\n\n            enableScroll: false,\n            hasLeftScroll: false,\n            hasRightScroll: false,\n            activeClassName: '',\n            activeStyle: {},\n\n            anchorStyle: {\n                color         : 'inherit',\n                textDecoration: 'inherit'\n            }\n        }\n    },\n\n    render: function(){\n        var props = copy(this.props)\n\n        var activeIndex = props.activeIndex || 0\n\n        var anchorStyle     = props.anchorStyle\n        var activeStyle     = props.activeStyle\n        var activeClassName = props.activeClassName\n\n        var baseStyle = copy(LIST_ITEM_STYLE)\n        copy(props.titleStyle, baseStyle)\n\n        var baseClassName = [props.titleClassName || '', 'tab-panel-item-title']\n\n        var nodes = props.children.map(function(child, index){\n            var props = child.props\n            var title = props.tabTitle || props.title\n\n            var titleStyle = copy(baseStyle)\n\n            //ALLOW each item to also specify a titleStyle\n            copy(props.titleStyle, titleStyle)\n\n            //and a titleClassName\n            var titleClassName = baseClassName.concat(props.titleClassName || '')\n\n            if (index == activeIndex){\n                copy(activeStyle, titleStyle)\n                titleClassName.push(activeClassName || '')\n            }\n\n            return (\n                React.createElement(\"li\", {key: index, onClick: this.handleChange.bind(this, index), style: titleStyle, \n                    className: titleClassName.join(' ')\n                }, \n                    React.createElement(\"a\", {href: \"#\", style: anchorStyle}, title)\n                )\n            )\n        }, this)\n\n        props.className = props.className || ''\n        props.className += ' tab-panel-strip'\n\n        props.style = props.style || {}\n        props.style.position = 'relative'\n\n        var listStyle = copy(LIST_STYLE)\n        if (this.state.scrollPos){\n            listStyle.left = -this.state.scrollPos\n        }\n\n        var scrollerLeft = this.renderScroller(-1)\n        var scrollerRight= this.renderScroller(1)\n\n        return (\n            React.createElement(\"nav\", React.__spread({},  props), \n                React.createElement(\"ul\", {ref: \"list\", style: listStyle}, \n                    nodes\n                ), \n                scrollerLeft, \n                scrollerRight\n            )\n        )\n    },\n\n    handleChange: function(index, event){\n        event.preventDefault()\n\n        this.props.onChange(index)\n    },\n\n    renderScroller: function(direction){\n\n        if (!this.props.enableScroll){\n            return\n        }\n\n        var onDoubleClick = direction == -1?\n                                this.handleScrollLeftMax:\n                                this.handleScrollRightMax\n\n        var onMouseDown = direction == -1?\n                            this.handleScrollLeft:\n                            this.handleScrollRight\n\n        var side = direction == -1? 'left': 'right'\n        var visible = direction == -1?\n                            this.state.hasLeftScroll:\n                            this.state.hasRightScroll\n\n        return ScrollerFactory({\n            factory      : this.props.scrollerFactory,\n            active       : this.state.scrollDirection==direction && this.state.scrolling,\n            onDoubleClick: onDoubleClick,\n            onMouseDown  : onMouseDown,\n            style        : this.props.scrollerStyle,\n            side         : side,\n            width        : this.props.scrollerWidth,\n            visible      : visible\n        })\n    }\n})",
+			"file": "lib/Strip.js",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 9878,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "'use strict';\n\nvar React = require('react')\nvar copy  = require('copy-utils').copy\n\nmodule.exports = React.createClass({\n\n    displayName: 'TabPanel.Container',\n\n    propTypes: {\n        activeIndex     : React.PropTypes.number,\n\n        defaultClassName: React.PropTypes.string,\n        defaultStyle    : React.PropTypes.object,\n\n        hiddenStyle     : React.PropTypes.object,\n\n        activeClassName : React.PropTypes.string,\n        activeStyle     : React.PropTypes.object\n    },\n\n    getDefaultProps: function(){\n        return {\n            activeIndex: 0,\n            hiddenStyle: {\n                display: 'none'\n            }\n        }\n    },\n\n    render: function(){\n\n        return (\n            React.createElement(\"section\", {className: \"tab-panel-container\"},\n                this.props.children.map(this.renderItem, this)\n            )\n        )\n    },\n\n    renderItem: function(item, index, array){\n        var props = this.props\n\n        var hiddenStyle = props.hiddenStyle\n        var activeIndex = props.activeIndex || 0\n\n        //make sure the wrapping article gets the correct style\n        //if it is the active item\n        var style = {}\n        var className = 'tab-panel-item '\n\n        if (index !== activeIndex){\n            copy(hiddenStyle, style)\n        } else {\n            copy(props.activeStyle, style)\n            className += props.activeClassName || ''\n        }\n\n        //default style for items\n        if (props.defaultStyle){\n            item.props.style = copy(props.defaultStyle, item.props.style)\n        }\n\n        //default className for items\n        if (props.defaultClassName){\n            item.props.className = item.props.className || ''\n            item.props.className += ' ' + props.defaultClassName\n        }\n\n        return React.createElement(\"article\", {key: index, style: style, className: className})\n    }\n})",
+			"file": "lib/Container.js",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 1877,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "'use strict';\n\nvar React = require('react')\nvar copy  = require('copy-utils').copy\n\nmodule.exports = React.createClass({\n\n    displayName: 'TabPanel.Container',\n\n    propTypes: {\n        activeIndex     : React.PropTypes.number,\n\n        defaultClassName: React.PropTypes.string,\n        defaultStyle    : React.PropTypes.object,\n\n        hiddenStyle     : React.PropTypes.object,\n\n        activeClassName : React.PropTypes.string,\n        activeStyle     : React.PropTypes.object\n    },\n\n    getDefaultProps: function(){\n        return {\n            activeIndex: 0,\n            hiddenStyle: {\n                display: 'none'\n            }\n        }\n    },\n\n    render: function(){\n\n        return (\n            React.createElement(\"section\", {className: \"tab-panel-container\"},\n                this.props.children.map(this.renderItem, this)\n            )\n        )\n    },\n\n    renderItem: function(item, index, array){\n        var props = this.props\n\n        var hiddenStyle = props.hiddenStyle\n        var activeIndex = props.activeIndex || 0\n\n        //make sure the wrapping article gets the correct style\n        //if it is the active item\n        var style = {}\n        var className = 'tab-panel-item '\n\n        if (index !== activeIndex){\n            copy(hiddenStyle, style)\n        } else {\n            copy(props.activeStyle, style)\n            className += props.activeClassName || ''\n        }\n\n        //default style for items\n        if (props.defaultStyle){\n            item.props.style = copy(props.defaultStyle, item.props.style)\n        }\n\n        //default className for items\n        if (props.defaultClassName){\n            item.props.className = item.props.className || ''\n            item.props.className += ' ' + props.defaultClassName\n        }\n\n        return <article key={index} style={style} className={className} />\n    }\n})",
+			"file": "src/Container.jsx",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 1856,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 1 file for \"stripposition\"\n\n0 matches across 0 files\n\n\nSearching 1 file for \"tabVerticalPosition\"\n\n0 matches across 0 files\n",
+			"settings":
+			{
+				"buffer_size": 134,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "style/index.styl",
+			"settings":
+			{
+				"buffer_size": 687,
 				"line_ending": "Unix"
 			}
 		},
@@ -571,7 +657,7 @@
 			"file": "dist/react-tab-panel.js",
 			"settings":
 			{
-				"buffer_size": 77609,
+				"buffer_size": 77663,
 				"line_ending": "Unix"
 			}
 		}
@@ -583,16 +669,16 @@
 		"selected_items":
 		[
 			[
+				"du",
+				"File: Duplicate"
+			],
+			[
 				"mar",
 				"Markdown Preview: Preview in Browser"
 			],
 			[
 				"mark",
 				"Markdown Preview: Preview in Browser"
-			],
-			[
-				"du",
-				"File: Duplicate"
 			],
 			[
 				"dele",
@@ -783,7 +869,7 @@
 				"Set Syntax: LiveScript"
 			]
 		],
-		"width": 583.0
+		"width": 593.0
 	},
 	"console":
 	{
@@ -804,12 +890,14 @@
 	},
 	"file_history":
 	[
-		"/home/radu/code/react-tab-panel/package.json",
-		"/home/radu/code/react-tab-panel/index.html",
+		"/home/radu/code/react-tab-panel/node_modules/webpack/lib/web/WebEnvironmentPlugin.js",
+		"/home/radu/code/react-tab-panel/webpack.config.js",
 		"/home/radu/code/react-tab-panel/index.css",
-		"/home/radu/code/react-tab-panel/src/index.jsx",
-		"/home/radu/code/react-tab-panel/node_modules/react/lib/isNode.js",
 		"/home/radu/code/react-tab-panel/index.styl",
+		"/home/radu/code/react-tab-panel/src/index.jsx",
+		"/home/radu/code/react-tab-panel/index.html",
+		"/home/radu/code/react-tab-panel/package.json",
+		"/home/radu/code/react-tab-panel/node_modules/react/lib/isNode.js",
 		"/home/radu/code/react-tab-panel/node_modules/react/lib/ReactElement.js",
 		"/home/radu/code/react-tab-panel/README.md",
 		"/home/radu/code/react-basic-tabs/node_modules/webpack/bin/config-optimist.js",
@@ -929,9 +1017,7 @@
 		"/home/radu/code/entity-designer/src/js/render/getAbsoluteItemRegion.js",
 		"/home/radu/code/entity-designer/src/js/state/ITEM_ELEMENTS.js",
 		"/home/radu/code/entity-designer/.idea/misc.xml",
-		"/home/radu/code/entity-designer/node_modules/react/lib/ReactElement.js",
-		"/home/radu/code/entity-designer/node_modules/react-flex/node_modules/webpack/lib/EntryModuleNotFoundError.js",
-		"/home/radu/code/entity-designer/node_modules/webpack/lib/removeAndDo.js"
+		"/home/radu/code/entity-designer/node_modules/react/lib/ReactElement.js"
 	],
 	"find":
 	{
@@ -942,6 +1028,7 @@
 		"height": 90.0,
 		"where_history":
 		[
+			"/home/radu/code/react-tab-panel/src,*.jsx, *.js",
 			"/home/radu/code/entity-designer/src,*.jsx, *.js",
 			"/home/radu/code/entity-designer/lib,*.jsx, *.js",
 			"/home/radu/code/entity-designer/src,*.jsx, *.js",
@@ -992,6 +1079,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"positi",
+			"tabVerticalPosition",
+			"bottom",
+			"stripposition",
 			"tab-panel",
 			"8",
 			"arrowWidth",
@@ -1115,10 +1206,6 @@
 			".at",
 			"at:",
 			"width",
-			"Region",
-			"region",
-			"Region",
-			"region",
 			"Region"
 		],
 		"highlight": true,
@@ -1137,7 +1224,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1168,7 +1255,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
@@ -1184,8 +1271,8 @@
 						"selection":
 						[
 							[
-								266,
-								266
+								776,
+								776
 							]
 						],
 						"settings":
@@ -1198,30 +1285,170 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 8,
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 2,
-			"sheets":
-			[
+				},
 				{
 					"buffer": 2,
-					"file": "src/index.jsx",
+					"file": "index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3426,
+						"buffer_size": 442,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								921,
-								921
+								71,
+								71
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "webpack.config.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 294,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								266,
+								266
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "loaders.config.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 515,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								472,
+								472
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1711,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								747,
+								747
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Gulpfile.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 193,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								193,
+								193
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/index.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3432,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1232,14 +1459,208 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 702.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
 					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 7,
+			"sheets":
+			[
+				{
+					"buffer": 7,
+					"file": "src/index.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3432,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2417,
+								2417
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/SublimeLinter-jsxhint/JavaScript (JSX).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1189.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 8,
+					"file": "src/Strip.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9782,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5978,
+								5978
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/SublimeLinter-jsxhint/JavaScript (JSX).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3797.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "lib/Strip.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9878,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "lib/Container.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1877,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								639,
+								639
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "src/Container.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1856,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1847,
+								1847
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/SublimeLinter-jsxhint/JavaScript (JSX).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 702.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 134,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								134,
+								134
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 72.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
 					"file": "style/index.styl",
 					"semi_transient": false,
 					"settings":
@@ -1266,39 +1687,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "Gulpfile.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 193,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
+					"buffer": 14,
 					"file": "README.md",
 					"semi_transient": false,
 					"settings":
@@ -1323,27 +1716,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 144.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 15,
 					"file": "dist/react-tab-panel.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 77609,
+						"buffer_size": 77663,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1857,
-								1857
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1355,11 +1748,11 @@
 						"translation.y": 2376.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 14,
 					"file": "README.md",
 					"semi_transient": false,
 					"settings":
@@ -1387,7 +1780,7 @@
 						"translation.y": 560.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 17,
 					"type": "text"
 				}
 			]
@@ -1421,7 +1814,7 @@
 		"cols":
 		[
 			0.0,
-			0.509302325582,
+			0.466777408638,
 			1.0
 		],
 		"rows":
@@ -1459,12 +1852,28 @@
 		"selected_items":
 		[
 			[
-				"index.",
+				"pac",
+				"package.json"
+			],
+			[
+				"webpac",
+				"webpack.config.js"
+			],
+			[
+				"index",
 				"index.html"
 			],
 			[
-				"pac",
-				"package.json"
+				"loader",
+				"loaders.config.js"
+			],
+			[
+				"index.html",
+				"index.html"
+			],
+			[
+				"index.",
+				"index.html"
 			],
 			[
 				"read",
@@ -1473,10 +1882,6 @@
 			[
 				"conta",
 				"src/Container.jsx"
-			],
-			[
-				"index",
-				"src/index.jsx"
 			],
 			[
 				"tabpa",
@@ -1553,10 +1958,6 @@
 			[
 				"canv",
 				"src/js/views/items/Canvas.jsx"
-			],
-			[
-				"loader",
-				"loaders.config.js"
 			],
 			[
 				"itemsma",
@@ -1961,14 +2362,6 @@
 			[
 				"canvaspro",
 				"src/js/views/properties/CanvasProperties.jsx"
-			],
-			[
-				"createp",
-				"src/js/render/createProxy.js"
-			],
-			[
-				"properties.sty",
-				"src/resources/css/properties.styl"
 			]
 		],
 		"width": 0.0
@@ -1978,6 +2371,14 @@
 		"height": 500.0,
 		"selected_items":
 		[
+			[
+				"react",
+				"~/code/react-date-picker/react-date-picker.sublime-project"
+			],
+			[
+				"split",
+				"~/code/react-split-container/react-split-container.sublime-project"
+			],
 			[
 				"raect-sp",
 				"~/code/react-split-container/react-split-container.sublime-project"
@@ -1993,10 +2394,6 @@
 			[
 				"react-ta",
 				"~/code/react-tab-panel/react-tab-panel.sublime-project"
-			],
-			[
-				"react",
-				"~/code/react-date-picker/react-date-picker.sublime-project"
 			],
 			[
 				"date",
