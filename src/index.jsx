@@ -28,8 +28,12 @@ var TabPanel = React.createClass({
             },
 
             defaultContainerStyle: {
-                flex: 1
+                flex: 1,
+                display: 'flex'
             },
+            defaultActiveStyle: {
+                overflow: 'auto'
+            }
 
             scrollerFactory: function(props, side) {
                 var style = assign({}, props.style)
