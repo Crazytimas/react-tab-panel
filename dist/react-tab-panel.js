@@ -57,9 +57,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	/** @jsx React.DOM */'use strict';
 
 	var React = __webpack_require__(1)
-	var Tabs  = __webpack_require__(3)
+	var Tabs  = __webpack_require__(4)
 	var assign = __webpack_require__(2)
 	var TabsFactory = React.createFactory(Tabs)
+	var prefixer = __webpack_require__(3)
 
 	var ARROW_DEFAULTS = {
 	    color : 'rgb(237, 227, 227)',
@@ -76,9 +77,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    getDefaultProps: function() {
 	        return {
 	            defaultStripStyle: {
+	                flex : 'none',
 	                textOverflow: 'ellipsis',
 	                overflow    : 'hidden',
 	                whiteSpace  : 'nowrap'
+	            },
+
+	            defaultContainerStyle: {
+	                flex: 1
 	            },
 
 	            scrollerFactory: function(props, side) {
@@ -135,10 +141,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 
+	    prepareStyle: function(props){
+	        var style = {}
+
+	        assign(style, {
+	            display : 'flex',
+	            flexFlow: 'column'
+	        }, props.style)
+
+	        return prefixer(style)
+	    },
+
 	    render: function() {
 	        var props = assign({}, this.props)
 
 	        props.onChange = this.handleChange
+	        props.style = this.prepareStyle(props)
+
 	        this.prepareIndex(props, this.state)
 
 	        if (props.arrowColor){
@@ -146,6 +165,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            props.scrollerProps.arrowColor = props.arrowColor
 	        }
 
+	        props.containerStyle = assign({}, props.defaultContainerStyle, props.containerStyle)
 	        props.stripStyle = assign({}, props.defaultStripStyle, props.stripStyle)
 
 	        return TabsFactory(props)
@@ -216,20 +236,102 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	var el;
+
+	if(!!global.document){
+	  el = global.document.createElement('div');
+	}
+
+	var prefixes = ["ms", "Moz", "Webkit", "O"];
+	var properties = [
+	  'userSelect',
+	  'transform',
+	  'transition',
+	  'transformOrigin',
+	  'transformStyle',
+	  'transitionProperty',
+	  'transitionDuration',
+	  'transitionTimingFunction',
+	  'transitionDelay',
+	  'borderImage',
+	  'borderImageSlice',
+	  'boxShadow',
+	  'backgroundClip',
+	  'backfaceVisibility',
+	  'perspective',
+	  'perspectiveOrigin',
+	  'animation',
+	  'animationDuration',
+	  'animationName',
+	  'animationDelay',
+	  'animationDirection',
+	  'animationIterationCount',
+	  'animationTimingFunction',
+	  'animationPlayState',
+	  'animationFillMode',
+	  'appearance'
+	];
+
+	function GetVendorPrefix(property) {
+	  if(properties.indexOf(property) == -1 || !global.document || typeof el.style[property] !== 'undefined'){
+	    return property;
+	  }
+
+	  property = property[0].toUpperCase() + property.slice(1);
+	  var temp;
+
+	  for(var i = 0; i < prefixes.length; i++){
+	    temp = prefixes[i] + property;
+	    if(typeof el.style[temp] !== 'undefined'){
+	      prefixes = [prefixes[i]]; // we only need to check this one prefix from now on.
+	      return temp;
+	    }
+	  }
+	  return property[0].toLowerCase() + property.slice(1);
+	}
+
+
+	module.exports = (function(){
+	  var cache = {};
+	  return function(obj){
+	    if(!global.document){
+	      return obj;
+	    }
+
+	    var result = {};
+
+	    for(var key in obj){
+	      if(cache[key] === undefined){
+	        cache[key] = GetVendorPrefix(key);
+	      }
+	      result[cache[key]] = obj[key];
+	    }
+
+	    return result;
+	  };
+	})();
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	var React     = __webpack_require__(1)
-	var copy      = __webpack_require__(7).copy
-	var copyList  = __webpack_require__(7).copyList
-	var copyKeys  = __webpack_require__(7).copyKeys
-	var copyExceptKeys  = __webpack_require__(7).copyExceptKeys
-	var Strip     = __webpack_require__(4)
-	var Container = __webpack_require__(5)
+	var copy      = __webpack_require__(8).copy
+	var copyList  = __webpack_require__(8).copyList
+	var copyKeys  = __webpack_require__(8).copyKeys
+	var copyExceptKeys  = __webpack_require__(8).copyExceptKeys
+	var Strip     = __webpack_require__(5)
+	var Container = __webpack_require__(6)
 
 	var StripFactory     = React.createFactory(Strip)
 	var ContainerFactory = React.createFactory(Container)
 
-	var BASE_CLASS_NAME = __webpack_require__(6)
+	var BASE_CLASS_NAME = __webpack_require__(7)
 
 	function emptyFn(){}
 
@@ -379,17 +481,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = TabPanel
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React  = __webpack_require__(1)
-	var copy   = __webpack_require__(7).copy
-	var F      = __webpack_require__(14)
+	var copy   = __webpack_require__(8).copy
+	var F      = __webpack_require__(15)
 	var buffer = F.buffer
 
-	var BASE_CLASS_NAME = __webpack_require__(6)
+	var BASE_CLASS_NAME = __webpack_require__(7)
 
 	function stop(event){
 	    event.preventDefault()
@@ -767,15 +869,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1)
-	var copy  = __webpack_require__(7).copy
+	var copy  = __webpack_require__(8).copy
 
-	var BASE_CLASS_NAME = __webpack_require__(6)
+	var BASE_CLASS_NAME = __webpack_require__(7)
 
 	module.exports = React.createClass({
 
@@ -850,13 +952,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = 'basic-tabs'
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(){
@@ -880,7 +982,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copy: __webpack_require__(8),
+	        copy: __webpack_require__(9),
 
 	        /**
 	         * Copies all properties from source to destination, if the property does not exist into the destination
@@ -893,7 +995,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyIf: __webpack_require__(9),
+	        copyIf: __webpack_require__(10),
 
 	        /**
 	         * Copies all properties from source to a new object, with the given value. This object is returned
@@ -935,7 +1037,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyList: __webpack_require__(10),
+	        copyList: __webpack_require__(11),
 
 	        /**
 	         * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
@@ -949,7 +1051,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyListIf: __webpack_require__(11),
+	        copyListIf: __webpack_require__(12),
 
 	        /**
 	         * Copies all properties named in the namedKeys, from source to destination
@@ -963,7 +1065,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyKeys: __webpack_require__(12),
+	        copyKeys: __webpack_require__(13),
 
 	        /**
 	         * Copies all properties named in the namedKeys, from source to destination,
@@ -978,7 +1080,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyKeysIf: __webpack_require__(13),
+	        copyKeysIf: __webpack_require__(14),
 
 	        copyExceptKeys: function(source, destination, exceptKeys){
 	            destination = destination || {}
@@ -1057,7 +1159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1092,7 +1194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1128,7 +1230,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1172,7 +1274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1218,7 +1320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1227,7 +1329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var STR_OBJECT    = 'object'
 	var HAS_OWN       = Object.prototype.hasOwnProperty
 
-	var copyList = __webpack_require__(10)
+	var copyList = __webpack_require__(11)
 
 	/**
 	 * Copies all properties named in the namedKeys, from source to destination
@@ -1274,7 +1376,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1283,7 +1385,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var STR_OBJECT    = 'object'
 	var HAS_OWN       = Object.prototype.hasOwnProperty
 
-	var copyListIf = __webpack_require__(11)
+	var copyListIf = __webpack_require__(12)
 
 	/**
 	 * Copies all properties named in the namedKeys, from source to destination,
@@ -1339,7 +1441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	    var setImmediate = function(fn){
@@ -1419,7 +1521,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var SLICE = Array.prototype.slice
 
-	    var curry = __webpack_require__(15),
+	    var curry = __webpack_require__(16),
 
 	        findFn = function(fn, target, onFound){
 	            // if (typeof target.find == 'function'){
@@ -1490,19 +1592,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return the result of the first function in the enumeration
 	         */
-	        compose = __webpack_require__(16),
+	        compose = __webpack_require__(17),
 
-	        chain = __webpack_require__(17),
+	        chain = __webpack_require__(18),
 
-	        once = __webpack_require__(18),
+	        once = __webpack_require__(19),
 
-	        bindArgsArray = __webpack_require__(19),
+	        bindArgsArray = __webpack_require__(20),
 
-	        bindArgs = __webpack_require__(20),
+	        bindArgs = __webpack_require__(21),
 
-	        lockArgsArray = __webpack_require__(21),
+	        lockArgsArray = __webpack_require__(22),
 
-	        lockArgs = __webpack_require__(22),
+	        lockArgs = __webpack_require__(23),
 
 	        skipArgs = function(fn, count){
 	            return function(){
@@ -1860,11 +1962,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = {
 
-	    map: __webpack_require__(23),
+	    map: __webpack_require__(24),
 
-	    dot: __webpack_require__(24),
+	    dot: __webpack_require__(25),
 
-	    maxArgs: __webpack_require__(25),
+	    maxArgs: __webpack_require__(26),
 
 	    /**
 	     * @method compose
@@ -1983,11 +2085,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    findIndex: findIndex,
 
-	    newify: __webpack_require__(26)
+	    newify: __webpack_require__(27)
 	}
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -2025,7 +2127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = curry
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -2058,7 +2160,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -2083,7 +2185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = chain
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use once'
@@ -2107,7 +2209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = once
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -2127,20 +2229,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
 	var SLICE = Array.prototype.slice
-	var bindArgsArray = __webpack_require__(19)
+	var bindArgsArray = __webpack_require__(20)
 
 	module.exports = function(fn){
 	    return bindArgsArray(fn, SLICE.call(arguments,1))
 	}
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -2159,25 +2261,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
 	var SLICE = Array.prototype.slice
-	var lockArgsArray = __webpack_require__(21)
+	var lockArgsArray = __webpack_require__(22)
 
 	module.exports = function(fn){
 	    return lockArgsArray(fn, SLICE.call(arguments, 1))
 	}
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var curry = __webpack_require__(15)
+	var curry = __webpack_require__(16)
 
 	module.exports = curry(function(fn, value){
 	    return value != undefined && typeof value.map?
@@ -2186,25 +2288,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	})
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var curry = __webpack_require__(15)
+	var curry = __webpack_require__(16)
 
 	module.exports = curry(function(prop, value){
 	    return value != undefined? value[prop]: undefined
 	})
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
 	var SLICE = Array.prototype.slice
-	var curry = __webpack_require__(15)
+	var curry = __webpack_require__(16)
 
 	module.exports = function(fn, count){
 	    return function(){
@@ -2213,28 +2315,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var newify = __webpack_require__(27)
-	var curry  = __webpack_require__(15)
+	var newify = __webpack_require__(28)
+	var curry  = __webpack_require__(16)
 
 	module.exports = curry(newify)
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getInstantiatorFunction = __webpack_require__(28)
+	var getInstantiatorFunction = __webpack_require__(29)
 
 	module.exports = function(fn, args){
 		return getInstantiatorFunction(args.length)(fn, args)
 	}
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(){

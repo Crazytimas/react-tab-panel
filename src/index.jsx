@@ -4,6 +4,7 @@ var React = require('react')
 var Tabs  = require('react-basic-tabs')
 var assign = require('object-assign')
 var TabsFactory = React.createFactory(Tabs)
+var prefixer = require('react-prefixr')
 
 var ARROW_DEFAULTS = {
     color : 'rgb(237, 227, 227)',
@@ -20,9 +21,14 @@ var TabPanel = React.createClass({
     getDefaultProps: function() {
         return {
             defaultStripStyle: {
+                flex : 'none',
                 textOverflow: 'ellipsis',
                 overflow    : 'hidden',
                 whiteSpace  : 'nowrap'
+            },
+
+            defaultContainerStyle: {
+                flex: 1
             },
 
             scrollerFactory: function(props, side) {
@@ -79,10 +85,23 @@ var TabPanel = React.createClass({
         }
     },
 
+    prepareStyle: function(props){
+        var style = {}
+
+        assign(style, {
+            display : 'flex',
+            flexFlow: 'column'
+        }, props.style)
+
+        return prefixer(style)
+    },
+
     render: function() {
         var props = assign({}, this.props)
 
         props.onChange = this.handleChange
+        props.style = this.prepareStyle(props)
+
         this.prepareIndex(props, this.state)
 
         if (props.arrowColor){
@@ -90,6 +109,7 @@ var TabPanel = React.createClass({
             props.scrollerProps.arrowColor = props.arrowColor
         }
 
+        props.containerStyle = assign({}, props.defaultContainerStyle, props.containerStyle)
         props.stripStyle = assign({}, props.defaultStripStyle, props.stripStyle)
 
         return TabsFactory(props)
