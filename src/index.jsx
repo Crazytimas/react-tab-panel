@@ -113,8 +113,9 @@ var TabPanel = React.createClass({
             props.scrollerProps.arrowColor = props.arrowColor
         }
 
+        props.activeStyle    = assign({}, props.defaultActiveStyle, props.activeStyle)
         props.containerStyle = assign({}, props.defaultContainerStyle, props.containerStyle)
-        props.stripStyle = assign({}, props.defaultStripStyle, props.stripStyle)
+        props.stripStyle     = assign({}, props.defaultStripStyle, props.stripStyle)
 
         return TabsFactory(props)
     },
