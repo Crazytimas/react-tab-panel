@@ -2,7 +2,7 @@
 
 var React = require('react')
 var Tabs  = require('react-basic-tabs')
-var copy  = require('copy-utils').copy
+var assign = require('object-assign')
 var TabsFactory = React.createFactory(Tabs)
 
 var ARROW_DEFAULTS = {
@@ -26,24 +26,24 @@ var TabPanel = React.createClass({
             },
 
             scrollerFactory: function(props, side) {
-                var style = copy(props.style)
+                var style = assign({}, props.style)
                 var borderWidth = style.borderWidth
 
                 style.borderWidth = 0
                 style.borderStyle = 'solid'
                 style['border' + (side=='left'? 'Right': 'Left') + 'Width'] = borderWidth
 
-                var arrowStyle  = props.arrowStyle? copy(props.arrowStyle): {}
+                var arrowStyle  = assign({}, props.arrowStyle)
                 var arrowWidth  = props.arrowWidth  ||  arrowStyle.width || ARROW_DEFAULTS.width
                 var arrowHeight = props.arrowHeight || arrowStyle.height || ARROW_DEFAULTS.height
                 var arrowColor  = props.arrowColor || arrowStyle.color || ARROW_DEFAULTS.color
 
-                copy({
+                assign(arrowStyle, {
                     borderTop   : arrowHeight + 'px solid transparent',
                     borderBottom: arrowHeight + 'px solid transparent',
                     borderLeftWidth  : arrowWidth,
                     borderRightWidth : arrowWidth
-                }, arrowStyle)
+                })
 
                 if (side == 'right'){
                     arrowStyle.borderLeftColor = arrowColor
@@ -80,7 +80,7 @@ var TabPanel = React.createClass({
     },
 
     render: function() {
-        var props = copy(this.props)
+        var props = assign({}, this.props)
 
         props.onChange = this.handleChange
         this.prepareIndex(props, this.state)
@@ -90,7 +90,7 @@ var TabPanel = React.createClass({
             props.scrollerProps.arrowColor = props.arrowColor
         }
 
-        props.stripStyle = copy(props.stripStyle, copy(props.defaultStripStyle))
+        props.stripStyle = assign({}, props.defaultStripStyle, props.stripStyle)
 
         return TabsFactory(props)
     },

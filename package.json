@@ -4,10 +4,9 @@
   "description": "React TabPanel",
   "main": "lib/index.js",
   "dependencies": {
-    "copy-utils": "^1.0.0",
-    "functionally": "^0.6.2",
+    "object-assign": "^2.0.0",
     "react": "^0.12.0",
-    "react-basic-tabs": "^1.0.3"
+    "react-basic-tabs": "radubrehar/react-basic-tabs"
   },
   "devDependencies": {
     "css-loader": "^0.9.0",
