@@ -11,41 +11,41 @@
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -56,138 +56,125 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/** @jsx React.DOM */'use strict';
 
-	var React = __webpack_require__(1)
-	var Tabs  = __webpack_require__(4)
-	var assign = __webpack_require__(2)
-	var TabsFactory = React.createFactory(Tabs)
-	var prefixer = __webpack_require__(3)
+	var React     = __webpack_require__(1)
+	var assign    = __webpack_require__(3)
 
-	var ARROW_DEFAULTS = {
-	    color : 'rgb(237, 227, 227)',
-	    width : 6,
-	    height: 6
-	}
+	var Tabs      = __webpack_require__(2)
 
 	function emptyFn(){}
 
+	// var ARROW_DEFAULTS = {
+	//     color : 'rgb(237, 227, 227)',
+	//     width : 6,
+	//     height: 6
+	// }
+
+	// var DEFAULT_ARROW_STYLE = {
+	//     top: '50%',
+	//     left: '50%',
+	//     display: 'inline-block',
+	//     position: 'absolute',
+	//     boxSizing: 'border-box',
+	//     borderLeft: '0px solid transparent',
+	//     borderRight: '0px solid transparent'
+	// }
+
+	// //default style for TabPanel
+	// var DEFAULT_STYLE =  {
+	//     display  : 'flex',
+	//     flexFlow : 'column',
+	//     boxSizing: 'border-box'
+	// }
+
+	var DISPLAY_NAME = 'ReactTabPanel'
+
 	var TabPanel = React.createClass({
 
-	    displayName: 'TabPanel',
+	    displayName: DISPLAY_NAME,
 
 	    getDefaultProps: function() {
 	        return {
-	            defaultStripStyle: {
-	                flex : 'none',
-	                textOverflow: 'ellipsis',
-	                overflow    : 'hidden',
-	                whiteSpace  : 'nowrap'
-	            },
 
-	            defaultContainerStyle: {
-	                flex: 1
-	            },
+	            'data-display-name': DISPLAY_NAME,
 
-	            scrollerFactory: function(props, side) {
-	                var style = assign({}, props.style)
-	                var borderWidth = style.borderWidth
+	            // defaultStripStyle: {
+	            //     flex : 'none',
+	            //     textOverflow: 'ellipsis',
+	            //     overflow    : 'hidden',
+	            //     whiteSpace  : 'nowrap'
+	            // },
 
-	                style.borderWidth = 0
-	                style.borderStyle = 'solid'
-	                style['border' + (side=='left'? 'Right': 'Left') + 'Width'] = borderWidth
+	            // defaultContainerStyle: {
+	            //     flex: 1,
+	            //     display: 'flex'
+	            // },
 
-	                var arrowStyle  = assign({}, props.arrowStyle)
-	                var arrowWidth  = props.arrowWidth  ||  arrowStyle.width || ARROW_DEFAULTS.width
-	                var arrowHeight = props.arrowHeight || arrowStyle.height || ARROW_DEFAULTS.height
-	                var arrowColor  = props.arrowColor || arrowStyle.color || ARROW_DEFAULTS.color
+	            // defaultSelectedStyle: {
+	            //     overflow: 'auto'
+	            // },
 
-	                assign(arrowStyle, {
-	                    borderTop   : arrowHeight + 'px solid transparent',
-	                    borderBottom: arrowHeight + 'px solid transparent',
-	                    borderLeftWidth  : arrowWidth,
-	                    borderRightWidth : arrowWidth
-	                })
+	            // scrollerFactory: function(props) {
+	            //     var side = props.side
+	            //     var style = assign({}, props.style)
+	            //     var borderWidth = style.borderWidth
 
-	                if (side == 'right'){
-	                    arrowStyle.borderLeftColor = arrowColor
-	                }
+	            //     style.borderWidth = 0
+	            //     style.borderStyle = 'solid'
+	            //     style['border' + (side=='left'? 'Right': 'Left') + 'Width'] = borderWidth
 
-	                if (side == 'left'){
-	                    arrowStyle.borderRightColor = arrowColor
-	                }
+	            //     var arrowStyle  = assign({}, DEFAULT_ARROW_STYLE, props.arrowStyle)
 
-	                delete arrowStyle.width
-	                delete arrowStyle.height
+	            //     var arrowWidth  = props.arrowWidth  ||  arrowStyle.width || ARROW_DEFAULTS.width
+	            //     var arrowHeight = props.arrowHeight || arrowStyle.height || ARROW_DEFAULTS.height
+	            //     var arrowColor  = props.arrowColor || arrowStyle.color || ARROW_DEFAULTS.color
 
-	                return (
-	                    React.createElement("div", React.__spread({},  props), 
-	                        React.createElement("div", {className: "arrow", 'data-side': side, style: arrowStyle})
-	                    )
-	                )
-	            },
+	            //     assign(arrowStyle, {
+	            //         borderTop   : arrowHeight + 'px solid transparent',
+	            //         borderBottom: arrowHeight + 'px solid transparent',
+	            //         borderLeftWidth  : arrowWidth,
+	            //         borderRightWidth : arrowWidth
+	            //     })
 
-	            stripFactory: function(props, Strip) {
-	                return (
-	                    React.createElement("div", {key: "stripWrap", style: {overflow: 'hidden'}}, 
-	                        Strip(props)
-	                    )
-	                )
-	            }
+	            //     if (side == 'right'){
+	            //         arrowStyle.borderLeftColor = arrowColor
+	            //     }
+
+	            //     if (side == 'left'){
+	            //         arrowStyle.borderRightColor = arrowColor
+	            //     }
+
+	            //     delete arrowStyle.width
+	            //     delete arrowStyle.height
+
+	            //     return (
+	            //         <div {...props}>
+	            //             <div className="arrow" data-side={side} style={arrowStyle} />
+	            //         </div>
+	            //     )
+	            // },
+
+	            // stripFactory: function(props, Strip) {
+	            //     return (
+	            //         <div key="stripWrap" style={{overflow: 'hidden'}}>
+	            //             {Strip(props)}
+	            //         </div>
+	            //     )
+	            // }
 	        }
 	    },
 
-	    getInitialState: function() {
-	        return {
+	    // prepareStyle: function(props){
 
-	        }
-	    },
+	    //     var style = assign({}, DEFAULT_STYLE, props.style)
 
-	    prepareStyle: function(props){
-	        var style = {}
-
-	        assign(style, {
-	            display : 'flex',
-	            flexFlow: 'column'
-	        }, props.style)
-
-	        return prefixer(style)
-	    },
+	    //     return normalize(style)
+	    // },
 
 	    render: function() {
-	        var props = assign({}, this.props)
 
-	        props.onChange = this.handleChange
-	        props.style = this.prepareStyle(props)
+	        // var props = this.prepareProps(this.props)
 
-	        this.prepareIndex(props, this.state)
-
-	        if (props.arrowColor){
-	            props.scrollerProps = props.scrollerProps || {}
-	            props.scrollerProps.arrowColor = props.arrowColor
-	        }
-
-	        props.containerStyle = assign({}, props.defaultContainerStyle, props.containerStyle)
-	        props.stripStyle = assign({}, props.defaultStripStyle, props.stripStyle)
-
-	        return TabsFactory(props)
-	    },
-
-	    prepareIndex: function(props, state) {
-	        if (props.hasOwnProperty('defaultActiveIndex')){
-	            props.activeIndex = props.defaultActiveIndex
-	            if (typeof state.activeIndex != 'undefined'){
-	                props.activeIndex = state.activeIndex
-	            }
-	        }
-	    },
-
-	    handleChange: function(index) {
-	        if (this.props.hasOwnProperty('defaultActiveIndex')){
-	            this.setState({
-	                activeIndex: index
-	            })
-	        }
-
-	        ;(this.props.onChange || emptyFn)(index)
+	        return React.createElement(Tabs, React.__spread({},  this.props))
 	    }
 
 	})
@@ -202,6 +189,255 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */'use strict';
+
+	var React          = __webpack_require__(1)
+	var assign         = __webpack_require__(8)
+
+	var copyList       = __webpack_require__(7)
+	var Strip          = __webpack_require__(4)
+	var Container      = __webpack_require__(5)
+
+	var normalize = __webpack_require__(9)
+
+	var StripFactory     = React.createFactory(Strip)
+	var ContainerFactory = React.createFactory(Container)
+
+	var BASE_CLASS_NAME = __webpack_require__(6)
+	var DISPLAY_NAME    = 'ReactBasicTabs'
+
+	function emptyFn(){}
+
+	var TabPanel = React.createClass({
+
+	    displayName: DISPLAY_NAME,
+
+	    propTypes: {
+	        selectedIndex         : React.PropTypes.number,
+
+	        //for panels
+	        selectedStyle         : React.PropTypes.object,
+	        selectedClassName     : React.PropTypes.string,
+
+	        childrenStyle        : React.PropTypes.object,
+	        childrenClassName    : React.PropTypes.string,
+
+	        //for titles
+	        titleStyle          : React.PropTypes.object,
+	        titleClassName      : React.PropTypes.string,
+	        selectedTitleStyle    : React.PropTypes.object,
+	        selectedTitleClassName: React.PropTypes.string,
+
+	        onSelect            : React.PropTypes.func,
+
+	        stripListStyle  : React.PropTypes.object,
+	        stripFactory    : React.PropTypes.func,
+	        containerFactory: React.PropTypes.func,
+
+	        //specify 'bottom' if you want to render the strip after the container
+	        tabVerticalPosition   : React.PropTypes.string
+	    },
+
+	    getInitialState: function(){
+	        return {
+	            defaultSelectedIndex: this.props.defaultSelectedIndex
+	        }
+	    },
+
+	    getDefaultProps: function(){
+	        return {
+	            'data-display-name': DISPLAY_NAME,
+
+	            defaultStyle: {
+	                display: 'flex',
+	                flexFlow: 'column',
+	                alignItems: 'stretch',
+
+	                border: '1px solid rgb(218, 218, 218)',
+	                color : 'rgb(120, 120, 120)'
+	            },
+
+	            //for panels
+	            hiddenStyle: null,
+	            hiddenClassName: null,
+
+	            selectedStyle: {},
+	            selectedClassName: 'selected',
+
+	            //for titles
+	            titleStyle: {},
+	            titleClassName: '',
+	            selectedTitleStyle: {},
+	            selectedTitleClassName: 'selected',
+
+	            tabVerticalPosition: 'top'
+	        }
+	    },
+
+	    prepareChildren: function(props) {
+
+	        var children = []
+
+	        React.Children.forEach(props.children, function(child){
+	            if (child != null && child != false){
+	                children.push(child)
+	            }
+	        })
+
+	        return children
+	    },
+
+	    prepareStyle: function(props) {
+	        var style = assign({}, props.defaultStyle, props.style)
+
+	        return normalize(style)
+	    },
+
+	    prepareSelectedIndex: function(props) {
+	        var state         = this.state
+	        var selectedIndex = props.selectedIndex
+
+	        if (!props.hasOwnProperty('selectedIndex')){
+	            selectedIndex = state.defaultSelectedIndex
+	        }
+
+	        selectedIndex = Math.min(selectedIndex, props.children.length - 1)
+
+	        return selectedIndex
+	    },
+
+	    render: function(){
+
+	        var props = assign({}, this.props)
+
+	        props.style = this.prepareStyle(props)
+	        props.children = this.prepareChildren(props)
+	        props.selectedIndex = this.prepareSelectedIndex(props)
+
+	        if (props.activeIndex != null){
+	            console.warn('"activeIndex" is deprecated. Use "selectedIndex" instead!')
+	        }
+
+	        if (props.defaultActiveIndex != null){
+	            console.warn('"defaultActiveIndex" is deprecated. Use "defaultSelectedIndex" instead!')
+	        }
+	        if (props.onChange != null){
+	            console.warn('"onChange" is deprecated. Use "onSelect" instead!')
+	        }
+
+	        props.className = props.className || ''
+	        props.className += ' ' + BASE_CLASS_NAME
+
+	        var StripComponent     = this.renderStrip(props)
+	        var ContainerComponent = this.renderContainer(props)
+
+	        var Content = props.tabVerticalPosition == 'bottom'?
+	                            [ContainerComponent, StripComponent]:
+	                            [StripComponent, ContainerComponent]
+
+	        var divProps = {
+	            className: props.className,
+	            style    : props.style
+	        }
+
+	        return (
+	            React.createElement("div", React.__spread({},  divProps), 
+	                Content
+	            )
+	        )
+	    },
+
+	    renderContainer: function(props) {
+	        var containerProps = copyList(props, [
+	                'children',
+	                'selectedIndex',
+
+	                'selectedClassName',
+	                'selectedStyle',
+
+	                'childrenStyle',
+	                'childrenClassName',
+
+	                'hiddenStyle',
+	                'hiddenClassName'
+	            ])
+
+	        containerProps.style = props.containerStyle
+	        containerProps.key = 'container'
+
+	        if (props.containerFactory){
+	            return props.containerFactory(containerProps, ContainerFactory)
+	        }
+
+	        return ContainerFactory(containerProps)
+	    },
+
+	    renderStrip: function(props){
+	        var stripProps = copyList(props, [
+	            'children',
+	            'selectedIndex',
+
+	            'selectedTitleStyle',
+	            'selectedTitleClassName',
+
+	            'disabledTitleStyle',
+	            'disabledTitleClassName',
+
+	            'focusedTitleStyle',
+	            'focusedSelectedTitleStyle',
+	            'focusedTitleClassName',
+
+	            'anchorStyle',
+	            'disabledAnchorStyle',
+	            'focusedAnchorStyle',
+
+	            'titleStyle',
+	            'titleFactory',
+	            'titleProps',
+	            'enableScroll',
+
+	            'scrollerProps',
+	            'scrollerStyle',
+	            'scrollStep',
+	            'scrollSpeed',
+	            'scrollerWidth',
+
+	            'tabAlign'
+	        ])
+
+	        stripProps.style    = props.stripStyle
+	        stripProps.position = props.tabVerticalPosition == 'bottom'? 'bottom': 'top'
+	        stripProps.key      = 'strip'
+	        stripProps.onSelect = this.handleSelect || emptyFn
+
+	        if (props.stripFactory){
+	            return props.stripFactory(stripProps, StripFactory)
+	        }
+
+	        return StripFactory(stripProps)
+	    },
+
+	    handleSelect: function(index){
+	        if (!this.props.hasOwnProperty('selectedIndex')){
+	            this.setState({
+	                defaultSelectedIndex: index
+	            })
+	        }
+
+	        ;(this.props.onSelect || emptyFn)(index)
+	        ;(this.props.onChange || emptyFn)(index) //deprecated
+	    }
+	})
+
+	TabPanel.Strip     = Strip
+	TabPanel.Container = Container
+
+	module.exports = TabPanel
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -233,339 +469,46 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-
-	var el;
-
-	if(!!global.document){
-	  el = global.document.createElement('div');
-	}
-
-	var prefixes = ["ms", "Moz", "Webkit", "O"];
-	var properties = [
-	  'userSelect',
-	  'transform',
-	  'transition',
-	  'transformOrigin',
-	  'transformStyle',
-	  'transitionProperty',
-	  'transitionDuration',
-	  'transitionTimingFunction',
-	  'transitionDelay',
-	  'borderImage',
-	  'borderImageSlice',
-	  'boxShadow',
-	  'backgroundClip',
-	  'backfaceVisibility',
-	  'perspective',
-	  'perspectiveOrigin',
-	  'animation',
-	  'animationDuration',
-	  'animationName',
-	  'animationDelay',
-	  'animationDirection',
-	  'animationIterationCount',
-	  'animationTimingFunction',
-	  'animationPlayState',
-	  'animationFillMode',
-	  'appearance'
-	];
-
-	function GetVendorPrefix(property) {
-	  if(properties.indexOf(property) == -1 || !global.document || typeof el.style[property] !== 'undefined'){
-	    return property;
-	  }
-
-	  property = property[0].toUpperCase() + property.slice(1);
-	  var temp;
-
-	  for(var i = 0; i < prefixes.length; i++){
-	    temp = prefixes[i] + property;
-	    if(typeof el.style[temp] !== 'undefined'){
-	      prefixes = [prefixes[i]]; // we only need to check this one prefix from now on.
-	      return temp;
-	    }
-	  }
-	  return property[0].toLowerCase() + property.slice(1);
-	}
-
-
-	module.exports = (function(){
-	  var cache = {};
-	  return function(obj){
-	    if(!global.document){
-	      return obj;
-	    }
-
-	    var result = {};
-
-	    for(var key in obj){
-	      if(cache[key] === undefined){
-	        cache[key] = GetVendorPrefix(key);
-	      }
-	      result[cache[key]] = obj[key];
-	    }
-
-	    return result;
-	  };
-	})();
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	var React     = __webpack_require__(1)
-	var copy      = __webpack_require__(8).copy
-	var copyList  = __webpack_require__(8).copyList
-	var copyKeys  = __webpack_require__(8).copyKeys
-	var copyExceptKeys  = __webpack_require__(8).copyExceptKeys
-	var Strip     = __webpack_require__(5)
-	var Container = __webpack_require__(6)
-
-	var StripFactory     = React.createFactory(Strip)
-	var ContainerFactory = React.createFactory(Container)
-
-	var BASE_CLASS_NAME = __webpack_require__(7)
-
-	function emptyFn(){}
-
-	var TabPanel = React.createClass({displayName: "TabPanel",
-
-	    propTypes: {
-	        activeIndex         : React.PropTypes.number,
-
-	        //for panels
-	        activeStyle         : React.PropTypes.object,
-	        activeClassName     : React.PropTypes.string,
-	        defaultStyle        : React.PropTypes.object,
-	        defaultClassName    : React.PropTypes.string,
-
-	        //for titles
-	        titleStyle          : React.PropTypes.object,
-	        titleClassName      : React.PropTypes.string,
-	        activeTitleStyle    : React.PropTypes.object,
-	        activeTitleClassName: React.PropTypes.string,
-
-	        onChange            : React.PropTypes.func,
-
-	        stripListStyle  : React.PropTypes.object,
-	        stripFactory    : React.PropTypes.func,
-	        containerFactory: React.PropTypes.func,
-
-	        //specify 'bottom' if you want to render the strip after the container
-	        tabVerticalPosition   : React.PropTypes.string
-	    },
-
-	    getDefaultProps: function(){
-	        return {
-	            activeIndex: 0,
-
-	            //for panels
-	            activeStyle: {},
-	            activeClassName: 'active',
-	            defaultStyle: {},
-	            defaultClassName: '',
-
-	            //for titles
-	            titleStyle: {},
-	            titleClassName: '',
-	            activeTitleStyle: {},
-	            activeTitleClassName: 'active',
-
-	            tabVerticalPosition: 'top'
-	        }
-	    },
-
-	    prepareStyle: function(props){
-	        var style = {}
-
-	        copy({
-	            display: 'flex',
-	            flexFlow: 'column'
-	        }, style)
-	        copy(props.style, style)
-
-	        return style
-	    },
-
-	    render: function(){
-
-	        var props = copy(this.props)
-	        props.children = props.children || []
-
-	        props.style = this.prepareStyle(props)
-
-	        var activeIndex = props.activeIndex || 0
-	        props.activeIndex = Math.min(activeIndex, props.children.length - 1)
-
-	        props.className = props.className || ''
-	        props.className += ' ' + BASE_CLASS_NAME
-
-	        var StripComponent     = this.renderStrip(props)
-	        var ContainerComponent = this.renderContainer(props)
-
-	        var Content = props.tabVerticalPosition == 'bottom'?
-	                            [ContainerComponent, StripComponent]:
-	                            [StripComponent, ContainerComponent]
-
-	        var divProps = {
-	            className: props.className,
-	            style    : props.style
-	        }
-
-	        return (
-	            React.createElement("div", React.__spread({},  divProps), 
-	                Content
-	            )
-	        )
-	    },
-
-	    renderContainer: function(props) {
-	        var containerProps = copyList(props, [
-	                'activeIndex',
-	                'activeClassName',
-	                'activeStyle',
-	                'defaultStyle',
-	                'defaultClassName',
-	                'hiddenStyle',
-	                'children'
-	            ])
-
-	        containerProps.style = props.containerStyle
-	        containerProps.key = 'container'
-
-	        if (props.containerFactory){
-	            return props.containerFactory(containerProps, ContainerFactory)
-	        }
-
-	        return ContainerFactory(containerProps)
-	    },
-
-	    renderStrip: function(props){
-	        var stripProps = copyExceptKeys(props, {},{
-	            stripStyle: 1,
-	            activeTitleStyle: 1,
-	            activeTitleClassName: 1
-	        })
-
-	        copyKeys(props, stripProps, {
-	            stripStyle          : 'style',
-	            activeTitleStyle    : 'activeStyle',
-	            activeTitleClassName: 'activeClassName'
-	        })
-
-	        stripProps.key      = 'strip'
-	        stripProps.onChange = this.handleChange || emptyFn
-
-	        if (props.stripFactory){
-	            return props.stripFactory(stripProps, StripFactory)
-	        }
-
-	        return StripFactory(stripProps)
-	    },
-
-	    handleChange: function(index){
-	        this.props.onChange(index)
-	    }
-	})
-
-	TabPanel.Strip     = Strip
-	TabPanel.Container = Container
-
-	module.exports = TabPanel
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
+	/** @jsx React.DOM */'use strict';
 
 	var React  = __webpack_require__(1)
-	var copy   = __webpack_require__(8).copy
-	var F      = __webpack_require__(15)
-	var buffer = F.buffer
+	var assign = __webpack_require__(8)
+	var buffer = __webpack_require__(16)
 
-	var BASE_CLASS_NAME = __webpack_require__(7)
+	var BASE_CLASS_NAME = __webpack_require__(6)
+
+	var TabTitle = __webpack_require__(10)
+	var TabTitleFactory = React.createFactory(TabTitle)
+
+	function emptyFn(){}
 
 	function stop(event){
 	    event.preventDefault()
 	    event.stopPropagation()
 	}
 
-	var LIST_ITEM_STYLE = {
-	    display: 'inline-block'
-	}
-
-	var LIST_STYLE = {
-	    margin   : 0,
-	    padding  : 0,
-	    listStyle: 'none',
-	    position : 'relative',
-	    display  : 'inline-block'
-	}
-
-	var SCROLLER_STYLE = {
-	    top       : 0,
-	    position  : 'absolute',
-	    // display   : 'inline-block',
-	    height    : '100%',
-	    cursor    : 'pointer'
-	}
-
-	var Scroller = React.createClass({displayName: "Scroller",
-
-	    display: 'Scroller',
-
-	    getDefaultProps: function(){
-	        return {
-	            width: 5
-	        }
-	    },
-
-	    render: function(){
-	        var props = this.props
-	        var side  = this.props.side
-
-	        props.className = props.className || ''
-	        props.className += ' ' + BASE_CLASS_NAME + '-scroller ' + side
-
-	        if (props.active && props.visible){
-	            props.className += ' active'
-	        }
-
-	        var scrollerStyle = copy(SCROLLER_STYLE)
-
-	        props.style = copy(props.style, scrollerStyle)
-	        props.style.width = props.style.width || props.width
-
-	        props.style[side] = 0
-
-	        if (!props.visible){
-	            props.style.display = 'none'
-	        }
-
-	        return props.factory?
-	                    props.factory(props, side):
-	                    React.createElement("div", React.__spread({},  props))
-	    }
-	})
-
+	var Scroller        = __webpack_require__(11)
 	var ScrollerFactory = React.createFactory(Scroller)
 
-	module.exports = React.createClass({displayName: "exports",
+	var DISPLAY_NAME = 'ReactBasicTabs.Strip'
 
-	    display: 'TabPanel.Strip',
+	var TAB_ALIGN = {
+	    left: 'flex-start',
+	    center: 'center',
+	    right: 'flex-end'
+	}
+
+	module.exports = React.createClass({
+
+	    displayName: DISPLAY_NAME,
 
 	    propTypes: {
-	        activeIndex    : React.PropTypes.number,
-	        activeStyle    : React.PropTypes.object,
-	        activeClassName: React.PropTypes.string,
+	        selectedIndex    : React.PropTypes.number,
+	        selectedStyle    : React.PropTypes.object,
+	        selectedClassName: React.PropTypes.string,
 
 	        titleStyle    : React.PropTypes.object,
 	        titleClassName: React.PropTypes.string,
@@ -584,6 +527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    getInitialState: function(){
 	        return {
+	            defaultSelectedIndex: this.props.defaultSelectedIndex,
 	            adjustScroll: true,
 	            scrollPos   : 0
 	        }
@@ -597,6 +541,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    componentDidMount: function(){
 	        if (this.props.enableScroll){
+
 	            setTimeout(function(){
 	                this.adjustScroll()
 
@@ -705,12 +650,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.scrollInterval = setInterval(this.doScroll.bind(this, direction), this.props.scrollSpeed)
 	    },
 
-	    doScroll: function(direction){
+	    doScroll: function(direction, step){
 	        this.setState({
 	            scrollDirection: direction
 	        })
 
-	        var newScrollPos = this.state.scrollPos + direction * this.props.scrollStep
+	        var newScrollPos = this.state.scrollPos + direction * (step || this.props.scrollStep)
 
 	        this.setScrollPosition(newScrollPos)
 	    },
@@ -740,99 +685,216 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    getDefaultProps: function(){
 	        return {
+	            'data-display-name': DISPLAY_NAME,
+
+	            tabAlign: 'left',
+
+	            defaultStyle: {
+	                boxSizing   : 'border-box',
+	                display     : 'flex',
+	                // flexFlow    : 'row'
+	                textOverflow: 'ellipsis',
+	                overflow    : 'hidden',
+	                whiteSpace  : 'nowrap',
+	                flex        : 'none',
+
+	            },
+
+	            border: '1px solid rgb(218, 218, 218)',
+
+	            defaultTopStyle: {
+	            },
+
+	            defaultBottomStyle: {
+	            },
+
 	            onWindowResizeBuffer: 50,
 
 	            scrollStep          : 5,
 	            scrollSpeed         : 50,
-	            scrollerWidth       : 8,
+	            scrollerWidth       : 10,
 	            scrollerProps       : {},
+	            scrollerStyle       : null,
 
 	            enableScroll: false,
 	            hasLeftScroll: false,
 	            hasRightScroll: false,
-	            activeClassName: '',
-	            activeStyle: {},
 
-	            anchorStyle: {
-	                color         : 'inherit',
-	                textDecoration: 'inherit'
+	            defaultListStyle: {
+	                margin   : 0,
+	                padding  : 0,
+	                flex: '1 0 auto',
+	                listStyle: 'none',
+	                position : 'relative',
+	                boxSizing: 'border-box',
+	                // display: 'inline-block',
+	                verticalAlign: 'top',
+	                display  : 'flex',
+	                // flexFlow: 'row'
 	            }
 	        }
 	    },
 
-	    renderTitle: F.curry(function(parentProps, classNameArray, titleStyle, child, index){
-	        var anchorStyle     = parentProps.anchorStyle
-	        var activeStyle     = parentProps.activeStyle
-	        var activeClassName = parentProps.activeClassName
-	        var activeIndex     = parentProps.activeIndex || 0
+	    renderTitle: function(parentProps, classNameArray, titleStyle, child, index){
+	        var selectedIndex = parentProps.selectedIndex || 0
 
 	        var childProps = child.props
 	        var title      = childProps.tabTitle || childProps.title
+	        var disabled   = childProps.disabled
 
-	        titleStyle = copy(titleStyle)
-
-	        //ALLOW each item to also specify a titleStyle
-	        copy(childProps.titleStyle, titleStyle)
+	        titleStyle = assign({},
+	                        titleStyle,
+	                        //ALLOW each item to also specify a titleStyle
+	                        childProps.titleStyle
+	                    )
 
 	        //and a titleClassName
 	        var titleClassName = classNameArray.concat(childProps.titleClassName || '')
 
-	        if (index == activeIndex){
-	            copy(activeStyle, titleStyle)
-	            titleClassName.push(activeClassName || '')
+	        // debugger
+	        var titleProps = assign({
+	            index   : index,
+	            key     : index,
+	            title   : title,
+	            disabled: disabled,
+	            selected: index === selectedIndex,
+	            href    : childProps.href,
+
+	            position: parentProps.position,
+	            style: titleStyle,
+
+	            selectedStyle    : parentProps.selectedTitleStyle,
+	            selectedClassName: parentProps.selectedTitleClassName,
+
+	            disabledStyle    : parentProps.disabledTitleStyle,
+	            disabledClassName: parentProps.disabledTitleClassName,
+
+	            focusedStyle        : parentProps.focusedTitleStyle,
+	            focusedSelectedStyle: parentProps.focusedSelectedTitleStyle,
+	            focusedClassName    : parentProps.focusedTitleClassName,
+
+	            anchorStyle        : parentProps.anchorStyle,
+	            disabledAnchorStyle: parentProps.disabledAnchorStyle,
+	            focusedAnchorStyle : parentProps.focusedAnchorStyle,
+
+	            className: titleClassName.join(' '),
+	            onSelect : this.handleSelection.bind(this, disabled),
+
+	            factory: parentProps.titleFactory
+
+	        }, parentProps.titleProps)
+
+	        var defaultFactory = TabTitleFactory
+	        var factory = parentProps.titleFactory || defaultFactory
+
+	        var result = factory(titleProps)
+
+	        if (result === undefined){
+	            result = defaultFactory(titleProps)
 	        }
 
-	        return (
-	            React.createElement("li", {
-	                key: index, 
-	                onClick: this.handleChange.bind(this, index), 
-	                style: titleStyle, 
-	                className: titleClassName.join(' ')
-	            }, 
-	                React.createElement("a", {href: "#", style: anchorStyle}, title)
-	            )
-	        )
-	    }),
+	        return result
+	    },
 
-	    render: function(){
-	        var props = copy(this.props)
+	    prepareStyle: function(props) {
+	        var defaultPositionStyle = props.position == 'top'? props.defaultTopStyle: props.defaultBottomStyle
+	        var defaultStyle = assign({}, props.defaultStyle, defaultPositionStyle)
 
-	        var titleStyle = copy(LIST_ITEM_STYLE)
-	        copy(props.titleStyle, titleStyle)
+	        defaultStyle.justifyContent = TAB_ALIGN[props.tabAlign] || TAB_ALIGN.left
 
-	        var titleClassName = [props.titleClassName || '', BASE_CLASS_NAME + '-item-title']
+	        if (props.border){
+	            var borderName = 'border' + (props.position == 'top'? 'Bottom':'Top')
+	            defaultStyle[borderName] = defaultStyle[borderName] || props.border
+	        }
 
-	        var nodes = React.Children.map(props.children, this.renderTitle(props, titleClassName, titleStyle), this)
+	        var style = assign({}, defaultStyle, props.style)
 
-	        props.className = props.className || ''
-	        props.className += ' ' + BASE_CLASS_NAME + '-strip'
+	        style.position = 'relative'
 
-	        props.style          = props.style || {}
-	        props.style.position = 'relative'
+	        return style
+	    },
 
-	        var listStyle = copy(LIST_STYLE)
+	    prepareClassName: function(props) {
+	        var className = props.className || ''
+	        className += ' ' + BASE_CLASS_NAME + '-strip'
+
+	        return className
+	    },
+
+	    prepareListStyle: function(props) {
+	        var defaultListStyle = assign({}, props.defaultListStyle)
+
+	        defaultListStyle.justifyContent = TAB_ALIGN[props.tabAlign] || TAB_ALIGN.left
+
+	        var listStyle = assign({}, defaultListStyle, props.listStyle)
 
 	        if (this.state.scrollPos){
 	            listStyle.left = -this.state.scrollPos
 	        }
 
+	        return listStyle
+	    },
+
+	    prepareListProps: function(props) {
+	        var listStyle = this.prepareListStyle(props)
+	        var children  = this.renderListChildren(props)
+
+	        return {
+	            style   : listStyle,
+	            children: children
+	        }
+	    },
+
+	    prepareProps: function(thisProps) {
+	        var props = assign({}, thisProps)
+
+	        props.className = this.prepareClassName(props)
+	        props.style     = this.prepareStyle(props)
+
+	        return props
+	    },
+
+	    renderListChildren: function(props) {
+	        var titleStyle = assign({}, props.defaultTitleStyle, props.titleStyle)
+
+	        var titleClassName = [props.titleClassName || '', BASE_CLASS_NAME + '-item-title']
+
+	        return React.Children.map(props.children,
+	                this.renderTitle.bind(this, props, titleClassName, titleStyle),
+	                this
+	            )
+	    },
+
+	    render: function(){
+
+	        var props     = this.prepareProps(this.props)
+	        var listProps = this.prepareListProps(props)
+
 	        var scrollerLeft = this.renderScroller(-1)
 	        var scrollerRight= this.renderScroller(1)
 
+	        props.onScroll = this.onScroll
+
 	        return (
 	            React.createElement("nav", React.__spread({},  props), 
-	                React.createElement("ul", {ref: "list", style: listStyle}, 
-	                nodes
-	                ), 
+	                React.createElement("ul", React.__spread({ref: "list"},  listProps)), 
 	                scrollerLeft, 
 	                scrollerRight
 	            )
 	        )
 	    },
 
-	    handleChange: function(index, event){
-	        event.preventDefault()
-	        this.props.onChange(index)
+	    onScroll: function(event){
+	        var target = event.target
+
+	        this.doScroll(1, target.scrollLeft)
+	        target.scrollLeft = 0
+	    },
+
+	    handleSelection: function(disabled, index, event){
+	        if (!disabled){
+	            this.props.onSelect(index)
+	        }
 	    },
 
 	    renderScroller: function(direction){
@@ -854,16 +916,153 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            this.state.hasLeftScroll:
 	                            this.state.hasRightScroll
 
-	        return ScrollerFactory(copy(this.props.scrollerProps, {
+	        return ScrollerFactory(assign({
 	            factory      : this.props.scrollerFactory,
-	            active       : this.state.scrollDirection==direction && this.state.scrolling,
+	            active       : this.state.scrollDirection == direction && this.state.scrolling,
 	            onDoubleClick: onDoubleClick,
 	            onMouseDown  : onMouseDown,
 	            style        : this.props.scrollerStyle,
-	            side         : side,
 	            width        : this.props.scrollerWidth,
+	            side         : side,
 	            visible      : visible
-	        }))
+	        }, this.props.scrollerProps))
+	    }
+	})
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */'use strict';
+
+	var React  = __webpack_require__(1)
+	var assign = __webpack_require__(8)
+	var cloneWithProps = __webpack_require__(17)
+	var normalize = __webpack_require__(9)
+
+	var BASE_CLASS_NAME = __webpack_require__(6)
+
+	function notEmpty(x){
+	    return !!x
+	}
+
+	module.exports = React.createClass({
+
+	    displayName: 'ReactBasicTabs.Container',
+
+	    propTypes: {
+	        selectedIndex     : React.PropTypes.number,
+
+	        childrenClassName : React.PropTypes.string,
+	        childrenStyle     : React.PropTypes.object,
+
+
+	        defaultHiddenStyle: React.PropTypes.object,
+	        hiddenStyle       : React.PropTypes.object,
+	        hiddenClassName   : React.PropTypes.string,
+
+	        defaultSelectedStyle: React.PropTypes.object,
+	        selectedStyle       : React.PropTypes.object,
+	        selectedClassName   : React.PropTypes.string
+	    },
+
+	    getDefaultProps: function(){
+	        return {
+	            defaultStyle: {
+	                flex: '1 1 auto',
+	                overflow: 'auto'
+	            },
+	            selectedIndex: 0,
+
+	            defaultSelectedStyle: {
+	                overflow: 'auto'
+	            },
+	            selectedStyle: null,
+
+	            defaultHiddenStyle: {
+	                display: 'none'
+	            },
+	            hiddenStyle: null
+	        }
+	    },
+
+	    prepareProps: function(thisProps) {
+	        var props = assign({}, thisProps)
+
+	        props.style     = this.prepareStyle(props)
+	        props.className = this.prepareClassName (props)
+	        props.children  = this.prepareChildren(props)
+
+	        return props
+	    },
+
+	    prepareStyle: function(props) {
+	        return normalize(assign({}, props.defaultStyle, props.style))
+	    },
+
+	    prepareClassName: function(props) {
+	        var className = [
+	                props.className,
+	                BASE_CLASS_NAME + '-container'
+	            ]
+
+	        return className.filter(notEmpty).join(' ')
+	    },
+
+	    prepareChildren: function(props) {
+	        return React.Children.map(this.props.children, this.renderItem, this)
+	    },
+
+	    render: function(){
+
+	        var props = this.prepareProps(this.props)
+
+	        return React.createElement("section", React.__spread({},  props))
+	    },
+
+	    renderItem: function(item, index){
+	        var props = this.props
+	        var selectedIndex = props.selectedIndex || 0
+
+	        //make sure the wrapping article gets the correct style
+	        //if it is the selected item
+	        var style = {}
+	        var className = BASE_CLASS_NAME + '-item '
+
+	        if (index !== selectedIndex){
+	            assign(style, props.defaultHiddenStyle, props.hiddenStyle)
+	            className += props.hiddenClassName || ''
+	        } else {
+	            assign(style, props.defaultSelectedStyle, props.selectedStyle)
+	            className += props.selectedClassName || ''
+	        }
+
+	        if (item && item.props){
+
+	            var newProps = {}
+	            var newPropsCount = 0
+
+	            if (props.childrenStyle){
+	                //default style for children
+	                newProps.style = assign({}, item.props.style, props.childrenStyle)
+	                newPropsCount++
+	            }
+
+	            if (props.childrenClassName){
+	                //default className for children
+	                newProps.className = item.props.className || ''
+	                newPropsCount++
+	            }
+
+	            if (newPropsCount){
+	                item = cloneWithProps(item, newProps)
+	            }
+	        }
+
+	        return React.createElement("article", {"data-index": index, key: index, style: style, className: className}, 
+	                    item
+	                )
 	    }
 	})
 
@@ -872,365 +1071,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	var React = __webpack_require__(1)
-	var copy  = __webpack_require__(8).copy
-
-	var BASE_CLASS_NAME = __webpack_require__(7)
-
-	module.exports = React.createClass({
-
-	    displayName: 'TabPanel.Container',
-
-	    propTypes: {
-	        activeIndex     : React.PropTypes.number,
-
-	        defaultClassName: React.PropTypes.string,
-	        defaultStyle    : React.PropTypes.object,
-
-	        hiddenStyle     : React.PropTypes.object,
-
-	        activeClassName : React.PropTypes.string,
-	        activeStyle     : React.PropTypes.object
-	    },
-
-	    getDefaultProps: function(){
-	        return {
-	            activeIndex: 0,
-	            hiddenStyle: {
-	                display: 'none'
-	            }
-	        }
-	    },
-
-	    render: function(){
-
-	        return (
-	            React.createElement("section", {style: this.props.style, className: BASE_CLASS_NAME + "-container"}, 
-	                React.Children.map(this.props.children, this.renderItem, this)
-	            )
-	        )
-	    },
-
-	    renderItem: function(item, index, array){
-	        var props = this.props
-
-	        var hiddenStyle = props.hiddenStyle
-	        var activeIndex = props.activeIndex || 0
-
-	        //make sure the wrapping article gets the correct style
-	        //if it is the active item
-	        var style = {}
-	        var className = BASE_CLASS_NAME + '-item '
-
-	        if (index !== activeIndex){
-	            copy(hiddenStyle, style)
-	        } else {
-	            copy(props.activeStyle, style)
-	            className += props.activeClassName || ''
-	        }
-
-	        //default style for items
-	        if (props.defaultStyle){
-	            item.props.style = copy(props.defaultStyle, item.props.style)
-	        }
-
-	        //default className for items
-	        if (props.defaultClassName){
-	            item.props.className = item.props.className || ''
-	            item.props.className += ' ' + props.defaultClassName
-	        }
-
-	        return (
-	            React.createElement("article", {key: index, style: style, className: className}, 
-	                item
-	            )
-	        )
-	    }
-	})
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
 	module.exports = 'basic-tabs'
 
 /***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(){
-
-	    'use strict'
-
-	    var HAS_OWN       = Object.prototype.hasOwnProperty,
-	        STR_OBJECT    = 'object',
-	        STR_UNDEFINED = 'undefined'
-
-	    return {
-
-	        /**
-	         * Copies all properties from source to destination
-	         *
-	         *      copy({name: 'jon',age:5}, this);
-	         *      // => this will have the 'name' and 'age' properties set to 'jon' and 5 respectively
-	         *
-	         * @param {Object} source
-	         * @param {Object} destination
-	         *
-	         * @return {Object} destination
-	         */
-	        copy: __webpack_require__(9),
-
-	        /**
-	         * Copies all properties from source to destination, if the property does not exist into the destination
-	         *
-	         *      copyIf({name: 'jon',age:5}, {age:7})
-	         *      // => { name: 'jon', age: 7}
-	         *
-	         * @param {Object} source
-	         * @param {Object} destination
-	         *
-	         * @return {Object} destination
-	         */
-	        copyIf: __webpack_require__(10),
-
-	        /**
-	         * Copies all properties from source to a new object, with the given value. This object is returned
-	         *
-	         *      copyAs({name: 'jon',age:5})
-	         *      // => the resulting object will have the 'name' and 'age' properties set to 1
-	         *
-	         * @param {Object} source
-	         * @param {Object/Number/String} [value=1]
-	         *
-	         * @return {Object} destination
-	         */
-	        copyAs: function(source, value){
-
-	            var destination = {}
-
-	            value = value || 1
-
-	            if (source != null && typeof source === STR_OBJECT ){
-
-	                for (var i in source) if ( HAS_OWN.call(source, i) ) {
-	                    destination[i] = value
-	                }
-
-	            }
-
-	            return destination
-	        },
-
-	        /**
-	         * Copies all properties named in the list, from source to destination
-	         *
-	         *      copyList({name: 'jon',age:5, year: 2006}, {}, ['name','age'])
-	         *      // => {name: 'jon', age: 5}
-	         *
-	         * @param {Object} source
-	         * @param {Object} destination
-	         * @param {Array} list the array with the names of the properties to copy
-	         *
-	         * @return {Object} destination
-	         */
-	        copyList: __webpack_require__(11),
-
-	        /**
-	         * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
-	         *
-	         *      copyListIf({name: 'jon',age:5, year: 2006}, {age: 10}, ['name','age'])
-	         *      // => {name: 'jon', age: 10}
-	         *
-	         * @param {Object} source
-	         * @param {Object} destination
-	         * @param {Array} list the array with the names of the properties to copy
-	         *
-	         * @return {Object} destination
-	         */
-	        copyListIf: __webpack_require__(12),
-
-	        /**
-	         * Copies all properties named in the namedKeys, from source to destination
-	         *
-	         *      copyKeys({name: 'jon',age:5, year: 2006, date: '2010/05/12'}, {}, {name:1 ,age: true, year: 'theYear'})
-	         *      // => {name: 'jon', age: 5, theYear: 2006}
-	         *
-	         * @param {Object} source
-	         * @param {Object} destination
-	         * @param {Object} namedKeys an object with keys denoting the properties to be copied
-	         *
-	         * @return {Object} destination
-	         */
-	        copyKeys: __webpack_require__(13),
-
-	        /**
-	         * Copies all properties named in the namedKeys, from source to destination,
-	         * but only if the property does not already exist in the destination object
-	         *
-	         *      copyKeysIf({name: 'jon',age:5, year: 2006}, {aname: 'test'}, {name:'aname' ,age: true})
-	         *      // => {aname: 'test', age: 5}
-	         *
-	         * @param {Object} source
-	         * @param {Object} destination
-	         * @param {Object} namedKeys an object with keys denoting the properties to be copied
-	         *
-	         * @return {Object} destination
-	         */
-	        copyKeysIf: __webpack_require__(14),
-
-	        copyExceptKeys: function(source, destination, exceptKeys){
-	            destination = destination || {}
-	            exceptKeys  = exceptKeys  || {}
-
-	            if (source != null && typeof source === STR_OBJECT ){
-
-	                for (var i in source) if ( HAS_OWN.call(source, i) && !HAS_OWN.call(exceptKeys, i) ) {
-
-	                    destination[i] = source[i]
-	                }
-
-	            }
-
-	            return destination
-	        },
-
-	        /**
-	         * Copies the named keys from source to destination.
-	         * For the keys that are functions, copies the functions bound to the source
-	         *
-	         * @param  {Object} source      The source object
-	         * @param  {Object} destination The target object
-	         * @param  {Object} namedKeys   An object with the names of the keys to copy The values from the keys in this object
-	         *                              need to be either numbers or booleans if you want to copy the property under the same name,
-	         *                              or a string if you want to copy the property under a different name
-	         * @return {Object}             Returns the destination object
-	         */
-	        bindCopyKeys: function(source, destination, namedKeys){
-	            if (arguments.length == 2){
-	                namedKeys = destination
-	                destination = null
-	            }
-
-	            destination = destination || {}
-
-	            if (
-	                       source != null && typeof source    === STR_OBJECT &&
-	                    namedKeys != null && typeof namedKeys === STR_OBJECT
-	                ) {
-
-
-	                var typeOfNamedProperty,
-	                    namedPropertyValue,
-
-	                    typeOfSourceProperty,
-	                    propValue
-
-
-	                for(var propName in namedKeys) if (HAS_OWN.call(namedKeys, propName)) {
-
-	                    namedPropertyValue = namedKeys[propName]
-	                    typeOfNamedProperty = typeof namedPropertyValue
-
-	                    propValue = source[propName]
-	                    typeOfSourceProperty = typeof propValue
-
-
-	                    if ( typeOfSourceProperty !== STR_UNDEFINED ) {
-
-	                        destination[
-	                            typeOfNamedProperty == 'string'?
-	                                            namedPropertyValue :
-	                                            propName
-	                            ] = typeOfSourceProperty == 'function' ?
-	                                            propValue.bind(source):
-	                                            propValue
-	                    }
-	                }
-	            }
-
-	            return destination
-	        }
-	    }
-
-	}()
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-	var STR_OBJECT    = 'object'
-
-	/**
-	 * Copies all properties from source to destination
-	 *
-	 *      copy({name: 'jon',age:5}, this);
-	 *      // => this will have the 'name' and 'age' properties set to 'jon' and 5 respectively
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination){
-
-	    destination = destination || {}
-
-	    if (source != null && typeof source === STR_OBJECT ){
-
-	        for (var i in source) if ( HAS_OWN.call(source, i) ) {
-	            destination[i] = source[i]
-	        }
-
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-	var STR_OBJECT    = 'object'
-	var STR_UNDEFINED = 'undefined'
-
-	/**
-	 * Copies all properties from source to destination, if the property does not exist into the destination
-	 *
-	 *      copyIf({name: 'jon',age:5}, {age:7})
-	 *      // => { name: 'jon', age: 7}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination){
-	    destination = destination || {}
-
-	    if (source != null && typeof source === STR_OBJECT){
-
-	        for (var i in source) if ( HAS_OWN.call(source, i) && (typeof destination[i] === STR_UNDEFINED) ) {
-
-	            destination[i] = source[i]
-
-	        }
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 11 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1274,1100 +1118,998 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function ToObject(val) {
+		if (val == null) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+
+		return Object(val);
+	}
+
+	module.exports = Object.assign || function (target, source) {
+		var from;
+		var keys;
+		var to = ToObject(target);
+
+		for (var s = 1; s < arguments.length; s++) {
+			from = arguments[s];
+			keys = Object.keys(Object(from));
+
+			for (var i = 0; i < keys.length; i++) {
+				to[keys[i]] = from[keys[i]];
+			}
+		}
+
+		return to;
+	};
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var hasOwn      = __webpack_require__(12)
+	var getPrefixed = __webpack_require__(13)
+
+	var map      = __webpack_require__(14)
+	var plugable = __webpack_require__(15)
+
+	function plugins(key, value){
+
+		var result = {
+			key  : key,
+			value: value
+		}
+
+		;(RESULT.plugins || []).forEach(function(fn){
+
+			var tmp = map(function(res){
+				return fn(key, value, res)
+			}, result)
+
+			if (tmp){
+				result = tmp
+			}
+		})
+
+		return result
+	}
+
+	function normalize(key, value){
+
+		var result = plugins(key, value)
+
+		return map(function(result){
+			return {
+				key  : getPrefixed(result.key, result.value),
+				value: result.value
+			}
+		}, result)
+
+		return result
+	}
+
+	var RESULT = function(style){
+		var k
+		var item
+		var result = {}
+
+		for (k in style) if (hasOwn(style, k)){
+			item = normalize(k, style[k])
+
+			if (!item){
+				continue
+			}
+
+			map(function(item){
+				result[item.key] = item.value
+			}, item)
+		}
+
+		return result
+	}
+
+	module.exports = plugable(RESULT)
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */'use strict';
+
+	var React  = __webpack_require__(1)
+	var assign = __webpack_require__(8)
+	var normalize = __webpack_require__(9)
+
+	function emptyFn(){}
+
+	function notEmpty(x){return !!x}
+
+	var DISPLAY_NAME = 'ReactBasicTabs.TabTitle'
+
+	module.exports = React.createClass({
+
+		displayName: DISPLAY_NAME,
+
+		getDefaultProps: function(){
+			return {
+				'data-display-name': DISPLAY_NAME,
+
+				defaultStyle: {
+					flex: 'none',
+					boxSizing: 'border-box',
+					userSelect: 'none',
+					display  : 'inline-block',
+					cursor   : 'pointer',
+					padding  : 5,
+					textOverflow: 'ellipsis',
+					whiteSpace: 'nowrap',
+					overflow: 'hidden'
+				},
+
+				defaultAnchorStyle: {
+					color         : 'inherit',
+					textDecoration: 'inherit',
+					cursor        : 'inherit'
+				},
+
+				defaultDisabledStyle: {
+					color: 'rgb(229, 229, 229)',
+					cursor: 'default'
+				},
+
+				defaultFocusedStyle: {
+					color: 'white',
+					background: 'rgb(163, 200, 229)'
+				},
+
+				defaultSelectedStyle: {
+				    //theme properties
+				    background: 'rgb(103, 175, 233)',
+				    color: 'white'
+				},
+
+				defaultFocusedSelectedStyle: {
+					background: 'rgb(36, 138, 221)'
+				},
+
+				defaultActiveStyle: {
+				    //theme properties
+				    background: 'rgb(70, 157, 228)',
+				    color: 'white'
+				},
+
+				defaultOverSelectedStyle: {
+					color: 'white',
+					background: 'rgb(90, 152, 202)' //pressed color
+				},
+
+				defaultOverStyle: {
+				    //theme properties
+				    background: 'rgb(118, 181, 231)',
+				    color: 'white'
+				},
+
+				defaultFocusedAnchorStyle: {
+					// outline: 'none'
+				}
+			}
+		},
+
+		getInitialState: function(){
+			return {}
+		},
+
+		render: function(){
+
+			var props = this.prepareProps(this.props)
+
+			var defaultFactory = React.DOM.li
+			var factory = props.factory || defaultFactory
+
+			var result = factory(props)
+
+			if (result === undefined){
+				result = defaultFactory(props)
+			}
+
+			return result
+		},
+
+		prepareProps: function(thisProps) {
+			var props = assign({}, thisProps)
+
+			props.mouseOver = this.state.mouseOver
+			props.focused   = this.state.focused
+			props.active    = this.state.active
+			props['data-selected'] = this.props.selected
+
+			props.style     = this.prepareStyle(props)
+			props.className = this.prepareClassName(props)
+
+			props.onMouseDown = this.handleMouseDown.bind(this, props)
+			props.onMouseUp   = this.handleMouseUp.bind(this, props)
+
+			props.onMouseEnter = this.handleMouseEnter.bind(this, props)
+			props.onMouseLeave = this.handleMouseLeave.bind(this, props)
+
+			props.onFocus = this.handleFocus.bind(this, props)
+			props.onBlur  = this.handleBlur.bind(this, props)
+
+			props.onClick     = this.handleClick.bind(this, props)
+
+			props.children = this.prepareChildren(props)
+
+			return props
+		},
+
+		prepareClassName: function(props) {
+			var className = [props.className]
+
+			if (props.disabled){
+				className.push(props.disabledClassName)
+			}
+
+			if (props.selected){
+				className.push(props.selectedClassName)
+			}
+
+			if (props.focused){
+				className.push(props.focusedClassName)
+			}
+
+			return className.filter(notEmpty).join(' ')
+		},
+
+		prepareStyle: function(props) {
+			var style = assign({}, props.defaultStyle, props.style)
+
+			var active   = props.active
+			var over     = props.mouseOver
+			var selected = props.selected
+			var focused  = props.focused
+
+			if (focused){
+				assign(style, props.defaultFocusedStyle, props.focusedStyle)
+			}
+
+			if (over){
+				assign(style, props.defaultOverStyle, props.overStyle)
+			}
+
+			if (selected){
+				assign(style, props.defaultSelectedStyle, props.selectedStyle)
+			}
+
+			if (active){
+				assign(style, props.defaultActiveStyle, props.activeStyle)
+			}
+
+			if (over && selected){
+				assign(style, props.defaultOverSelectedStyle, props.overSelectedStyle)
+			}
+
+			if (focused && selected){
+				assign(style, props.defaultFocusedSelectedStyle, props.focusedSelectedStyle)
+			}
+
+			if (active && selected){
+				assign(style, props.defaultActiveSelectedStyle, props.activeSelectedStyle)
+			}
+
+			if (props.disabled){
+				assign(style, props.defaultDisabledStyle, props.disabledStyle)
+			}
+
+			;(props.onStyleReady || emptyFn)(style, props)
+
+			return normalize(style)
+		},
+
+		prepareChildren: function(props) {
+			var children = props.children
+			var anchorProps
+
+			if (!children){
+				children = this.prepareAnchor(props)
+			}
+
+			return children
+		},
+
+		prepareAnchor: function(props) {
+			var disabledAnchorStyle
+			var defaultDisabledAnchorStyle
+
+			if (props.disabled){
+				defaultDisabledAnchorStyle = props.defaultDisabledAnchorStyle
+				disabledAnchorStyle = props.disabledAnchorStyle
+			}
+
+			var defaultFocusedAnchorStyle
+			var focusedAnchorStyle
+
+			if (props.focused){
+				defaultFocusedAnchorStyle = props.defaultFocusedAnchorStyle
+				focusedAnchorStyle = props.focusedAnchorStyle
+			}
+
+			var style = assign({},
+							props.defaultAnchorStyle,
+							defaultDisabledAnchorStyle,
+							defaultFocusedAnchorStyle,
+							props.anchorStyle,
+							disabledAnchorStyle,
+							focusedAnchorStyle
+						)
+			var anchorProps = {
+				href: props.href || "#",
+				style: style
+			}
+
+			if (props.disabled){
+				anchorProps.tabIndex = -1
+			}
+
+			return React.createElement("a", React.__spread({},  anchorProps), props.title)
+		},
+
+		handleFocus: function(props, event){
+			this.setState({
+				focused: true
+			})
+
+			;(this.props.onFocus || emptyFn)(event)
+		},
+
+		handleBlur: function(props, event){
+			this.setState({
+				focused: false
+			})
+
+			;(this.props.onBlur || emptyFn)(event)
+		},
+
+		handleMouseUp: function(props, event) {
+
+		    if (props.disabled){
+		        return
+		    }
+
+		    this.setState({
+		        active: false
+		    })
+
+		    window.removeEventListener('mouseup', this.handleMouseUp)
+
+		    ;(this.props.onMouseUp || emptyFn)(event)
+		},
+
+		handleMouseDown: function(props, event) {
+
+		    if (props.disabled){
+		    	event.preventDefault()
+		    	return
+		    }
+
+		    this.setState({
+		        active: true
+		    })
+
+		    window.addEventListener('mouseup', this.handleMouseUp)
+
+		    ;(this.props.onMouseDown || emptyFn)(event)
+		},
+
+		handleMouseEnter: function(props, event) {
+			if (props.disabled){
+				return
+			}
+
+			this.setState({
+				mouseOver: true
+			})
+
+			;(this.props.onMouseEnter || emptyFn)(event)
+		},
+
+		handleMouseLeave: function(props, event) {
+			if (props.disabled){
+				return
+			}
+
+			this.setState({
+				mouseOver: false
+			})
+
+			;(this.props.onMouseLeave || emptyFn)(event)
+		},
+
+		handleClick: function(props, event) {
+			!props.href && event.preventDefault()
+
+			if (!this.props.disabled){
+				;(this.props.onSelect || emptyFn)(this.props.index)
+			}
+		}
+	})
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */'use strict';
+
+	var React  = __webpack_require__(1)
+	var assign = __webpack_require__(8)
+
+	var BASE_CLASS_NAME = __webpack_require__(6)
+
+	function emptyFn(){}
+
+	var Scroller = React.createClass({
+
+	    displayName: 'ReactBasicTabs.Scroller',
+
+	    getDefaultProps: function(){
+	        return {
+	            width: 5,
+
+	            defaultStyle: {
+				    top       : 0,
+				    position  : 'absolute',
+				    height    : '100%',
+				    cursor    : 'pointer',
+				    background: 'rgb(40, 117, 179)',
+	                color: 'white',
+	                display: 'flex',
+	                flexFlow: 'column',
+	                justifyContent: 'center',
+	                fontSize: '1.2em',
+	                textAlign: 'center'
+				},
+
+				defaultOverStyle: {
+					background: 'rgb(90, 152, 202)'
+				},
+
+				defaultSelectedStyle: {
+					background: 'rgb(82, 81, 81)'
+				}
+	        }
+	    },
+
+	    getInitialState: function() {
+	    	return {}
+	    },
+
+	    handleMouseEnter: function(event) {
+	    	this.setState({
+	    		mouseOver: true
+	    	})
+
+	    	;(this.props.onMouseEnter || emptyFn)(event)
+	    },
+
+	    handleMouseLeave: function(event) {
+	    	this.setState({
+	    		mouseOver: false
+	    	})
+
+	    	;(this.props.onMouseLeave || emptyFn)(event)
+	    },
+
+	    prepareProps: function(thisProps) {
+	    	var props = assign({}, thisProps)
+
+			props.className = this.prepareClassName(props)
+			props.style     = this.prepareStyle(props)
+
+			props.onMouseEnter = this.handleMouseEnter
+			props.onMouseLeave = this.handleMouseLeave
+
+	    	return props
+	    },
+
+	    prepareStyle: function(props) {
+	    	var defaultOverStyle
+	    	var overStyle
+
+	    	if (this.state.mouseOver){
+				defaultOverStyle = props.defaultOverStyle
+				overStyle        = props.overStyle
+	    	}
+
+	    	var defaultSelectedStyle
+	    	var selectedStyle
+
+	    	if (props.selected){
+	    		defaultSelectedStyle = props.defaultSelectedStyle
+	    		selectedStyle = props.selectedStyle
+	    	}
+
+	    	var style = assign({},
+	    					props.defaultStyle,
+	    					props.style,
+
+	    					defaultOverStyle,
+	    					overStyle,
+
+	    					defaultSelectedStyle,
+	    					selectedStyle
+	    				)
+
+	    	style.width = style.width || props.width
+	    	style[props.side] = 0
+
+	    	if (!props.visible){
+	    	    style.display = 'none'
+	    	}
+
+	    	return style
+	    },
+
+	    prepareClassName: function(props) {
+	    	var className = props.className || ''
+
+	    	className += ' ' + BASE_CLASS_NAME + '-scroller ' + props.side
+
+	    	if (props.selected && props.visible){
+	    	    className += ' selected'
+	    	}
+
+	    	return className
+	    },
+
+	    render: function(){
+
+	    	var props = this.prepareProps(this.props)
+
+	        props.children = [props.side == 'left'? '‹': '›']
+
+	        return props.factory?
+	                    props.factory(props):
+	                    React.createElement("div", React.__spread({},  props))
+	    }
+	})
+
+	module.exports = Scroller
+
+/***/ },
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	'use strict';
 
-	var STR_UNDEFINED = 'undefined'
-
-	/**
-	 * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
-	 *
-	 *      copyListIf({name: 'jon',age:5, year: 2006}, {age: 10}, ['name','age'])
-	 *      // => {name: 'jon', age: 10}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Array} list the array with the names of the properties to copy
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, list){
-	    if (arguments.length < 3){
-	        list = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-	    list        = list || Object.keys(source)
-
-	    var i   = 0
-	    var len = list.length
-	    var propName
-
-	    for ( ; i < len ; i++ ){
-	        propName = list[i]
-	        if (
-	                (typeof source[propName]      !== STR_UNDEFINED) &&
-	                (typeof destination[propName] === STR_UNDEFINED)
-	            ){
-	            destination[propName] = source[propName]
-	        }
-	    }
-
-	    return destination
+	module.exports = function(obj, prop){
+		return Object.prototype.hasOwnProperty.call(obj, prop)
 	}
+
 
 /***/ },
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	'use strict';
 
-	var STR_UNDEFINED = 'undefined'
-	var STR_OBJECT    = 'object'
-	var HAS_OWN       = Object.prototype.hasOwnProperty
+	var getStylePrefixed = __webpack_require__(19)
+	var properties       = __webpack_require__(20)
 
-	var copyList = __webpack_require__(11)
+	module.exports = function(key, value){
 
-	/**
-	 * Copies all properties named in the namedKeys, from source to destination
-	 *
-	 *      copyKeys({name: 'jon',age:5, year: 2006, date: '2010/05/12'}, {}, {name:1 ,age: true, year: 'theYear'})
-	 *      // => {name: 'jon', age: 5, theYear: 2006}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, namedKeys){
-	    if (arguments.length < 3 ){
-	        namedKeys = destination
-	        destination = null
-	    }
+		if (!properties[key]){
+			return key
+		}
 
-	    destination = destination || {}
-
-	    if (!namedKeys || Array.isArray(namedKeys)){
-	        return copyList(source, destination, namedKeys)
-	    }
-
-	    if (
-	           source != null && typeof source    === STR_OBJECT &&
-	        namedKeys != null && typeof namedKeys === STR_OBJECT
-	    ) {
-	        var typeOfNamedProperty
-	        var namedPropertyValue
-
-	        for  (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
-	            namedPropertyValue  = namedKeys[propName]
-	            typeOfNamedProperty = typeof namedPropertyValue
-
-	            if (typeof source[propName] !== STR_UNDEFINED){
-	                destination[typeOfNamedProperty == 'string'? namedPropertyValue : propName] = source[propName]
-	            }
-	        }
-	    }
-
-	    return destination
+		return getStylePrefixed(key, value)
 	}
 
 /***/ },
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	'use strict';
 
-	var STR_UNDEFINED = 'undefined'
-	var STR_OBJECT    = 'object'
-	var HAS_OWN       = Object.prototype.hasOwnProperty
+	module.exports = function(fn, item){
 
-	var copyListIf = __webpack_require__(12)
+		if (!item){
+			return
+		}
 
-	/**
-	 * Copies all properties named in the namedKeys, from source to destination,
-	 * but only if the property does not already exist in the destination object
-	 *
-	 *      copyKeysIf({name: 'jon',age:5, year: 2006}, {aname: 'test'}, {name:'aname' ,age: true})
-	 *      // => {aname: 'test', age: 5}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, namedKeys){
-	    if (arguments.length < 3 ){
-	        namedKeys = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-
-	    if (!namedKeys || Array.isArray(namedKeys)){
-	        return copyListIf(source, destination, namedKeys)
-	    }
-
-	    if (
-	               source != null && typeof source    === STR_OBJECT &&
-	            namedKeys != null && typeof namedKeys === STR_OBJECT
-	        ) {
-
-	            var typeOfNamedProperty
-	            var namedPropertyValue
-	            var newPropertyName
-
-	            for (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
-
-	                namedPropertyValue  = namedKeys[propName]
-	                typeOfNamedProperty = typeof namedPropertyValue
-	                newPropertyName     = typeOfNamedProperty == 'string'? namedPropertyValue : propName
-
-	                if (
-	                        typeof      source[propName]        !== STR_UNDEFINED &&
-	                        typeof destination[newPropertyName] === STR_UNDEFINED
-	                    ) {
-	                    destination[newPropertyName] = source[propName]
-	                }
-
-	            }
-	        }
-
-	    return destination
+		if (Array.isArray(item)){
+			return item.map(fn).filter(function(x){
+				return !!x
+			})
+		} else {
+			return fn(item)
+		}
 	}
 
 /***/ },
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	    var setImmediate = function(fn){
-	        setTimeout(fn, 0)
-	    }
-	    var clearImmediate = clearTimeout
-	    /**
-	     * Utility methods for working with functions.
-	     * These methods augment the Function prototype.
-	     *
-	     * Using {@link #before}
-	     *
-	     *      function log(m){
-	     *          console.log(m)
-	     *      }
-	     *
-	     *      var doLog = function (m){
-	     *          console.log('LOG ')
-	     *      }.before(log)
-	     *
-	     *      doLog('test')
-	     *      //will log
-	     *      //"LOG "
-	     *      //and then
-	     *      //"test"
-	     *
-	     *
-	     *
-	     * Using {@link #bindArgs}:
-	     *
-	     *      //returns the sum of all arguments
-	     *      function add(){
-	     *          var sum = 0
-	     *          [].from(arguments).forEach(function(n){
-	     *              sum += n
-	     *          })
-	     *
-	     *          return sum
-	     *      }
-	     *
-	     *      var add1 = add.bindArgs(1)
-	     *
-	     *      add1(2, 3) == 6
-	     *
-	     * Using {@link #lockArgs}:
-	     *
-	     *      function add(){
-	     *          var sum = 0
-	     *          [].from(arguments).forEach(function(n){
-	     *              sum += n
-	     *          })
-	     *
-	     *          return sum
-	     *      }
-	     *
-	     *      var add1_2   = add.lockArgs(1,2)
-	     *      var add1_2_3 = add.lockArgs(1,2,3)
-	     *
-	     *      add1_2(3,4)  == 3 //args are locked to only be 1 and 2
-	     *      add1_2_3(6)  == 6 //args are locked to only be 1, 2 and 3
-	     *
-	     *
-	     *
-	     * Using {@link #compose}:
-	     *
-	     *      function multiply(a,b){
-	     *          return a* b
-	     *      }
-	     *
-	     *      var multiply2 = multiply.curry()(2)
-	     *
-	     *      Function.compose(multiply2( add(5,6) )) == multiply2( add(5,6) )
-	     *
-	     *
-	     * @class Function
-	     */
-
-	    var SLICE = Array.prototype.slice
-
-	    var curry = __webpack_require__(16),
-
-	        findFn = function(fn, target, onFound){
-	            // if (typeof target.find == 'function'){
-	            //     return target.find(fn)
-	            // }
-
-	            onFound = typeof onFound == 'function'?
-	                        onFound:
-	                        function(found, key, target){
-	                            return found
-	                        }
-
-	            if (Array.isArray(target)){
-	                var i   = 0
-	                var len = target.length
-	                var it
-
-	                for(; i < len; i++){
-	                    it = target[i]
-	                    if (fn(it, i, target)){
-	                        return onFound(it, i, target)
-	                    }
-	                }
-
-	                return
-	            }
-
-	            if (typeof target == 'object'){
-	                var keys = Object.keys(target)
-	                var i = 0
-	                var len = keys.length
-	                var k
-	                var it
-
-	                for( ; i < len; i++){
-	                    k  = keys[i]
-	                    it = target[k]
-
-	                    if (fn(it, k, target)){
-	                        return onFound(it, k, target)
-	                    }
-	                }
-	            }
-	        },
-
-	        find = curry(findFn, 2),
-
-	        findIndex = curry(function(fn, target){
-	            return findFn(fn, target, function(it, i){
-	                return i
-	            })
-	        }),
-
-	        bindFunctionsOf = function(obj) {
-	            Object.keys(obj).forEach(function(k){
-	                if (typeof obj[k] == 'function'){
-	                    obj[k] = obj[k].bind(obj)
-	                }
-	            })
-
-	            return obj
-	        },
-
-	        /*
-	         * @param {Function...} an enumeration of functions, each consuming the result of the following function.
-	         *
-	         * For example: compose(c, b, a)(1,4) == c(b(a(1,4)))
-	         *
-	         * @return the result of the first function in the enumeration
-	         */
-	        compose = __webpack_require__(17),
-
-	        chain = __webpack_require__(18),
-
-	        once = __webpack_require__(19),
-
-	        bindArgsArray = __webpack_require__(20),
-
-	        bindArgs = __webpack_require__(21),
-
-	        lockArgsArray = __webpack_require__(22),
-
-	        lockArgs = __webpack_require__(23),
-
-	        skipArgs = function(fn, count){
-	            return function(){
-	                var args = SLICE.call(arguments, count || 0)
-
-	                return fn.apply(this, args)
-	            }
-	        },
-
-	        intercept = function(interceptedFn, interceptingFn, withStopArg){
-
-	            return function(){
-	                var args    = [].from(arguments),
-	                    stopArg = { stop: false }
-
-	                if (withStopArg){
-	                    args.push(stopArg)
-	                }
-
-	                var result = interceptingFn.apply(this, args)
-
-	                if (withStopArg){
-	                    if (stopArg.stop === true){
-	                        return result
-	                    }
-
-	                } else {
-	                    if (result === false){
-	                        return result
-	                    }
-	                }
-
-	                //the interception was not stopped
-	                return interceptedFn.apply(this, arguments)
-	            }
-
-	        },
-
-	        delay = function(fn, delay, scope){
-
-	            var delayIsNumber = delay * 1 == delay
-
-	            if (arguments.length == 2 && !delayIsNumber){
-	                scope = delay
-	                delay = 0
-	            } else {
-	                if (!delayIsNumber){
-	                    delay = 0
-	                }
-	            }
-
-	            return function(){
-	                var self = scope || this,
-	                    args = arguments
-
-	                if (delay < 0){
-	                    fn.apply(self, args)
-	                    return
-	                }
-
-	                if (delay || !setImmediate){
-	                    setTimeout(function(){
-	                        fn.apply(self, args)
-	                    }, delay)
-
-	                } else {
-	                    setImmediate(function(){
-	                        fn.apply(self, args)
-	                    })
-	                }
-	            }
-	        },
-
-	        defer = function(fn, scope){
-	            return delay(fn, 0, scope)
-	        },
-
-	        buffer = function(fn, delay, scope){
-
-	            var timeoutId = -1
-
-	            return function(){
-
-	                var self = scope || this,
-	                    args = arguments
-
-	                if (delay < 0){
-	                    fn.apply(self, args)
-	                    return
-	                }
-
-	                var withTimeout = delay || !setImmediate,
-	                    clearFn = withTimeout?
-	                                clearTimeout:
-	                                clearImmediate,
-	                    setFn   = withTimeout?
-	                                setTimeout:
-	                                setImmediate
-
-	                if (timeoutId !== -1){
-	                    clearFn(timeoutId)
-	                }
-
-	                timeoutId = setFn(function(){
-	                    fn.apply(self, args)
-	                    self = null
-	                }, delay)
-
-	            }
-
-	        },
-
-	        throttle = function(fn, delay, scope) {
-	            var timeoutId = -1,
-	                self,
-	                args
-
-	            return function () {
-
-	                self = scope || this
-	                args = arguments
-
-	                if (timeoutId !== -1) {
-	                    //the function was called once again in the delay interval
-	                } else {
-	                    timeoutId = setTimeout(function () {
-	                        fn.apply(self, args)
-
-	                        self = null
-	                        timeoutId = -1
-	                    }, delay)
-	                }
-
-	            }
-
-	        },
-
-	        spread = function(fn, delay, scope){
-
-	            var timeoutId       = -1
-	            var callCount       = 0
-	            var executeCount    = 0
-	            var nextArgs        = {}
-	            var increaseCounter = true
-	            var resultingFnUnbound
-	            var resultingFn
-
-	            resultingFn = resultingFnUnbound = function(){
-
-	                var args = arguments,
-	                    self = scope || this
-
-	                if (increaseCounter){
-	                    nextArgs[callCount++] = {args: args, scope: self}
-	                }
-
-	                if (timeoutId !== -1){
-	                    //the function was called once again in the delay interval
-	                } else {
-	                    timeoutId = setTimeout(function(){
-	                        fn.apply(self, args)
-
-	                        timeoutId = -1
-	                        executeCount++
-
-	                        if (callCount !== executeCount){
-	                            resultingFn = bindArgsArray(resultingFnUnbound, nextArgs[executeCount].args).bind(nextArgs[executeCount].scope)
-	                            delete nextArgs[executeCount]
-
-	                            increaseCounter = false
-	                            resultingFn.apply(self)
-	                            increaseCounter = true
-	                        } else {
-	                            nextArgs = {}
-	                        }
-	                    }, delay)
-	                }
-
-	            }
-
-	            return resultingFn
-	        },
-
-	        /*
-	         * @param {Array} args the array for which to create a cache key
-	         * @param {Number} [cacheParamNumber] the number of args to use for the cache key. Use this to limit the args that area actually used for the cache key
-	         */
-	        getCacheKey = function(args, cacheParamNumber){
-	            if (cacheParamNumber == null){
-	                cacheParamNumber = -1
-	            }
-
-	            var i        = 0,
-	                len      = Math.min(args.length, cacheParamNumber),
-	                cacheKey = [],
-	                it
-
-	            for ( ; i < len; i++){
-	                it = args[i]
-
-	                if (root.check.isPlainObject(it) || Array.isArray(it)){
-	                    cacheKey.push(JSON.stringify(it))
-	                } else {
-	                    cacheKey.push(String(it))
-	                }
-	            }
-
-	            return cacheKey.join(', ')
-	        },
-
-	        /*
-	         * @param {Function} fn - the function to cache results for
-	         * @param {Number} skipCacheParamNumber - the index of the boolean parameter that makes this function skip the caching and
-	         * actually return computed results.
-	         * @param {Function|String} cacheBucketMethod - a function or the name of a method on this object which makes caching distributed across multiple buckets.
-	         * If given, cached results will be searched into the cache corresponding to this bucket. If no result found, return computed result.
-	         *
-	         * For example this param is very useful when a function from a prototype is cached,
-	         * but we want to return the same cached results only for one object that inherits that proto, not for all objects. Thus, for example for Wes.Element,
-	         * we use the 'getId' cacheBucketMethod to indicate cached results for one object only.
-	         * @param {Function} [cacheKeyBuilder] A function to be used to compose the cache key
-	         *
-	         * @return {Function} a new function, which returns results from cache, if they are available, otherwise uses the given fn to compute the results.
-	         * This returned function has a 'clearCache' function attached, which clears the caching. If a parameter ( a bucket id) is  provided,
-	         * only clears the cache in the specified cache bucket.
-	         */
-	        cache = function(fn, config){
-	            config = config || {}
-
-	            var bucketCache = {},
-	                cache       = {},
-	                skipCacheParamNumber = config.skipCacheIndex,
-	                cacheBucketMethod    = config.cacheBucket,
-	                cacheKeyBuilder      = config.cacheKey,
-	                cacheArgsLength      = skipCacheParamNumber == null?
-	                                            fn.length:
-	                                            skipCacheParamNumber,
-	                cachingFn
-
-	            cachingFn = function(){
-	                var result,
-	                    skipCache = skipCacheParamNumber != null?
-	                                                arguments[skipCacheParamNumber] === true:
-	                                                false,
-	                    args = skipCache?
-	                                    SLICE.call(arguments, 0, cacheArgsLength):
-	                                    SLICE.call(arguments),
-
-	                    cacheBucketId = cacheBucketMethod != null?
-	                                        typeof cacheBucketMethod == 'function'?
-	                                            cacheBucketMethod():
-	                                            typeof this[cacheBucketMethod] == 'function'?
-	                                                this[cacheBucketMethod]():
-	                                                null
-	                                        :
-	                                        null,
-
-
-	                    cacheObject = cacheBucketId?
-	                                        bucketCache[cacheBucketId]:
-	                                        cache,
-
-	                    cacheKey = (cacheKeyBuilder || getCacheKey)(args, cacheArgsLength)
-
-	                if (cacheBucketId && !cacheObject){
-	                    cacheObject = bucketCache[cacheBucketId] = {}
-	                }
-
-	                if (skipCache || cacheObject[cacheKey] == null){
-	                    cacheObject[cacheKey] = result = fn.apply(this, args)
-	                } else {
-	                    result = cacheObject[cacheKey]
-	                }
-
-	                return result
-	            }
-
-	            /*
-	             * @param {String|Object|Number} [bucketId] the bucket for which to clear the cache. If none given, clears all the cache for this function.
-	             */
-	            cachingFn.clearCache = function(bucketId){
-	                if (bucketId){
-	                    delete bucketCache[String(bucketId)]
-	                } else {
-	                    cache = {}
-	                    bucketCache = {}
-	                }
-	            }
-
-	            /*
-	             *
-	             * @param {Array} cacheArgs The array of objects from which to create the cache key
-	             * @param {Number} [cacheParamNumber] A limit for the cache args that are actually used to compute the cache key.
-	             * @param {Function} [cacheKeyBuilder] The function to be used to compute the cache key from the given cacheArgs and cacheParamNumber
-	             */
-	            cachingFn.getCache = function(cacheArgs, cacheParamNumber, cacheKeyBuilder){
-	                return cachingFn.getBucketCache(null, cacheArgs, cacheParamNumber, cacheKeyBuilder)
-	            }
-
-	            /*
-	             *
-	             * @param {String} bucketId The id of the cache bucket from which to retrieve the cached value
-	             * @param {Array} cacheArgs The array of objects from which to create the cache key
-	             * @param {Number} [cacheParamNumber] A limit for the cache args that are actually used to compute the cache key.
-	             * @param {Function} [cacheKeyBuilder] The function to be used to compute the cache key from the given cacheArgs and cacheParamNumber
-	             */
-	            cachingFn.getBucketCache = function(bucketId, cacheArgs, cacheParamNumber, cacheKeyBuilder){
-	                var cacheObject = cache,
-	                    cacheKey = (cacheKeyBuilder || getCacheKey)(cacheArgs, cacheParamNumber)
-
-	                if (bucketId){
-	                    bucketId = String(bucketId);
-
-	                    cacheObject = bucketCache[bucketId] = bucketCache[bucketId] || {}
-	                }
-
-	                return cacheObject[cacheKey]
-	            }
-
-	            /*
-	             *
-	             * @param {Object} value The value to set in the cache
-	             * @param {Array} cacheArgs The array of objects from which to create the cache key
-	             * @param {Number} [cacheParamNumber] A limit for the cache args that are actually used to compute the cache key.
-	             * @param {Function} [cacheKeyBuilder] The function to be used to compute the cache key from the given cacheArgs and cacheParamNumber
-	             */
-	            cachingFn.setCache = function(value, cacheArgs, cacheParamNumber, cacheKeyBuilder){
-	                return cachingFn.setBucketCache(null, value, cacheArgs, cacheParamNumber, cacheKeyBuilder)
-	            }
-
-	            /*
-	             *
-	             * @param {String} bucketId The id of the cache bucket for which to set the cache value
-	             * @param {Object} value The value to set in the cache
-	             * @param {Array} cacheArgs The array of objects from which to create the cache key
-	             * @param {Number} [cacheParamNumber] A limit for the cache args that are actually used to compute the cache key.
-	             * @param {Function} [cacheKeyBuilder] The function to be used to compute the cache key from the given cacheArgs and cacheParamNumber
-	             */
-	            cachingFn.setBucketCache = function(bucketId, value, cacheArgs, cacheParamNumber, cacheKeyBuilder){
-
-	                var cacheObject = cache,
-	                    cacheKey = (cacheKeyBuilder || getCacheKey)(cacheArgs, cacheParamNumber)
-
-	                if (bucketId){
-	                    bucketId = String(bucketId)
-
-	                    cacheObject = bucketCache[bucketId] = bucketCache[bucketId] || {};
-	                }
-
-	                return cacheObject[cacheKey] = value
-	            }
-
-	            return cachingFn
-	        }
-
-	module.exports = {
-
-	    map: __webpack_require__(24),
-
-	    dot: __webpack_require__(25),
-
-	    maxArgs: __webpack_require__(26),
-
-	    /**
-	     * @method compose
-	     *
-	     * Example:
-	     *
-	     *      zippy.Function.compose(c, b, a)
-	     *
-	     * See {@link Function#compose}
-	     */
-	    compose: compose,
-
-	    /**
-	     * See {@link Function#self}
-	     */
-	    self: function(fn){
-	        return fn
-	    },
-
-	    /**
-	     * See {@link Function#buffer}
-	     */
-	    buffer: buffer,
-
-	    /**
-	     * See {@link Function#delay}
-	     */
-	    delay: delay,
-
-	    /**
-	     * See {@link Function#defer}
-	     * @param {Function} fn
-	     * @param {Object} scope
-	     */
-	    defer:defer,
-
-	    /**
-	     * See {@link Function#skipArgs}
-	     * @param {Function} fn
-	     * @param {Number} [count=0] how many args to skip when calling the resulting function
-	     * @return {Function} The function that will call the original fn without the first count args.
-	     */
-	    skipArgs: skipArgs,
-
-	    /**
-	     * See {@link Function#intercept}
-	     */
-	    intercept: function(fn, interceptedFn, withStopArgs){
-	        return intercept(interceptedFn, fn, withStopArgs)
-	    },
-
-	    /**
-	     * See {@link Function#throttle}
-	     */
-	    throttle: throttle,
-
-	    /**
-	     * See {@link Function#spread}
-	     */
-	    spread: spread,
-
-	    /**
-	     * See {@link Function#chain}
-	     */
-	    chain: function(fn, where, mainFn){
-	        return chain(where, mainFn, fn)
-	    },
-
-	    /**
-	     * See {@link Function#before}
-	     */
-	    before: function(fn, otherFn){
-	        return chain('before', otherFn, fn)
-	    },
-
-	    /**
-	     * See {@link Function#after}
-	     */
-	    after: function(fn, otherFn){
-	        return chain('after', otherFn, fn)
-	    },
-
-	    /**
-	     * See {@link Function#curry}
-	     */
-	    curry: curry,
-
-	    /**
-	     * See {@link Function#once}
-	     */
-	    once: once,
-
-	    /**
-	     * See {@link Function#bindArgs}
-	     */
-	    bindArgs: bindArgs,
-
-	    /**
-	     * See {@link Function#bindArgsArray}
-	     */
-	    bindArgsArray: bindArgsArray,
-
-	    /**
-	     * See {@link Function#lockArgs}
-	     */
-	    lockArgs: lockArgs,
-
-	    /**
-	     * See {@link Function#lockArgsArray}
-	     */
-	    lockArgsArray: lockArgsArray,
-
-	    bindFunctionsOf: bindFunctionsOf,
-
-	    find: find,
-
-	    findIndex: findIndex,
-
-	    newify: __webpack_require__(27)
+	'use strict';
+
+	var getCssPrefixedValue = __webpack_require__(18)
+
+	module.exports = function(target){
+		target.plugins = target.plugins || [
+			(function(){
+				var values = {
+					'flex':1,
+					'inline-flex':1
+				}
+
+				return function(key, value){
+					if (key === 'display' && value in values){
+						return {
+							key  : key,
+							value: getCssPrefixedValue(key, value)
+						}
+					}
+				}
+			})()
+		]
+
+		target.plugin = function(fn){
+			target.plugins = target.plugins || []
+
+			target.plugins.push(fn)
+		}
+
+		return target
 	}
 
 /***/ },
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
-	function curry(fn, n){
+	var setImmediate   = global.setImmediate
+	var clearImmediate = global.clearImmediate
 
-	    if (typeof n !== 'number'){
-	        n = fn.length
-	    }
+	module.exports = function(fn, delay, scope){
 
-	    function getCurryClosure(prevArgs){
+	    var timeoutId = -1
 
-	        function curryClosure() {
+	    return function(){
 
-	            var len  = arguments.length
-	            var args = [].concat(prevArgs)
+	        var self = scope || this
+	        var args = arguments
 
-	            if (len){
-	                args.push.apply(args, arguments)
-	            }
-
-	            if (args.length < n){
-	                return getCurryClosure(args)
-	            }
-
-	            return fn.apply(this, args)
+	        if (delay < 0){
+	            fn.apply(self, args)
+	            return
 	        }
 
-	        return curryClosure
+	        var withTimeout = delay || !setImmediate
+	        var clearFn = withTimeout?
+	                        clearTimeout:
+	                        clearImmediate
+	        var setFn   = withTimeout?
+	                        setTimeout:
+	                        setImmediate
+
+	        if (timeoutId !== -1){
+	            clearFn(timeoutId)
+	        }
+
+	        timeoutId = setFn(function(){
+	            fn.apply(self, args)
+	            self = null
+	        }, delay)
 	    }
-
-	    return getCurryClosure([])
 	}
-
-	module.exports = curry
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	'use strict';
+	var React    = __webpack_require__(1)
+	  , hasOwn   = Object.prototype.hasOwnProperty
+	  , version  = React.version.split('.').map(parseFloat)
+	  , RESERVED = {
+	      className:  resolve(joinClasses),
+	      children:   function(){},
+	      key:        function(){},
+	      ref:        function(){},
+	      style:      resolve(extend)
+	    };
 
-	function composeTwo(f, g) {
-	    return function () {
-	        return f(g.apply(this, arguments))
-	    }
+	module.exports = function cloneWithProps(child, props) {
+	  var newProps = mergeProps(props, child.props);
+
+	  if (!hasOwn.call(newProps, 'children') && hasOwn.call(child.props, 'children'))
+	    newProps.children = child.props.children;
+
+	  // < 0.11
+	  if (version[0] === 0 && version[1] < 11)
+	    return child.constructor.ConvenienceConstructor(newProps);
+	  
+	  // 0.11
+	  if (version[0] === 0 && version[1] === 11)
+	    return child.constructor(newProps);
+
+	  // 0.12
+	  else if (version[0] === 0 && version[1] === 12){
+	    MockLegacyFactory.isReactLegacyFactory = true
+	    MockLegacyFactory.type = child.type
+	    return React.createElement(MockLegacyFactory, newProps);
+	  }
+
+	  // 0.13+
+	  return React.createElement(child.type, newProps);
+
+	  function MockLegacyFactory(){}
 	}
 
-	/*
-	 * @param {Function...} an enumeration of functions, each consuming the result of the following function.
-	 *
-	 * For example: compose(c, b, a)(1,4) == c(b(a(1,4)))
-	 *
-	 * @return the result of the first function in the enumeration
-	 */
-	module.exports = function(){
+	function mergeProps(currentProps, childProps) {
+	  var newProps = extend(currentProps), key
 
-	    var args = arguments
-	    var len  = args.length
-	    var i    = 0
-	    var f    = args[0]
+	  for (key in childProps) {
+	    if (hasOwn.call(RESERVED, key) )
+	      RESERVED[key](newProps, childProps[key], key)
 
-	    while (++i < len) {
-	        f = composeTwo(f, args[i])
-	    }
+	    else if ( !hasOwn.call(newProps, key) )
+	      newProps[key] = childProps[key];
+	  }
+	  return newProps
+	}
 
-	    return f
+	function resolve(fn){
+	  return function(src, value, key){
+	    if( !hasOwn.call(src, key)) src[key] = value
+	    else src[key] = fn(src[key], value)
+	  }
+	}
+
+	function joinClasses(a, b){
+	  if ( !a ) return b || ''
+	  return a + (b ? ' ' + b : '')
+	}
+
+	function extend() {
+	  var target = {};
+	  for (var i = 0; i < arguments.length; i++) 
+	    for (var key in arguments[i]) if (hasOwn.call(arguments[i], key)) 
+	      target[key] = arguments[i][key]   
+	  return target
 	}
 
 /***/ },
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	'use strict';
 
-	function chain(where, fn, secondFn){
+	var getPrefix     = __webpack_require__(21)
+	var forcePrefixed = __webpack_require__(22)
+	var el            = __webpack_require__(23)
 
-	    return function(){
-	        if (where === 'before'){
-	            secondFn.apply(this, arguments)
-	        }
+	var MEMORY = {}
+	var STYLE = el.style
 
-	        var result = fn.apply(this, arguments)
+	module.exports = function(key, value){
 
-	        if (where !== 'before'){
-	            secondFn.apply(this, arguments)
-	        }
+	    var k = key + ': ' + value
 
-	        return result
+	    if (MEMORY[k]){
+	        return MEMORY[k]
 	    }
-	}
 
-	module.exports = chain
+	    var prefix
+	    var prefixed
+	    var prefixedValue
+
+	    if (!(key in STYLE)){
+
+	        prefix = getPrefix('appearance')
+
+	        if (prefix){
+	            prefixed = forcePrefixed(key, value)
+
+	            prefixedValue = '-' + prefix.toLowerCase() + '-' + value
+
+	            if (prefixed in STYLE){
+	                el.style[prefixed] = ''
+	                el.style[prefixed] = prefixedValue
+
+	                if (el.style[prefixed] !== ''){
+	                    value = prefixedValue
+	                }
+	            }
+	        }
+	    }
+
+	    MEMORY[k] = value
+
+	    return value
+	}
 
 /***/ },
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use once'
+	'use strict';
 
-	function once(fn, scope){
+	var toUpperFirst = __webpack_require__(24)
+	var getPrefix    = __webpack_require__(21)
+	var el           = __webpack_require__(23)
 
-	    var called
-	    var result
+	var MEMORY = {}
+	var STYLE = el.style
 
-	    return function(){
-	        if (called){
-	            return result
-	        }
+	module.exports = function(key, value){
 
-	        called = true
+	    var k = key// + ': ' + value
 
-	        return result = fn.apply(scope || this, arguments)
+	    if (MEMORY[k]){
+	        return MEMORY[k]
 	    }
-	}
 
-	module.exports = once
+	    var prefix
+	    var prefixed
+
+	    if (!(key in STYLE)){//we have to prefix
+
+	        prefix = getPrefix('appearance')
+
+	        if (prefix){
+	            prefixed = prefix + toUpperFirst(key)
+
+	            if (prefixed in STYLE){
+	                key = prefixed
+	            }
+	        }
+	    }
+
+	    MEMORY[k] = key
+
+	    return key
+	}
 
 /***/ },
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	'use strict';
 
-	var SLICE = Array.prototype.slice
+	module.exports = {
+	  'alignItems': 1,
+	  'justifyContent': 1,
+	  'flex': 1,
+	  'flexFlow': 1,
 
-	module.exports = function(fn, args){
-	    return function(){
-	        var thisArgs = SLICE.call(args || [])
-
-	        if (arguments.length){
-	            thisArgs.push.apply(thisArgs, arguments)
-	        }
-
-	        return fn.apply(this, thisArgs)
-	    }
+	  'userSelect': 1,
+	  'transform': 1,
+	  'transition': 1,
+	  'transformOrigin': 1,
+	  'transformStyle': 1,
+	  'transitionProperty': 1,
+	  'transitionDuration': 1,
+	  'transitionTimingFunction': 1,
+	  'transitionDelay': 1,
+	  'borderImage': 1,
+	  'borderImageSlice': 1,
+	  'boxShadow': 1,
+	  'backgroundClip': 1,
+	  'backfaceVisibility': 1,
+	  'perspective': 1,
+	  'perspectiveOrigin': 1,
+	  'animation': 1,
+	  'animationDuration': 1,
+	  'animationName': 1,
+	  'animationDelay': 1,
+	  'animationDirection': 1,
+	  'animationIterationCount': 1,
+	  'animationTimingFunction': 1,
+	  'animationPlayState': 1,
+	  'animationFillMode': 1,
+	  'appearance': 1
 	}
 
 /***/ },
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	'use strict';
 
-	var SLICE = Array.prototype.slice
-	var bindArgsArray = __webpack_require__(20)
+	var toUpperFirst = __webpack_require__(24)
+	var prefixes     = ["ms", "Moz", "Webkit", "O"]
 
-	module.exports = function(fn){
-	    return bindArgsArray(fn, SLICE.call(arguments,1))
+	var el = __webpack_require__(23)
+
+	var PREFIX
+
+	module.exports = function(key){
+
+		if (PREFIX){
+			return PREFIX
+		}
+
+		var i = 0
+		var len = prefixes.length
+		var tmp
+		var prefix
+
+		for (; i < len; i++){
+			prefix = prefixes[i]
+			tmp = prefix + toUpperFirst(key)
+
+			if (typeof el.style[tmp] != 'undefined'){
+				return PREFIX = prefix
+			}
+		}
 	}
 
 /***/ },
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	'use strict';
 
-	var SLICE = Array.prototype.slice
+	var toUpperFirst = __webpack_require__(24)
+	var getPrefix    = __webpack_require__(21)
+	var properties   = __webpack_require__(20)
 
-	module.exports = function(fn, args){
+	/**
+	 * Returns the given key prefixed, if the property is found in the prefixProps map.
+	 *
+	 * Does not test if the property supports the given value unprefixed.
+	 * If you need this, use './getPrefixed' instead
+	 */
+	module.exports = function(key, value){
 
-	    return function(){
-	        if (!Array.isArray(args)){
-	            args = SLICE.call(args || [])
-	        }
+		if (!properties[key]){
+			return key
+		}
 
-	        return fn.apply(this, args)
-	    }
+		var prefix = getPrefix(key)
+
+		return prefix?
+					prefix + toUpperFirst(key):
+					key
 	}
 
 /***/ },
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
-	var SLICE = Array.prototype.slice
-	var lockArgsArray = __webpack_require__(22)
+	var el
 
-	module.exports = function(fn){
-	    return lockArgsArray(fn, SLICE.call(arguments, 1))
+	if(!!global.document){
+	  	el = global.document.createElement('div')
 	}
+
+	module.exports = el
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
+	'use strict';
 
-	var curry = __webpack_require__(16)
-
-	module.exports = curry(function(fn, value){
-	    return value != undefined && typeof value.map?
-	            value.map(fn):
-	            fn(value)
-	})
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var curry = __webpack_require__(16)
-
-	module.exports = curry(function(prop, value){
-	    return value != undefined? value[prop]: undefined
-	})
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var SLICE = Array.prototype.slice
-	var curry = __webpack_require__(16)
-
-	module.exports = function(fn, count){
-	    return function(){
-	        return fn.apply(this, SLICE.call(arguments, 0, count))
-	    }
+	module.exports = function(str){
+		return str?
+				str.charAt(0).toUpperCase() + str.slice(1):
+				''
 	}
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var newify = __webpack_require__(28)
-	var curry  = __webpack_require__(16)
-
-	module.exports = curry(newify)
-
-/***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getInstantiatorFunction = __webpack_require__(29)
-
-	module.exports = function(fn, args){
-		return getInstantiatorFunction(args.length)(fn, args)
-	}
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(){
-
-	    'use strict';
-
-	    var fns = {}
-
-	    return function(len){
-
-	        if ( ! fns [len ] ) {
-
-	            var args = []
-	            var i    = 0
-
-	            for (; i < len; i++ ) {
-	                args.push( 'a[' + i + ']')
-	            }
-
-	            fns[len] = new Function(
-	                            'c',
-	                            'a',
-	                            'return new c(' + args.join(',') + ')'
-	                        )
-	        }
-
-	        return fns[len]
-	    }
-
-	}()
 
 /***/ }
 /******/ ])
 });
+;
