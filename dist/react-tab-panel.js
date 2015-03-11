@@ -56,35 +56,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/** @jsx React.DOM */'use strict';
 
-	var React     = __webpack_require__(1)
-	var assign    = __webpack_require__(2)
-
-	var Tabs      = __webpack_require__(3)
-
-	function emptyFn(){}
-
-	// var ARROW_DEFAULTS = {
-	//     color : 'rgb(237, 227, 227)',
-	//     width : 6,
-	//     height: 6
-	// }
-
-	// var DEFAULT_ARROW_STYLE = {
-	//     top: '50%',
-	//     left: '50%',
-	//     display: 'inline-block',
-	//     position: 'absolute',
-	//     boxSizing: 'border-box',
-	//     borderLeft: '0px solid transparent',
-	//     borderRight: '0px solid transparent'
-	// }
-
-	// //default style for TabPanel
-	// var DEFAULT_STYLE =  {
-	//     display  : 'flex',
-	//     flexFlow : 'column',
-	//     boxSizing: 'border-box'
-	// }
+	var React  = __webpack_require__(1)
+	var assign = __webpack_require__(2)
+	var Tabs   = __webpack_require__(3)
 
 	var DISPLAY_NAME = 'ReactTabPanel'
 
@@ -94,86 +68,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    getDefaultProps: function() {
 	        return {
-
-	            'data-display-name': DISPLAY_NAME,
-
-	            // defaultStripStyle: {
-	            //     flex : 'none',
-	            //     textOverflow: 'ellipsis',
-	            //     overflow    : 'hidden',
-	            //     whiteSpace  : 'nowrap'
-	            // },
-
-	            // defaultContainerStyle: {
-	            //     flex: 1,
-	            //     display: 'flex'
-	            // },
-
-	            // defaultSelectedStyle: {
-	            //     overflow: 'auto'
-	            // },
-
-	            // scrollerFactory: function(props) {
-	            //     var side = props.side
-	            //     var style = assign({}, props.style)
-	            //     var borderWidth = style.borderWidth
-
-	            //     style.borderWidth = 0
-	            //     style.borderStyle = 'solid'
-	            //     style['border' + (side=='left'? 'Right': 'Left') + 'Width'] = borderWidth
-
-	            //     var arrowStyle  = assign({}, DEFAULT_ARROW_STYLE, props.arrowStyle)
-
-	            //     var arrowWidth  = props.arrowWidth  ||  arrowStyle.width || ARROW_DEFAULTS.width
-	            //     var arrowHeight = props.arrowHeight || arrowStyle.height || ARROW_DEFAULTS.height
-	            //     var arrowColor  = props.arrowColor || arrowStyle.color || ARROW_DEFAULTS.color
-
-	            //     assign(arrowStyle, {
-	            //         borderTop   : arrowHeight + 'px solid transparent',
-	            //         borderBottom: arrowHeight + 'px solid transparent',
-	            //         borderLeftWidth  : arrowWidth,
-	            //         borderRightWidth : arrowWidth
-	            //     })
-
-	            //     if (side == 'right'){
-	            //         arrowStyle.borderLeftColor = arrowColor
-	            //     }
-
-	            //     if (side == 'left'){
-	            //         arrowStyle.borderRightColor = arrowColor
-	            //     }
-
-	            //     delete arrowStyle.width
-	            //     delete arrowStyle.height
-
-	            //     return (
-	            //         <div {...props}>
-	            //             <div className="arrow" data-side={side} style={arrowStyle} />
-	            //         </div>
-	            //     )
-	            // },
-
-	            // stripFactory: function(props, Strip) {
-	            //     return (
-	            //         <div key="stripWrap" style={{overflow: 'hidden'}}>
-	            //             {Strip(props)}
-	            //         </div>
-	            //     )
-	            // }
+	            'data-display-name': DISPLAY_NAME
 	        }
 	    },
 
-	    // prepareStyle: function(props){
-
-	    //     var style = assign({}, DEFAULT_STYLE, props.style)
-
-	    //     return normalize(style)
-	    // },
-
 	    render: function() {
-
-	        // var props = this.prepareProps(this.props)
-
 	        return React.createElement(Tabs, React.__spread({},  this.props))
 	    }
 
@@ -223,7 +122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/** @jsx React.DOM */'use strict';
+	'use strict';
 
 	var React          = __webpack_require__(1)
 	var assign         = __webpack_require__(2)
@@ -425,7 +324,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            'disabledAnchorStyle',
 	            'focusedAnchorStyle',
 
-	            'titleStyle',
 	            'titleFactory',
 	            'titleProps',
 	            'enableScroll',
@@ -434,9 +332,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            'scrollerStyle',
 	            'scrollStep',
 	            'scrollSpeed',
-	            'scrollerWidth',
-
-	            'tabAlign'
+	            'scrollerWidth'
 	        ])
 
 	        stripProps.style    = props.stripStyle
@@ -516,11 +412,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/** @jsx React.DOM */'use strict';
+	'use strict';
 
 	var React  = __webpack_require__(1)
 	var assign = __webpack_require__(2)
-	var buffer = __webpack_require__(11)
+	var buffer = __webpack_require__(12)
 
 	var BASE_CLASS_NAME = __webpack_require__(7)
 
@@ -538,12 +434,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var ScrollerFactory = React.createFactory(Scroller)
 
 	var DISPLAY_NAME = 'ReactBasicTabs.Strip'
-
-	var TAB_ALIGN = {
-	    left: 'flex-start',
-	    center: 'center',
-	    right: 'flex-end'
-	}
 
 	module.exports = React.createClass({
 
@@ -731,17 +621,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return {
 	            'data-display-name': DISPLAY_NAME,
 
-	            tabAlign: 'left',
-
 	            defaultStyle: {
 	                boxSizing   : 'border-box',
-	                display     : 'flex',
-	                // flexFlow    : 'row'
 	                textOverflow: 'ellipsis',
 	                overflow    : 'hidden',
 	                whiteSpace  : 'nowrap',
-	                flex        : 'none',
-
+	                flex        : 'none'
 	            },
 
 	            border: '1px solid rgb(218, 218, 218)',
@@ -767,14 +652,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            defaultListStyle: {
 	                margin   : 0,
 	                padding  : 0,
-	                flex: '1 0 auto',
 	                listStyle: 'none',
 	                position : 'relative',
-	                boxSizing: 'border-box',
-	                // display: 'inline-block',
-	                verticalAlign: 'top',
-	                display  : 'flex',
-	                // flexFlow: 'row'
+	                display  : 'inline-block',
+	                boxSizing: 'border-box'
 	            }
 	        }
 	    },
@@ -844,8 +725,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var defaultPositionStyle = props.position == 'top'? props.defaultTopStyle: props.defaultBottomStyle
 	        var defaultStyle = assign({}, props.defaultStyle, defaultPositionStyle)
 
-	        defaultStyle.justifyContent = TAB_ALIGN[props.tabAlign] || TAB_ALIGN.left
-
 	        if (props.border){
 	            var borderName = 'border' + (props.position == 'top'? 'Bottom':'Top')
 	            defaultStyle[borderName] = defaultStyle[borderName] || props.border
@@ -866,11 +745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    prepareListStyle: function(props) {
-	        var defaultListStyle = assign({}, props.defaultListStyle)
-
-	        defaultListStyle.justifyContent = TAB_ALIGN[props.tabAlign] || TAB_ALIGN.left
-
-	        var listStyle = assign({}, defaultListStyle, props.listStyle)
+	        var listStyle = assign({}, props.defaultListStyle, props.listStyle)
 
 	        if (this.state.scrollPos){
 	            listStyle.left = -this.state.scrollPos
@@ -900,7 +775,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    renderListChildren: function(props) {
 	        var titleStyle = assign({}, props.defaultTitleStyle, props.titleStyle)
-
 	        var titleClassName = [props.titleClassName || '', BASE_CLASS_NAME + '-item-title']
 
 	        return React.Children.map(props.children,
@@ -978,11 +852,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/** @jsx React.DOM */'use strict';
+	'use strict';
 
 	var React  = __webpack_require__(1)
 	var assign = __webpack_require__(2)
-	var cloneWithProps = __webpack_require__(12)
+	var cloneWithProps = __webpack_require__(11)
 	var normalize = __webpack_require__(8)
 
 	var BASE_CLASS_NAME = __webpack_require__(7)
@@ -1190,7 +1064,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/** @jsx React.DOM */'use strict';
+	'use strict';
 
 	var React  = __webpack_require__(1)
 	var assign = __webpack_require__(2)
@@ -1211,15 +1085,11 @@ return /******/ (function(modules) { // webpackBootstrap
 				'data-display-name': DISPLAY_NAME,
 
 				defaultStyle: {
-					flex: 'none',
 					boxSizing: 'border-box',
 					userSelect: 'none',
 					display  : 'inline-block',
 					cursor   : 'pointer',
-					padding  : 5,
-					textOverflow: 'ellipsis',
-					whiteSpace: 'nowrap',
-					overflow: 'hidden'
+					padding  : 5
 				},
 
 				defaultAnchorStyle: {
@@ -1446,7 +1316,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 
 		handleMouseUp: function(props, event) {
-
 		    if (props.disabled){
 		        return
 		    }
@@ -1513,7 +1382,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/** @jsx React.DOM */'use strict';
+	'use strict';
 
 	var React  = __webpack_require__(1)
 	var assign = __webpack_require__(2)
@@ -1654,49 +1523,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-
-	var setImmediate   = global.setImmediate
-	var clearImmediate = global.clearImmediate
-
-	module.exports = function(fn, delay, scope){
-
-	    var timeoutId = -1
-
-	    return function(){
-
-	        var self = scope || this
-	        var args = arguments
-
-	        if (delay < 0){
-	            fn.apply(self, args)
-	            return
-	        }
-
-	        var withTimeout = delay || !setImmediate
-	        var clearFn = withTimeout?
-	                        clearTimeout:
-	                        clearImmediate
-	        var setFn   = withTimeout?
-	                        setTimeout:
-	                        setImmediate
-
-	        if (timeoutId !== -1){
-	            clearFn(timeoutId)
-	        }
-
-	        timeoutId = setFn(function(){
-	            fn.apply(self, args)
-	            self = null
-	        }, delay)
-	    }
-	}
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 	var React    = __webpack_require__(1)
 	  , hasOwn   = Object.prototype.hasOwnProperty
@@ -1768,6 +1594,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	      target[key] = arguments[i][key]   
 	  return target
 	}
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	var setImmediate   = global.setImmediate
+	var clearImmediate = global.clearImmediate
+
+	module.exports = function(fn, delay, scope){
+
+	    var timeoutId = -1
+
+	    return function(){
+
+	        var self = scope || this
+	        var args = arguments
+
+	        if (delay < 0){
+	            fn.apply(self, args)
+	            return
+	        }
+
+	        var withTimeout = delay || !setImmediate
+	        var clearFn = withTimeout?
+	                        clearTimeout:
+	                        clearImmediate
+	        var setFn   = withTimeout?
+	                        setTimeout:
+	                        setImmediate
+
+	        if (timeoutId !== -1){
+	            clearFn(timeoutId)
+	        }
+
+	        timeoutId = setFn(function(){
+	            fn.apply(self, args)
+	            self = null
+	        }, delay)
+	    }
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 13 */
@@ -1866,9 +1735,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var el           = __webpack_require__(22)
 
 	var MEMORY = {}
-	var STYLE = el.style
+	var STYLE
+	var ELEMENT
 
 	module.exports = function(key, value){
+
+	    ELEMENT = ELEMENT || el()
+	    STYLE   = STYLE   || ELEMENT.style
 
 	    var k = key// + ': ' + value
 
@@ -1948,9 +1821,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var el            = __webpack_require__(22)
 
 	var MEMORY = {}
-	var STYLE = el.style
+	var STYLE
+	var ELEMENT
 
 	module.exports = function(key, value){
+
+	    ELEMENT = ELEMENT || el()
+	    STYLE   = STYLE   ||  ELEMENT.style
 
 	    var k = key + ': ' + value
 
@@ -1972,10 +1849,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            prefixedValue = '-' + prefix.toLowerCase() + '-' + value
 
 	            if (prefixed in STYLE){
-	                el.style[prefixed] = ''
-	                el.style[prefixed] = prefixedValue
+	                ELEMENT.style[prefixed] = ''
+	                ELEMENT.style[prefixed] = prefixedValue
 
-	                if (el.style[prefixed] !== ''){
+	                if (ELEMENT.style[prefixed] !== ''){
 	                    value = prefixedValue
 	                }
 	            }
@@ -2010,6 +1887,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var el = __webpack_require__(22)
 
+	var ELEMENT
 	var PREFIX
 
 	module.exports = function(key){
@@ -2017,6 +1895,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		if (PREFIX){
 			return PREFIX
 		}
+
+		ELEMENT = ELEMENT || el()
 
 		var i = 0
 		var len = prefixes.length
@@ -2027,7 +1907,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			prefix = prefixes[i]
 			tmp = prefix + toUpperFirst(key)
 
-			if (typeof el.style[tmp] != 'undefined'){
+			if (typeof ELEMENT.style[tmp] != 'undefined'){
 				return PREFIX = prefix
 			}
 		}
@@ -2041,11 +1921,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var el
 
-	if(!!global.document){
-	  	el = global.document.createElement('div')
-	}
+	module.exports = function(){
 
-	module.exports = el
+		if(!el && !!global.document){
+		  	el = global.document.createElement('div')
+		}
+
+		return el
+	}
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
