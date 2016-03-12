@@ -1,0 +1,30 @@
+.react-tab-panel {
+  box-sizing: border-box;
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
+  display: inline-flex;
+  flex-flow: column;
+}
+
+.react-tab-panel__body {
+  flex: 1 0 auto;
+}
+
+//tabstrip
+.react-tab-panel__tab-strip {
+
+}
+
+.react-tab-panel__tab-title {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.react-tab-panel__tab-title--active {
+
+}

@@ -1,0 +1,15 @@
+.react-tab-panel--theme-default {
+  border: 1px solid red;
+
+  .react-tab-panel__tab-title {
+    padding: 5px 10px;
+  }
+
+  .react-tab-panel__tab-title--active {
+    background: gray;
+  }
+
+  .react-tab-panel__body {
+    padding: 5px 10px;
+  }
+}

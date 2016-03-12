@@ -18,6 +18,7 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+logfile
 
 # Dependency directory
 # Commenting this out is preferred by some people, see
@@ -26,3 +27,9 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+.idea
+/*.sublime-project
+/*.sublime-workspace
+dist
+lib

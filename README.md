@@ -2,6 +2,16 @@
 
 > React Tab Panel
 
+## Usage
+
+```jsx
+import TabPanel from 'react-tab-panel'
+
+<TabPanel>
+  
+</TabPanel>
+```
+
 This component is a very simple yet powerful tab panel. You only have to require it (there are no css files involved).
 
 For flexibility it leaves styling up to the end-user. (It does render html with some css class names, so you can use those to style your component).
