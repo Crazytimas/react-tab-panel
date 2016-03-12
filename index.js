@@ -14,7 +14,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      index: 0
+      index: 2
     }
   }
 
@@ -27,11 +27,12 @@ class App extends Component {
 
   render(){
     return <TabPanel
-      activeIndex={this.state.index}
+
       onActivate={this.onActivate}
     >
       <TabStrip
         style={{padding: 100}}
+        activeIndex={this.state.index}
         onActivate={e => console.log(e,'!!!')}
       />
 

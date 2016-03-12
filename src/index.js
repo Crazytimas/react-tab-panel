@@ -62,7 +62,7 @@ export default class TabPanel extends Component {
 
   onActivate(activeIndex){
 
-    if (this.props.activeIndex == null){
+    if (this.props.activeIndex == null ){
       this.setState({
         activeIndex
       })
@@ -87,9 +87,11 @@ export default class TabPanel extends Component {
     const tabStripProps = assign(
       {
         tabFactory,
+        activeIndex,
       },
       this.p.tabStrip,
       {
+        //call both this.onActive AND the tabStrip provided one
         onActivate: chain(this.onActivate, this.p.tabStrip.onActivate),
         tabFactory,
         tabs
