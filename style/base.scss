@@ -1,4 +1,7 @@
-.react-tab-panel {
+@import '~react-flex/index.css';
+
+.react-tab-panel,
+.react-tab-panel__tab-strip {
   box-sizing: border-box;
 
   *,
@@ -6,23 +9,87 @@
   *:after {
     box-sizing: border-box;
   }
+}
 
+.react-tab-panel {
   display: inline-flex;
   flex-flow: column;
 }
 
 .react-tab-panel__body {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  overflow: auto;
 }
 
 //tabstrip
 .react-tab-panel__tab-strip {
+  flex: none;
+}
 
+.react-tab-panel__tab-strip-before,
+.react-tab-panel__tab-strip-after {
+  min-width: 10px;
+}
+
+//tabAlign: start
+.react-tab-panel__tab-strip--tab-align-start {
+  .react-tab-panel__tab-strip-between,
+  .react-tab-panel__tab-strip-before {
+    flex: none;
+  }
+}
+
+//tabAlign: center
+.react-tab-panel__tab-strip--tab-align-center {
+  .react-tab-panel__tab-strip-between {
+    flex: none;
+  }
+}
+//tabAlign: end
+.react-tab-panel__tab-strip--tab-align-end {
+  .react-tab-panel__tab-strip-between,
+  .react-tab-panel__tab-strip-after {
+    flex: none;
+  }
+}
+
+//tabAlign: space-around
+.react-tab-panel__tab-strip--tab-align-space-around {
+  .react-tab-panel__tab-strip-before,
+  .react-tab-panel__tab-strip-after,
+  .react-tab-panel__tab-strip-between {
+    // flex: 1 0 0;
+    // flex: none;
+  }
+}
+
+.react-tab-panel__tab-strip--tab-align-space-between {
+  .react-tab-panel__tab-strip-before,
+  .react-tab-panel__tab-strip-after {
+    // flex: 1 0 0;
+    flex: none;
+  }
+}
+
+.react-tab-panel__tab-strip--tab-align-stretch {
+  .react-tab-panel__tab-strip-before,
+  .react-tab-panel__tab-strip-after,
+  .react-tab-panel__tab-strip-between {
+    // flex: 1 0 0;
+    flex: none;
+  }
+  .react-tab-panel__tab-title {
+    flex: 1;
+  }
 }
 
 .react-tab-panel__tab-title {
   cursor: pointer;
   display: inline-block;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .react-tab-panel__tab-title--active {

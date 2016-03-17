@@ -2,118 +2,241 @@
 
 > React Tab Panel
 
+## Coming soon - scrollable tabs
 ## Usage
 
 ```jsx
 import TabPanel from 'react-tab-panel'
 
+import 'react-tab-panel/index.css'
+
 <TabPanel>
-  
+  <div tabTitle="First Tab">
+    First tab contents here
+  </div>  
+
+  <YourComponent tabTitle="Second Tab">
+    Content for second tab here
+  </YourComponent>
 </TabPanel>
 ```
 
-This component is a very simple yet powerful tab panel. You only have to require it (there are no css files involved).
+## Examples
 
-For flexibility it leaves styling up to the end-user. (It does render html with some css class names, so you can use those to style your component).
+For brevity, we are not showing the `import` statements in the examples below (with a few exceptions, where appropriate)!
 
-## Install
-
-```sh
-$ npm install react-tab-panel
-```
-
-## Features
-
- - tab scrolling (use enableScroll: true)
- - complete control over styling
- - clean design
- - keyboard-navigateable
-
-## Usage
+### Stretching tabs:
 
 ```jsx
-var React    = require('react')
-var TabPanel = require('react-tab-panel')
+<TabPanel tabAlign="strech">
+  <div tabTitle="First Tab">
+    First tab contents here
+  </div>  
 
-var App = React.createClass({
-
-    getInitialState: function(){
-        return {
-            activeIndex: 1
-        }
-    },
-
-    handleChange: function(index){
-        this.setState({
-            activeIndex: index
-        })
-    },
-
-    render: function() {
-        return (
-            <TabPanel activeIndex={this.state.activeIndex}
-                onChange={this.handleChange}
-                titleStyle={{padding: 10}}
-            >
-                <div title="One">first</div>
-                <div title="Two">second</div>
-                <div title="Three">third</div>
-            </TabPanel>
-        )
-    }
-})
-
-React.render(<App />, document.body)
+  <YourComponent tabTitle="Second Tab">
+    Content for second tab here
+  </YourComponent>
+</TabPanel>
 ```
 
-## Properties
+### Disabled tabs:
 
-The TabPanel supports the following props:
+```jsx
+<TabPanel activeIndex={1}>
+  <div
+    tabTitle="First Tab"
+    tabProps={{disabled: true}}
+  >
+    First tab contents here
+  </div>  
 
- * activeIndex: Number - the index of the TabPanel children to be rendered as active - NOTE: When setting this option, you have to listen for onChange, and re-render the tabpanel (CONTROLLED behaviour)
+  <YourComponent tabTitle="Second Tab">
+    Content for second tab here
+  </YourComponent>
+</TabPanel>
+```
 
- * defaultActiveIndex: Number - the index of the TabPanel. When clicking on a tab, the panel manages the active index internally, and you are shown the clicked tab (UNCONTROLLED behaviour)
+For disabled tabs, just specify `tabProps={{disabled: true}}` on the component you want to show as disabled.
 
- * enableScroll: Boolean (defaults to false) - Whether to show scroll to tab titles when they don't have enough space
+### Using `tabProps`
 
- * onChange: Function(index) - the function to be called when the user selects another tab to be the active tab. The first param is the new activeIndex to be set
+As an alternative to `tabTitle`, you can use `tabProps`, which should be an object with at least the `title` property.
 
- * tabVerticalPosition: String - can be 'top' or 'bottom'
+You can use this property to pass in any custom props to tab titles
 
- * titleStyle: Object - style to be applied to tab titles
- * defaultStyle: Object - style to be applied to every tab in the tabpanel.
+```jsx
+<TabPanel activeIndex={1}>
+  <div
+    tabProps={{title:'First tab here'}}
+  >
+    First tab contents here
+  </div>  
 
- * stripStyle: Object - a style object for the tab title strip
+  <YourComponent
+    tabProps={{
+      title: 'Second Tab',
+      disabled: true,
+      onClick: (e) => console.log(e)
+    }}
+  >
+    Content for second tab here
+  </YourComponent>
+</TabPanel>
+```
 
- * scrollStep: Number (defaults to 5) - the scroll step size
- * scrollSpeed: Number (defaults to 20) - used when holding mouse down on scroll. Every **scrollSpeed** milliseconds we scroll **scrollStep** pixels
+### Using the `TabStrip`
+
+```jsx
+import TabPanel, { TabStrip } from 'react-tab-panel'
+
+<TabPanel activeIndex={1}>
+
+  <TabStrip
+    style={{padding: 10}}
+  />
+
+  <div tabTitle="First tab here">
+    First tab contents here
+  </div>  
+
+  <YourComponent tabTitle="Second Tab">
+    Content for second tab here
+  </YourComponent>
+
+</TabPanel>
+```
+
+## Structure
+
+```
+*-------------------*
+|    Tab Strip      |
+*-------------------*
+|                   |
+|    Tab Body       |
+|                   |
+*-------------------*
+```
+
+The `TabPanel` is built of a `TabStrip` and a `TabBody`.
+
+### TabStrip
+
+The TabStrip basically renders the tabs at the top (or bottom) of the component.
+
+By default, when rendering a `TabPanel` you don't have to render a `TabStrip` explicitly. However, doing so gives you greater flexibility in configuring and positioning it.
+
+Example, with `TabStrip`
+
+```jsx
+import TabPanel, { TabStrip } from 'react-tab-panel'
+
+<TabPanel
+  activeIndex={x}
+  onActivate={onActivate}
+>
+  <TabStrip style={{padding: 20}} />
+
+  <div tabTitle="First Tab">
+    First tab contents here
+  </div>  
+
+  <YourComponent tabTitle="Second Tab">
+    Content for second tab here
+  </YourComponent>
+</TabPanel>
+```
+
+The `TabPanel` detects you are using the `TabStrip` inside it, and won't render it as a tab, instead, you can configure it's style and other props.
+
+You can even use the `TabStrip` in isolation, without the `TabPanel`:
+
+```jsx
+import { TabStrip } from 'react-tab-panel'
+
+let x = 1
+let onActivate = (newIndex) => { ... }
+
+const tabs = [
+  'First tab',
+  <b>second tab</b>
+]
+<TabStrip
+  tabs={tabs}
+  activeIndex={x}
+  onActivate={onActivate}
+/>
+```
+
+#### Configuration
+
+If you are using the `TabStrip` as a standalone component, you can specify the following props:
+
+ * `tabs: Array` - an array of ReactNode elements, which will be the tab titles
+ * `activeIndex` - the index of the tab to render as active. **Controlled prop**!
+ * `defaultActiveIndex` - uncontrolled version of `activeIndex`
+ * `onActivate: Function(index)` - function to be called when a new tab is clicked & activated.
+
+### TabBody
+
+Renders the active tab contents.
+
+You can include a `TabBody` inside your `TabPanel` to configure how the current tab content is rendered.
+
+Example:
+
+```jsx
+import TabPanel, { TabBody, TabStrip } from 'react-tab-panel'
+
+<TabPanel>
+
+  <TabBody style={{padding: 100}}>
+    <div tabTitle="First tab">
+      Lorem ipsum Nisi fugiat ut nulla consectetur reprehenderit.
+    </div>
+    <YourComponent tabTitle="Second"/>
+  </TabBody>
+
+  <TabStrip />
+</TabPanel>
+```
+
+The `TabPanel` will detect you are using a `TabBody` inside, and will use its children as tabs, and not the children of the `TabPanel`.
+You can even use a `TabStrip` and include it after the `TabBody` as an alternative way of configuring the `tabPosition` to `'bottom'`
+
+#### Configuration
+
+ * `renderContent: Function` - a function that gets passed the content to render in the `TabBody`. You can use this to add some nesting and/or custom styling, etc.
+
+The `TabBody` accepts any other normal `JSX` props. Eg: `onClick`, `style`, `className`, etc
+
+#### Styling
+
+It's default className will be `'react-tab-panel__body'`. If you configure it with another className, it will use both yours and the default value.
 
 
-For tab titles, the children of the TabPanel are expected to have have either a **title** property, or a **tabTitle** property (the tabTitle property has higher priority, and will be used if specified as a truthy value).
+## Configuration
 
-Other useful props:
+ * `children` with `tabTitle` prop as tabs
+ * `tabPosition` - `'top'` or `'bottom'` are possible values. By default the `TabPanel` will render tabs at the top.
 
- * scrollerProps: Object
-        Example:
+## Theming
 
-        scrollerProps = {
-            arrowStyle: {
-                color: 'magenta',
-                width: 10,
-                height: 5
-            },
-            width: 10, //defaults to 8
-            style: {background: 'blue', borderWidth: 2, borderColor: 'gray'}
-        }
+For the default look&feel, just import `react-tab-panel/index.css`, which includes the structural styles as well as the default theme.
 
-## Styling
+If you want to use only the structural styles, make sure you only include `react-tab-panel/base.css` and then add your own custom theme on top of those styles.
 
-For styling, the following classes are present in the rendered html:
+```jsx
+import TabPanel from 'react-tab-panel'
 
- * 'basic-tabs' - className for the React component.
- * 'basic-tabs-strip' - the nav element containing the tab titles
- * 'basic-tabs-item-title' - a **li** with the title of each tab
- * 'basic-tabs-item-title.active' - the active version of the above
- * 'basic-tabs-container' - the body of the tab panel
- * 'basic-tabs-item' - html **article** tags inside the .basic-tabs-container. Those hold the actual children of the tab panel
- * 'basic-tabs-item.active' - the active version of the above
+//now import the css files
+import 'react-tab-panel/index.css' //for the default look
+
+//the css import above is equivalent to
+import 'react-tab-panel/base.css'
+import 'react-tab-panel/theme/default.css'
+```
+
+## License
+
+#### MIT

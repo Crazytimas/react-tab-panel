@@ -7,14 +7,6 @@ import join from './join'
 import TabStrip from './TabStrip'
 import Body from './Body'
 
-const chain = (...fns) => {
-  return (...args) => {
-    fns.forEach(f => {
-      f(...args)
-    })
-  }
-}
-
 export default class TabPanel extends Component {
 
   constructor(props){
@@ -28,35 +20,77 @@ export default class TabPanel extends Component {
   render(){
 
     const { props } = this
-    const className = join(props.className, 'react-tab-panel', `react-tab-panel--theme-${props.theme}`)
-
     const p = assign({}, props)
 
     let tabStrip = {}
-    p.children = React.Children.toArray(props.children).filter(child => {
-      if (child && child.props && child.props.isTabStrip){
-        tabStrip = child.props
-        return false
-      }
+    let tabBody
 
-      return true
-    })
+    let tabStripIndex
+    let tabBodyIndex
+
+    let children = React.Children
+      .toArray(props.children)
+      .filter((child, index) => {
+        if (child && child.props && child.props.isTabStrip){
+          tabStrip = child.props
+          tabStripIndex = index
+          return false
+        }
+
+        if (child && child.props && child.props.isTabBody){
+          tabBody = child.props
+          tabBodyIndex = index
+          return false
+        }
+
+        return true
+      })
+
+    if (tabBody){
+      children = tabBody.children
+    }
+
+    let tabPosition = props.tabPosition || 'top'
+
+    if (
+      !props.tabPosition &&
+      tabStripIndex !== undefined &&
+      tabBodyIndex !== undefined &&
+      tabStripIndex > tabBodyIndex
+    ){
+      tabPosition = 'bottom'
+    }
+
+    p.tabPosition = tabPosition
 
     p.tabStrip = tabStrip
+    p.tabBody = tabBody
 
-    let activeIndex = tabStrip.activeIndex == null && props.activeIndex == null?
+    p.children = children
+
+    p.activeIndex = props.activeIndex == null?
                         this.state.activeIndex:
-                        tabStrip.activeIndex == null?
-                          props.activeIndex:
-                          tabStrip.activeIndex
-
-    p.activeIndex = activeIndex
+                        props.activeIndex
 
     this.p = p
 
+    const className = join(
+      props.className,
+      'react-tab-panel',
+
+      `react-tab-panel--theme-${props.theme}`,
+
+      `react-tab-panel--tab-align-${props.tabAlign}`,
+
+      `react-tab-panel--tab-position-${tabPosition}`
+    )
+
+    const top = tabPosition == 'top'
+
     return <div {...props} className={className}>
-      {this.renderTabStrip()}
+      {top && this.renderTabStrip()}
       {this.renderBody()}
+      {!top && this.renderTabStrip()}
     </div>
   }
 
@@ -82,20 +116,33 @@ export default class TabPanel extends Component {
               null
     }).filter(x => !!x)
 
-    const { activeIndex, tabFactory, tabStripFactory } = this.p
+    const {
+      activeIndex,
+      tabFactory,
+      tabStripFactory,
+      theme,
+      tabAlign,
+      tabPosition
+    } = this.p
+
+    const newTabStripProps = {
+      //call both this.onActive AND the tabStrip provided one
+      onActivate: this.onActivate,
+      activeIndex,
+      tabFactory,
+      tabAlign,
+      theme,
+      tabs,
+      tabPosition,
+      inTabPanel: true
+    }
 
     const tabStripProps = assign(
       {
         tabFactory,
-        activeIndex,
       },
       this.p.tabStrip,
-      {
-        //call both this.onActive AND the tabStrip provided one
-        onActivate: chain(this.onActivate, this.p.tabStrip.onActivate),
-        tabFactory,
-        tabs
-      }
+      newTabStripProps
     )
 
     let tabStrip
@@ -116,10 +163,10 @@ export default class TabPanel extends Component {
 
     const bodyChildren = strategy(children, activeIndex)
 
-    const bodyProps = {
+    const bodyProps = assign({}, this.p.tabBody, {
       activeIndex,
       children: bodyChildren
-    }
+    })
 
     return <Body {...bodyProps} />
   }
@@ -132,10 +179,12 @@ TabPanel.propTypes = {
 
 TabPanel.defaultProps = {
   theme: 'default',
+  tabAlign: 'start',
   onActivate: () => {},
   strategy: (children, activeIndex) => children[activeIndex]
 }
 
 export {
-  TabStrip
+  TabStrip,
+  Body as TabBody
 }

@@ -11,6 +11,17 @@ export default class Body extends Component {
     const { props } = this
     const className = join(props.className, 'react-tab-panel__body')
 
-    return <div {...props} className={className} />
+    const content = props.renderContent(props.children)
+
+    return <div {...props} className={className} children={content} />
   }
+}
+
+Body.propTypes = {
+  renderContent: PropTypes.func
+}
+
+Body.defaultProps = {
+  renderContent: children => children,
+  isTabBody: true
 }
