@@ -237,6 +237,19 @@ import 'react-tab-panel/base.css'
 import 'react-tab-panel/theme/default.css'
 ```
 
+If you want to show the `TabPanel` with another theme, don't forget to also specify the `theme` prop on the component:
+
+
+```jsx
+<TabPanel theme="flat" ... />
+```
+
+### Available themes:
+
+ * `default`
+ * `red`
+ * `flat`
+
 ## License
 
 #### MIT
