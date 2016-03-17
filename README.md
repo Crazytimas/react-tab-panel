@@ -28,7 +28,7 @@ For brevity, we are not showing the `import` statements in the examples below (w
 ### Stretching tabs:
 
 ```jsx
-<TabPanel tabAlign="strech">
+<TabPanel tabAlign="stretch">
   <div tabTitle="First Tab">
     First tab contents here
   </div>  
@@ -39,6 +39,14 @@ For brevity, we are not showing the `import` statements in the examples below (w
 </TabPanel>
 ```
 
+Possible `tabAlign` values:
+ * `start`
+ * `center`
+ * `end`
+ * `stretch`
+ * `space-around`
+ * `space-between`
+ 
 ### Disabled tabs:
 
 ```jsx
