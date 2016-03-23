@@ -4,12 +4,10 @@
   "description": "React TabPanel",
   "main": "lib/index.js",
   "dependencies": {
-    "object-assign": "^2.1.1",
-    "react-basic-tabs": "git://github.com/zippyui/react-basic-tabs",
+    "object-assign": "^4.0.1",
     "react-class": "^2.0.0",
     "react-flex": "^1.2.3",
-    "react-notify-resize": "^0.1.8",
-    "react-style-normalizer": "^1.1.4"
+    "react-notify-resize": "^0.1.8"
   },
   "peerDependencies": {
     "react": ">=0.14.0"
