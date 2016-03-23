@@ -55,13 +55,9 @@ export default class App extends Component {
         xtabAlign="end"
         activeIndex={this.state.index}
         onActivate={this.onActivate}
-        style={{minWidth: '100%'}}
+        style={{minWidth: '100%', height: 100}}
       >
-        <TabBody renderContent={(c) => {
-          return <div style={{padding: 100}}>
-            {c}
-          </div>
-        }}>
+
           <div tabTitle="First" tabProps={{xdisabled: true}}>
             first tabLorem ipsum In velit veniam elit officia sunt.
           </div>
@@ -73,7 +69,6 @@ export default class App extends Component {
           <div tabTitle="third tab title">
             thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
           </div>
-        </TabBody>
 
       </TabPanel>
     </div>
