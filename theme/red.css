@@ -35,16 +35,13 @@
     border-bottom-right-radius: 3px; }
   .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip-after--after-active {
     border-bottom-left-radius: 3px; }
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-strip-between--after-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-strip-between--after-active {
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-strip-between--after-active, .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-strip-between--after-active {
     border-bottom-left-radius: 3px; }
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-strip-between--before-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-strip-between--before-active {
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-strip-between--before-active, .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-strip-between--before-active {
     border-bottom-right-radius: 3px; }
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-title--before-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-title--after-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-title--before-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-title--after-active {
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-title--before-active,
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-title--after-active, .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-title--before-active,
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-title--after-active {
     border-radius: 0px; }
 
 .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom {
@@ -65,14 +62,11 @@
     border-top-right-radius: 3px; }
   .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip--last-active .react-tab-panel__tab-strip-after {
     border-top-left-radius: 3px; }
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-strip-between--after-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-strip-between--after-active {
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-strip-between--after-active, .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-strip-between--after-active {
     border-top-left-radius: 3px; }
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-strip-between--before-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-strip-between--before-active {
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-strip-between--before-active, .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-strip-between--before-active {
     border-top-right-radius: 3px; }
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-title--before-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-title--after-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-title--before-active,
-  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-title--after-active {
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-title--before-active,
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--tab-align-space-around .react-tab-panel__tab-title--after-active, .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-title--before-active,
+  .react-tab-panel__tab-strip--theme-red.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--tab-align-space-between .react-tab-panel__tab-title--after-active {
     border-radius: 0px; }
