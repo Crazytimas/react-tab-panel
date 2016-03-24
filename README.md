@@ -6,6 +6,8 @@
 
 Visit the docs site at [zippyui.com/docs/react-tab-panel](http://zippyui.com/docs/react-tab-panel)
 
+[![Tab Panel](./usage-example.gif)](http://zippyui.com/docs/react-tab-panel)
+
 # Install
 
 ```sh
