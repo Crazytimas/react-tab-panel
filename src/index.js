@@ -106,7 +106,9 @@ export default class TabPanel extends Component {
   }
 
   renderTabStrip(){
-    const tabs = this.p.children.map(child => {
+    const children = Array.isArray(this.p.children): this.p.children: [this.p.children]
+
+    const tabs = children.map(child => {
       return child && child.props?
               assign({
                 title: child.props.tabTitle || '',
