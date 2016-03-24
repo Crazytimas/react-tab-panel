@@ -63,8 +63,8 @@ $THEME_NAME: 'default' !default;
       border-bottom-left-radius: $BORDER_RADIUS;
     }
 
-    .react-tab-panel__tab-strip--tab-align-space-around,
-    .react-tab-panel__tab-strip--tab-align-space-between {
+    &.react-tab-panel__tab-strip--tab-align-space-around,
+    &.react-tab-panel__tab-strip--tab-align-space-between {
 
       .react-tab-panel__tab-strip-between--after-active {
         border-bottom-left-radius: $BORDER_RADIUS;
@@ -112,8 +112,8 @@ $THEME_NAME: 'default' !default;
       border-top-left-radius: $BORDER_RADIUS;
     }
 
-    .react-tab-panel__tab-strip--tab-align-space-around,
-    .react-tab-panel__tab-strip--tab-align-space-between {
+    &.react-tab-panel__tab-strip--tab-align-space-around,
+    &.react-tab-panel__tab-strip--tab-align-space-between {
 
       .react-tab-panel__tab-strip-between--after-active {
         border-top-left-radius: $BORDER_RADIUS;

@@ -51,8 +51,8 @@ export default class App extends Component {
         style={{ marginBottom: 20 }}
       />
       <TabPanel
-        theme="flat"
-        xtabAlign="end"
+
+        tabAlign="stretch"
         activeIndex={this.state.index}
         onActivate={this.onActivate}
         style={{minWidth: '100%', height: 100}}
