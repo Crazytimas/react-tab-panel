@@ -1,8 +1,19 @@
 # react-tab-panel
 
-> React Tab Panel
+> Carefully crafted tabs for React
+
+# Docs
+
+Visit the docs site at [zippyui.com/docs/react-tab-panel](http://zippyui.com/docs/react-tab-panel)
+
+# Install
+
+```sh
+$npm install --save react-tab-panel
+```
 
 ## Coming soon - scrollable tabs
+
 ## Usage
 
 ```jsx
