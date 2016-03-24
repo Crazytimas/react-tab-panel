@@ -50,7 +50,7 @@ export default class TabPanel extends Component {
       children = tabBody.children
     }
 
-    let tabPosition = props.tabPosition || 'top'
+    let tabPosition = props.tabPosition != 'bottom'? 'top': props.tabPosition
 
     if (
       !props.tabPosition &&

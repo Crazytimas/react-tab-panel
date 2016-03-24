@@ -55,7 +55,7 @@ export default class App extends Component {
         tabAlign="stretch"
         activeIndex={this.state.index}
         onActivate={this.onActivate}
-        style={{minWidth: '100%', height: 100}}
+        style={{height: 100}}
       >
 
           <div tabTitle="First" tabProps={{xdisabled: true}}>

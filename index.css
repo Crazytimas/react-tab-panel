@@ -698,7 +698,8 @@
   display: inline-flex;
   -webkit-flex-flow: column;
       -ms-flex-flow: column;
-          flex-flow: column; }
+          flex-flow: column;
+  width: 100%; }
 
 .react-tab-panel__body {
   -webkit-box-flex: 1;
