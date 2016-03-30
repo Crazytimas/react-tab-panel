@@ -128,4 +128,112 @@ $THEME_NAME: 'default' !default;
       }
     }
   }
+
+  &.react-tab-panel__tab-strip--tab-position-left {
+    border-left: $PADDING solid $BG_COLOR;
+
+    .react-tab-panel__tab-title-inner--active {
+      border-top-left-radius: $BORDER_RADIUS;
+      border-bottom-left-radius: $BORDER_RADIUS;
+      background: white;
+    }
+
+    //target the tab before the active tab
+    .react-tab-panel__tab-title--before-active {
+      border-bottom-right-radius: $BORDER_RADIUS;
+    }
+    //target the tab after the active tab
+    .react-tab-panel__tab-title--after-active {
+      border-top-right-radius: $BORDER_RADIUS;
+    }
+
+    .react-tab-panel__tab-strip-before,
+    .react-tab-panel__tab-strip-after,
+    .react-tab-panel__tab-strip-between {
+      background: $BG_COLOR;
+    }
+
+    .react-tab-panel__tab-strip-before--before-active {
+      border-bottom-right-radius: $BORDER_RADIUS;
+    }
+
+    .react-tab-panel__tab-strip-after--after-active {
+      border-top-right-radius: $BORDER_RADIUS;
+    }
+
+    &.react-tab-panel__tab-strip--tab-align-space-around,
+    &.react-tab-panel__tab-strip--tab-align-space-between {
+
+      .react-tab-panel__tab-strip-between--after-active {
+        border-top-right-radius: $BORDER_RADIUS;
+      }
+      .react-tab-panel__tab-strip-between--before-active {
+        border-bottom-right-radius: $BORDER_RADIUS;
+      }
+
+      .react-tab-panel__tab-title--before-active,
+      .react-tab-panel__tab-title--after-active {
+        border-radius: 0px;
+      }
+    }
+
+    &.react-tab-panel__tab-strip--vertical {
+      .react-tab-panel__tab-title-inner--active {
+        border-top-left-radius: $BORDER_RADIUS;
+        border-top-right-radius: $BORDER_RADIUS;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        background: white;
+      }
+    }
+  }
+
+  &.react-tab-panel__tab-strip--tab-position-right {
+    border-right: $PADDING solid $BG_COLOR;
+
+    .react-tab-panel__tab-title-inner--active {
+      border-top-right-radius: $BORDER_RADIUS;
+      border-bottom-right-radius: $BORDER_RADIUS;
+      background: white;
+    }
+
+    //target the tab before the active tab
+    .react-tab-panel__tab-title--before-active {
+      border-bottom-left-radius: $BORDER_RADIUS;
+    }
+    //target the tab after the active tab
+    .react-tab-panel__tab-title--after-active {
+      border-top-left-radius: $BORDER_RADIUS;
+    }
+
+    .react-tab-panel__tab-strip-before,
+    .react-tab-panel__tab-strip-after,
+    .react-tab-panel__tab-strip-between {
+      background: $BG_COLOR;
+    }
+
+    .react-tab-panel__tab-strip-before--before-active {
+      border-bottom-left-radius: $BORDER_RADIUS;
+    }
+
+    .react-tab-panel__tab-strip-after--after-active {
+      border-top-left-radius: $BORDER_RADIUS;
+    }
+
+    &.react-tab-panel__tab-strip--tab-align-space-around,
+    &.react-tab-panel__tab-strip--tab-align-space-between {
+
+      .react-tab-panel__tab-strip-between--after-active {
+        border-top-left-radius: $BORDER_RADIUS;
+      }
+      .react-tab-panel__tab-strip-between--before-active {
+        border-bottom-left-radius: $BORDER_RADIUS;
+      }
+
+      .react-tab-panel__tab-title--before-active,
+      .react-tab-panel__tab-title--after-active {
+        border-radius: 0px;
+      }
+    }
+  }
 }

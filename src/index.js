@@ -7,6 +7,10 @@ import join from './join'
 import TabStrip from './TabStrip'
 import Body from './Body'
 
+import assignDefined from './assignDefined'
+
+import TAB_POSITION_MAP from './tabPositions'
+
 export default class TabPanel extends Component {
 
   constructor(props){
@@ -50,7 +54,7 @@ export default class TabPanel extends Component {
       children = tabBody.children
     }
 
-    let tabPosition = props.tabPosition != 'bottom'? 'top': props.tabPosition
+    let tabPosition = props.tabPosition in TAB_POSITION_MAP? props.tabPosition: 'top'
 
     if (
       !props.tabPosition &&
@@ -85,12 +89,12 @@ export default class TabPanel extends Component {
       `react-tab-panel--tab-position-${tabPosition}`
     )
 
-    const top = tabPosition == 'top'
+    const tabStripFirst = tabPosition == 'top' || tabPosition == 'left'
 
     return <div {...props} className={className}>
-      {top && this.renderTabStrip()}
+      {tabStripFirst && this.renderTabStrip()}
       {this.renderBody()}
-      {!top && this.renderTabStrip()}
+      {!tabStripFirst && this.renderTabStrip()}
     </div>
   }
 
@@ -124,7 +128,10 @@ export default class TabPanel extends Component {
       tabStripFactory,
       theme,
       tabAlign,
-      tabPosition
+      tabStyle,
+      tabPosition,
+      tabEllipsis,
+      vertical
     } = this.p
 
     const newTabStripProps = {
@@ -134,10 +141,16 @@ export default class TabPanel extends Component {
       tabFactory,
       tabAlign,
       theme,
-      tabs,
+      defaultTabs: tabs,
       tabPosition,
       inTabPanel: true
     }
+
+    assignDefined(newTabStripProps, {
+      vertical,
+      tabStyle,
+      tabEllipsis
+    })
 
     const tabStripProps = assign(
       {
@@ -146,6 +159,8 @@ export default class TabPanel extends Component {
       this.p.tabStrip,
       newTabStripProps
     )
+
+    console.log(tabStripProps, vertical)
 
     let tabStrip
 
@@ -176,7 +191,9 @@ export default class TabPanel extends Component {
 
 TabPanel.propTypes = {
   tabStripFactory: PropTypes.func,
-  tabFactory: PropTypes.func
+  tabFactory: PropTypes.func,
+  tabStyle: PropTypes.object,
+  tabEllipsis: PropTypes.bool
 }
 
 TabPanel.defaultProps = {

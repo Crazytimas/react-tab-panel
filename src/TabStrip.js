@@ -4,8 +4,11 @@ import assign from 'object-assign'
 
 import { Flex, Item } from 'react-flex'
 
+import TAB_POSITION_MAP from './tabPositions'
 import join from './join'
 import TabTitle from './TabTitle'
+
+// import { NotifyResize } from 'react-notify-resize'
 
 export default class TabStrip extends Component {
 
@@ -28,13 +31,16 @@ export default class TabStrip extends Component {
                         props.activeIndex
 
     p.activeIndex = activeIndex
+    p.tabs = props.defaultTabs || props.tabs
 
     this.p = p
 
     const {
       tabs,
-      tabAlign
-    } = props
+      tabAlign,
+      tabPosition,
+      vertical
+    } = p
 
     const firstActive = activeIndex === 0
     const lastActive = activeIndex === tabs.length - 1
@@ -46,6 +52,7 @@ export default class TabStrip extends Component {
       `react-tab-panel__tab-strip--tab-align-${props.tabAlign}`,
       `react-tab-panel__tab-strip--tab-position-${props.tabPosition}`,
 
+      vertical && 'react-tab-panel__tab-strip--vertical',
       firstActive && 'react-tab-panel__tab-strip--first-active',
       lastActive && 'react-tab-panel__tab-strip--last-active'
     )
@@ -60,18 +67,34 @@ export default class TabStrip extends Component {
       lastActive && 'react-tab-panel__tab-strip-after--after-active'
     )
 
+    const row = tabPosition == 'top' || tabPosition == 'bottom'
+
     return <Flex alignItems="stretch" row wrap={false} {...props} className={className}>
-      <Item className={beforeClassName} />
-      {tabs.map(this.renderTab)}
-      <Item className={afterClassName} />
+      {/*// <NotifyResize onResize={this.onResize} />*/}
+      <Flex className="react-tab-panel__tab-strip-inner" alignItems="stretch" row={row} column={!row} wrap={false}>
+        <Item className={beforeClassName} />
+        {tabs.map(this.renderTab)}
+        <Item className={afterClassName} />
+      </Flex>
     </Flex>
 
+  }
+
+  onResize(){
+    console.log('RESIZE')
   }
 
   renderTab(tab, index){
 
     const props = this.p
-    const { activeIndex, inTabPanel } = props
+    const {
+      activeIndex,
+      inTabPanel,
+      tabStyle,
+      tabEllipsis,
+      vertical,
+      tabAlign
+    } = props
 
     if (!inTabPanel && !tab.title){
       tab = {
@@ -89,8 +112,14 @@ export default class TabStrip extends Component {
       active,
       beforeActive,
       afterActive,
+      tabAlign,
 
+      tabTitle: tab.title,
       children: tab.title,
+
+      vertical,
+      tabStyle,
+      tabEllipsis,
 
       key: index,
       onActivate: this.onActivate.bind(this, index)
@@ -143,10 +172,7 @@ TabStrip.propTypes = {
     'space-between',
     'stretch'
   ]),
-  tabPosition: PropTypes.oneOf([
-    'top',
-    'bottom'
-  ])
+  tabPosition: PropTypes.oneOf(Object.keys(TAB_POSITION_MAP))
 }
 
 TabStrip.defaultProps = {

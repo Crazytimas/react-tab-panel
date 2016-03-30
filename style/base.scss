@@ -13,8 +13,17 @@
 
 .react-tab-panel {
   display: inline-flex;
-  flex-flow: column;
   width: 100%;
+}
+
+.react-tab-panel--tab-position-top,
+.react-tab-panel--tab-position-bottom {
+  flex-flow: column;
+}
+
+.react-tab-panel--tab-position-left,
+.react-tab-panel--tab-position-right {
+  flex-flow: row;
 }
 
 .react-tab-panel__body {
@@ -24,12 +33,28 @@
 
 //tabstrip
 .react-tab-panel__tab-strip {
+  position: relative;
   flex: none;
+
+  &--tab-position-top,
+  &--tab-position-bottom {
+    .react-tab-panel__tab-strip-before,
+    .react-tab-panel__tab-strip-after {
+      min-width: 10px;
+    }
+  }
+
+  &--tab-position-left,
+  &--tab-position-right {
+    .react-tab-panel__tab-strip-before,
+    .react-tab-panel__tab-strip-after {
+      min-height: 10px;
+    }
+  }
 }
 
-.react-tab-panel__tab-strip-before,
-.react-tab-panel__tab-strip-after {
-  min-width: 10px;
+.react-tab-panel__tab-strip-inner {
+  flex: 1 0 auto;
 }
 
 //tabAlign: start
@@ -79,8 +104,13 @@
     // flex: 1 0 0;
     flex: none;
   }
-  .react-tab-panel__tab-title {
-    flex: 1;
+  .react-tab-panel__tab-title,
+  .react-tab-panel__tab-title-inner {
+    flex: 1 0 auto; //0 for no shrink
+    display: inline-flex;
+    flex-flow: column;
+    align-items: stretch;
+    justify-content: center;
   }
 }
 
@@ -88,9 +118,53 @@
   cursor: pointer;
   display: inline-block;
   position: relative;
+
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  &-inner--ellipsis,
+  &--ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &--disabled {
+    cursor: default;
+    user-select: none;
+  }
+}
+
+.react-tab-panel__tab-strip--vertical {
+  .react-tab-panel__tab-title-inner {
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 0px;
+  }
+
+  &.react-tab-panel__tab-strip--tab-position-left {
+    .react-tab-panel__tab-title-inner {
+      top: 100%;
+      left: 0px;
+      transform-origin: 0 0;
+      transform: translate(0%, 0%) rotate(-90deg);
+    }
+  }
+
+  &.react-tab-panel__tab-strip--tab-position-right {
+    .react-tab-panel__tab-title-inner {
+      left: 100%;
+      top: 0px;
+      transform-origin: 0 0;
+      transform: translate(0%, 0%) rotate(90deg);
+    }
+  }
+  .react-tab-panel__tab-title-inner--hidden {
+    transform: none !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+  }
 }
 
 .react-tab-panel__tab-title--active {
