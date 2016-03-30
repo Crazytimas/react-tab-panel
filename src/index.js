@@ -160,8 +160,6 @@ export default class TabPanel extends Component {
       newTabStripProps
     )
 
-    console.log(tabStripProps, vertical)
-
     let tabStrip
 
     if (tabStripFactory){

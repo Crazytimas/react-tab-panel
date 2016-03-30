@@ -84,10 +84,11 @@ export default class App extends Component {
         activeIndex={this.state.index}
         onActivate={this.onActivate}
 
-        tabPosition="left"
-        tabAlign="space-around"
+        tabPosition="right"
+        tabAlign="space-between"
         tabEllipsis
         vertical
+        tabStyle={{maxWidth: 200}}
         style={{maxWidth: '100%', minHeight: 700}}
       >
 

@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 import assign from 'object-assign'
 import { NotifyResize } from 'react-notify-resize'
-import join from './join'
+import join from '../join'
 
 const invert = ({width, height}) => {
   return {
@@ -57,40 +57,54 @@ export default class TabTitle extends Component {
       props.tabEllipsis && 'react-tab-panel__tab-title-inner--ellipsis'
     )
 
+    const children = (props.tabTitle !== undefined?
+                        props.tabTitle:
+                        props.children) || '\u00a0'
+
     const {
       innerSize,
       innerHiddenSize
     } = this.state
 
-    const innerStyle = (typeof tabStyle == 'function'?
-                    tabStyle(props):
-                    tabStyle) || {}
+    let innerStyle = (
+      typeof tabStyle == 'function'?
+        tabStyle(props):
+        tabStyle
+      ) || {}
 
-    const style = assign({}, props.style, {
-      width: innerSize.height
-    })
-
-    console.log(innerSize.width)
-    // debugger
-
-    const children = (props.tabTitle !== undefined?
-                        props.tabTitle:
-                        props.children) || '\u00a0'
-
+    let style = props.style
 
     let verticalFix
     let notifier
+
+    //HAIRY LOGIC - all needed for vertical tabs!
     if (props.vertical){
 
-      notifier = props.vertical && <NotifyResize onResize={this.onResize} />
-      verticalFix = <div
-        ref="innerHidden"
-        className={join(innerClassName, 'react-tab-panel__tab-title-inner--hidden')}
-        style={assign({}, innerStyle, HIDDEN_STYLE)}
-      >
-        {children}
-        {notifier}
-      </div>
+      //compute style
+      style = assign({}, props.style, {
+        width: innerSize.height
+      })
+
+      if (props.tabAlign != 'stretch'){
+        style.height = innerSize.width
+      }
+
+      //compute innerStyle
+      innerStyle = assign({}, innerStyle, { width: innerHiddenSize.width })
+
+      notifier = <NotifyResize onResize={this.onResize} />
+
+      if (props.tabAlign === 'stretch'){
+
+        verticalFix = <div
+          ref="innerHidden"
+          className={join(innerClassName, 'react-tab-panel__tab-title-inner--hidden')}
+          style={assign({}, innerStyle, HIDDEN_STYLE)}
+        >
+          {children}
+          {notifier}
+        </div>
+      }
     }
 
     return <div
@@ -100,7 +114,11 @@ export default class TabTitle extends Component {
       className={className}
       onClick={this.onClick}
     >
-      <div ref="inner" className={innerClassName} style={assign({}, innerStyle, {width: innerHiddenSize.width})}>
+      <div
+        ref="inner"
+        className={innerClassName}
+        style={innerStyle}
+      >
         {children}
         {notifier}
       </div>
@@ -110,6 +128,9 @@ export default class TabTitle extends Component {
   }
 
   getNodeSize(node){
+    if (!node){
+      return {}
+    }
     const rect = node.getBoundingClientRect()
     return {
       width: rect.width,
@@ -139,8 +160,6 @@ export default class TabTitle extends Component {
       const innerSize = invert(this.getInnerSize())
       const innerHiddenSize = invert(this.getInnerHiddenSize())
 
-      console.log(innerSize, innerHiddenSize)
-      // debugger
       this.setState({
         innerSize,
         innerHiddenSize
