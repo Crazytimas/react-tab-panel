@@ -98,12 +98,17 @@
 }
 
 .react-tab-panel__tab-strip--tab-align-stretch {
+
   .react-tab-panel__tab-strip-before,
   .react-tab-panel__tab-strip-after {
+    //we still need flex 1, and on tab-title flex: 100
+    //since we could have a specified maxwidth on tabs, and they could
+    //be less than the width of the tabStrip. In this case, the rest of the tabstrip
+    //would not have a valid background. So we make tab-strip-before and -after
+    //have a flex of 1 to make sure the tabstrip is always filled
     flex: 1;
   }
   .react-tab-panel__tab-strip-between {
-    // flex: 1 0 0;
     flex: none;
   }
   .react-tab-panel__tab-title,
