@@ -32,7 +32,9 @@ $THEME_NAME: 'default' !default;
   }
 
   &.react-tab-panel__tab-strip--tab-position-top {
-    border-top: $PADDING solid $BG_COLOR;
+    .react-tab-panel__tab-strip-inner {
+      border-top: $PADDING solid $BG_COLOR;
+    }
 
     .react-tab-panel__tab-title-inner--active {
       border-top-left-radius: $BORDER_RADIUS;

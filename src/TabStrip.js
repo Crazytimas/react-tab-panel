@@ -8,6 +8,8 @@ import TAB_POSITION_MAP from './tabPositions'
 import join from './join'
 import TabTitle from './TabTitle'
 
+import Scroller from './Scroller'
+
 // import { NotifyResize } from 'react-notify-resize'
 
 export default class TabStrip extends Component {
@@ -75,15 +77,26 @@ export default class TabStrip extends Component {
 
     const row = tabPosition == 'top' || tabPosition == 'bottom'
 
-    return <Flex alignItems="stretch" row wrap={false} {...props} className={className} tabIndex={null}>
-      {/*// <NotifyResize onResize={this.onResize} />*/}
-      <Flex className="react-tab-panel__tab-strip-inner" alignItems="stretch" row={row} column={!row} wrap={false}>
-        <Item className={beforeClassName} />
-        {tabs.map(this.renderTab)}
-        <Item className={afterClassName} />
-      </Flex>
-    </Flex>
-
+    return <Scroller
+      alignItems="stretch"
+      row
+      wrap={false}
+      {...props}
+      className={className}
+      tabIndex={null}
+      childProps={{
+        className:"react-tab-panel__tab-strip-inner",
+        alignItems: "stretch",
+        row: row,
+        column:!row,
+        wrap: false,
+        children: [
+          <Item className={beforeClassName} />,
+          tabs.map(this.renderTab),
+          <Item className={afterClassName} />
+        ]
+      }}
+    />
   }
 
   onResize(){

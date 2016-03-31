@@ -4,6 +4,9 @@
   "description": "React TabPanel",
   "main": "lib/index.js",
   "dependencies": {
+    "has-touch": "^1.0.1",
+    "lodash.debounce": "^4.0.3",
+    "lodash.throttle": "^4.0.1",
     "object-assign": "^4.0.1",
     "react-class": "^2.0.0",
     "react-flex": "^1.2.3",

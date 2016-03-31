@@ -35,6 +35,7 @@
 .react-tab-panel__tab-strip {
   position: relative;
   flex: none;
+  overflow: hidden;
 
   &--tab-position-top,
   &--tab-position-bottom {
@@ -53,8 +54,35 @@
   }
 }
 
+.react-tab-panel__tab-strip-scroll-tool {
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  bottom: 0px;
+  z-index: 100;
+  background: blue;
+  padding: 0px 10px;
+
+  &--left {
+    left: 0px;
+    z-index: 200;
+  }
+
+  &--right {
+    right: 0px;
+  }
+
+  &--disabled {
+    opacity: 0.3;
+  }
+
+  &--active {
+  }
+}
+
 .react-tab-panel__tab-strip-inner {
   flex: 1 0 auto;
+  position: relative;
 }
 
 //tabAlign: start

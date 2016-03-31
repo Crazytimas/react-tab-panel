@@ -50,6 +50,12 @@ export default class App extends Component {
     })
   }
 
+  removeTab(){
+    this.setState({
+      tabs: this.state.tabs.slice(1)
+    })
+  }
+
   setSecondTab(event){
     this.setState({
       secondTabTitle: event.target.value
@@ -74,11 +80,12 @@ export default class App extends Component {
         defaultActiveIndex={2}
         theme="red"
         tabs={this.state.tabs}
-        style={{ marginBottom: 20, maxWidth: '50%' }}
+        style={{ border: '1px solid black', maxWidth: '50%' }}
       />
 
       <p>
         <button onClick={this.addTab}>add tab</button>
+        <button onClick={this.removeTab}>remove tab</button>
       </p>
       <TabPanel
         activeIndex={this.state.index}
