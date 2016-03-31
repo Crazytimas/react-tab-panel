@@ -133,6 +133,7 @@ export default class TabPanel extends Component {
       tabStyle,
       tabPosition,
       tabEllipsis,
+      tabIndex,
       vertical
     } = this.p
 
@@ -151,7 +152,8 @@ export default class TabPanel extends Component {
     assignDefined(newTabStripProps, {
       vertical,
       tabStyle,
-      tabEllipsis
+      tabEllipsis,
+      tabIndex
     })
 
     const tabStripProps = assign(
@@ -191,23 +193,7 @@ export default class TabPanel extends Component {
 
 TabPanel.propTypes = {
   tabStripFactory: PropTypes.func,
-  tabFactory: PropTypes.func,
-
-  tabStyle: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.object
-  ]),
-
-  tabEllipsis: PropTypes.bool,
-  tabPosition: PropTypes.oneOf(['top','bottom','left','right']),
-
-  vertical: (props, propName) => {
-    const value = props[propName]
-
-    if (value && (props.tabPosition != 'left' && props.tabPosition != 'right')){
-      return new Error('You can only have "vertical" tabs if "tabPosition" is one of "left", "right".')
-    }
-  }
+  tabFactory: PropTypes.func
 }
 
 TabPanel.defaultProps = {

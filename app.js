@@ -62,11 +62,11 @@ export default class App extends Component {
       <TabStrip
         defaultActiveIndex={2}
         tabs={[
-          'a',
-          'b',
+          {title: 'a', disabled: true},
+          { title: 'b', disabled: true},
           'c',
-          'd',
-          'e'
+          {title: 'd', disabled: false},
+          {title: 'e', disabled: false}
         ]}
         style={{ marginBottom: 20 }}
       />
@@ -83,11 +83,14 @@ export default class App extends Component {
       <TabPanel
         activeIndex={this.state.index}
         onActivate={this.onActivate}
-        vertical
-        tabAlign="space-between"
-        tabPosition="left"
-        style={{minHeight: 700}}
+
+        tabPosition="right"
+        tabAlign="stretch"
+        tabEllipsis
+        tabStyle={{maxWidth: 200}}
+        style={{maxWidth: '100%', minHeight: 700}}
       >
+
         <div tabProps={{ title: firstTabTitle }}>
           first tabLorem ipsum In velit veniam elit officia sunt.
         </div>

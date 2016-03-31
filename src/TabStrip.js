@@ -32,8 +32,14 @@ export default class TabStrip extends Component {
 
     p.activeIndex = activeIndex
     p.tabs = props.defaultTabs || props.tabs
+    p.tabIndex = typeof p.tabIndex === 'boolean'?
+                    p.tabIndex? 0: -1
+                    :
+                    p.tabIndex
 
     this.p = p
+
+    p.allTabsProps = []
 
     const {
       tabs,
@@ -94,10 +100,11 @@ export default class TabStrip extends Component {
       tabStyle,
       tabEllipsis,
       vertical,
-      tabAlign
+      tabAlign,
+      tabIndex
     } = props
 
-    if (!inTabPanel && !tab.title){
+    if (typeof tab == 'string'){
       tab = {
         title: tab
       }
@@ -115,6 +122,7 @@ export default class TabStrip extends Component {
       beforeActive,
       afterActive,
       tabAlign,
+      tabIndex,
 
       tabTitle: tab.title,
       children: tab.title,
@@ -124,10 +132,15 @@ export default class TabStrip extends Component {
       tabEllipsis,
 
       key: index,
-      onActivate: this.onActivate.bind(this, index)
+      onActivate: this.onActivate.bind(this, index),
+      onNavigate: this.onNavigate.bind(this, index),
+      onNavigateFirst: this.onNavigateFirst,
+      onNavigateLast: this.onNavigateLast
     })
 
     delete tabProps.title
+
+    props.allTabsProps.push(tabProps)
 
     let tabTitle
 
@@ -153,7 +166,23 @@ export default class TabStrip extends Component {
     ]
   }
 
+  onNavigate(index, dir){
+    this.onActivate(this.getAvailableIndexFrom(index, dir, this.props.rotateNavigation))
+  }
+
+  onNavigateFirst(){
+    this.onActivate(this.getFirstAvailableIndex())
+  }
+
+  onNavigateLast(){
+    this.onActivate(this.getLastAvailableIndex())
+  }
+
   onActivate(activeIndex){
+    if (!this.p.allTabsProps[activeIndex]){
+      return
+    }
+
     if (this.props.activeIndex == null){
       this.setState({
         activeIndex
@@ -163,9 +192,76 @@ export default class TabStrip extends Component {
       this.props.onActivate(activeIndex)
     }
   }
+
+  getAvailableIndexFrom(index, dir, rotate){
+    const tabs = this.p.allTabsProps || []
+    const len = tabs.length
+
+    let firstIndex
+    let lastIndex
+
+    if (rotate){
+      firstIndex = this.getFirstAvailableIndex()
+      lastIndex = this.getLastAvailableIndex()
+    }
+
+    let currentTab
+
+    const adjustIndex = (index) => {
+      if (rotate){
+        if (index < firstIndex){
+          index = lastIndex
+        } else if (index > lastIndex){
+          index = firstIndex
+        }
+      }
+
+      return index
+    }
+
+    let currentIndex = adjustIndex(index + dir)
+
+    while (currentTab = tabs[currentIndex]){
+      if (!currentTab.disabled){
+        return currentIndex
+      }
+
+      currentIndex = adjustIndex(currentIndex + dir)
+    }
+
+    return -1
+  }
+
+  getFirstAvailableIndex(){
+    return this.getAvailableIndexFrom(-1, 1)
+  }
+
+  getLastAvailableIndex(){
+    const tabs = this.p.allTabsProps || []
+
+    return this.getAvailableIndexFrom(tabs.length, -1)
+  }
 }
 
 TabStrip.propTypes = {
+  tabStyle: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object
+  ]),
+
+  rotateNavigation: PropTypes.bool,
+  tabIndex: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  tabEllipsis: PropTypes.bool,
+  tabPosition: PropTypes.oneOf(['top','bottom','left','right']),
+
+  vertical: (props, propName) => {
+    const value = props[propName]
+
+    if (value && (props.tabPosition != 'left' && props.tabPosition != 'right')){
+      return new Error('You can only have "vertical" tabs if "tabPosition" is one of "left", "right".')
+    }
+  },
+
   tabAlign: PropTypes.oneOf([
     'start',
     'center',
@@ -178,6 +274,8 @@ TabStrip.propTypes = {
 }
 
 TabStrip.defaultProps = {
+  rotateNavigation: true,
+  tabIndex: true,
   tabAlign: 'start',
   tabPosition: 'top',
   theme: 'default',
