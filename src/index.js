@@ -65,6 +65,7 @@ export default class TabPanel extends Component {
       tabPosition = 'bottom'
     }
 
+    p.vertical = p.vertical && (tabPosition == 'left' || tabPosition == 'right')
     p.tabPosition = tabPosition
 
     p.tabStrip = tabStrip
@@ -124,6 +125,7 @@ export default class TabPanel extends Component {
 
     const {
       activeIndex,
+      activateEvent,
       tabFactory,
       tabStripFactory,
       theme,
@@ -135,7 +137,7 @@ export default class TabPanel extends Component {
     } = this.p
 
     const newTabStripProps = {
-      //call both this.onActive AND the tabStrip provided one
+      activateEvent,
       onActivate: this.onActivate,
       activeIndex,
       tabFactory,
@@ -190,8 +192,22 @@ export default class TabPanel extends Component {
 TabPanel.propTypes = {
   tabStripFactory: PropTypes.func,
   tabFactory: PropTypes.func,
-  tabStyle: PropTypes.object,
-  tabEllipsis: PropTypes.bool
+
+  tabStyle: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object
+  ]),
+
+  tabEllipsis: PropTypes.bool,
+  tabPosition: PropTypes.oneOf(['top','bottom','left','right']),
+
+  vertical: (props, propName) => {
+    const value = props[propName]
+
+    if (value && (props.tabPosition != 'left' && props.tabPosition != 'right')){
+      return new Error('You can only have "vertical" tabs if "tabPosition" is one of "left", "right".')
+    }
+  }
 }
 
 TabPanel.defaultProps = {

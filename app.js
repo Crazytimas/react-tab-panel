@@ -83,15 +83,11 @@ export default class App extends Component {
       <TabPanel
         activeIndex={this.state.index}
         onActivate={this.onActivate}
-
-        tabPosition="right"
-        tabAlign="space-between"
-        tabEllipsis
         vertical
-        tabStyle={{maxWidth: 200}}
-        style={{maxWidth: '100%', minHeight: 700}}
+        tabAlign="space-between"
+        tabPosition="left"
+        style={{minHeight: 700}}
       >
-
         <div tabProps={{ title: firstTabTitle }}>
           first tabLorem ipsum In velit veniam elit officia sunt.
         </div>

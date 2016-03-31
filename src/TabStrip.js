@@ -89,6 +89,7 @@ export default class TabStrip extends Component {
     const props = this.p
     const {
       activeIndex,
+      activateEvent,
       inTabPanel,
       tabStyle,
       tabEllipsis,
@@ -108,6 +109,7 @@ export default class TabStrip extends Component {
 
     const tabProps = assign({}, tab, {
       index,
+      activateEvent,
       activeIndex,
       active,
       beforeActive,

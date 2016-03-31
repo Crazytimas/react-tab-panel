@@ -107,13 +107,14 @@ export default class TabTitle extends Component {
       }
     }
 
-    return <div
-      {...props}
-      style={style}
-      disabled={null}
-      className={className}
-      onClick={this.onClick}
-    >
+    const renderProps = assign({}, props, {
+      style,
+      disabled: null,
+      className,
+      [this.props.activateEvent || 'onClick']: this.onActivate
+    })
+
+    return <div {...renderProps} >
       <div
         ref="inner"
         className={innerClassName}
@@ -133,8 +134,8 @@ export default class TabTitle extends Component {
     }
     const rect = node.getBoundingClientRect()
     return {
-      width: rect.width,
-      height: rect.height
+      width: Math.ceil(rect.width),
+      height: Math.ceil(rect.height)
     }
   }
 
@@ -168,18 +169,24 @@ export default class TabTitle extends Component {
     }
   }
 
-  onClick(event){
-    this.props.onClick(event)
+  onActivate(event){
+    const eventName = this.props.activateEvent || 'onClick'
+
+    if (typeof this.props[eventName] === 'function'){
+      this.props[eventName](event)
+    }
 
     !this.props.disabled && this.props.onActivate()
   }
 }
 
 TabTitle.propTypes = {
-  tabEllipsis: PropTypes.bool
+  disabled: PropTypes.bool,
+  tabEllipsis: PropTypes.bool,
+  activateEvent: PropTypes.oneOf(['onClick', 'onMouseEnter', 'onMouseDown']),
+  onActivate: PropTypes.func
 }
 
 TabTitle.defaultProps = {
-  onClick: () => {},
   onActivate: () => {}
 }
