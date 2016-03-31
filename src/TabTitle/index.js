@@ -38,16 +38,12 @@ export default class TabTitle extends Component {
     findDOMNode(this).focus()
   }
 
-  render(){
-
-    const { props } = this
-    const { index, tabStyle } = props
-
-    const className = join(
+  prepareClassName(props){
+    return join(
       props.className,
       'react-tab-panel__tab-title',
 
-      this.state.focused && 'react-tab-panel__tab-title--focused',
+      props.focused && 'react-tab-panel__tab-title--focused',
       props.vertical && 'react-tab-panel__tab-title--vertical',
       props.active && 'react-tab-panel__tab-title--active',
 
@@ -57,29 +53,74 @@ export default class TabTitle extends Component {
       props.disabled && 'react-tab-panel__tab-title--disabled',
       props.tabEllipsis && 'react-tab-panel__tab-title--ellipsis'
     )
+  }
 
-    const innerClassName = join(
+  prepareInnerClassName(props){
+    return join(
       'react-tab-panel__tab-title-inner',
       props.active && 'react-tab-panel__tab-title-inner--active',
       props.tabEllipsis && 'react-tab-panel__tab-title-inner--ellipsis'
     )
+  }
 
-    const children = (props.tabTitle !== undefined?
-                        props.tabTitle:
-                        props.children) || '\u00a0'
+  prepareChildren(props){
+    return (props.tabTitle !== undefined?
+      props.tabTitle:
+      props.children) || '\u00a0'
+  }
+
+  prepareInnerStyle(props){
+    const tabStyle = props.tabStyle
+
+    const innerStyle = (
+      typeof tabStyle == 'function'?
+        tabStyle(props):
+        tabStyle
+      ) || {}
+
+    return assign({}, innerStyle)
+  }
+
+  prepareStyle(props, innerStyle){
+
+    let style = assign({}, props.style)
+
+    if (props.tabAlign === 'stretch'){
+      //if we are in stretch mode, the size (more exactly, width)
+      //dimensions should be set on the style object (if they are specified)
+      //not on the innerStyle, since the main div will now give the dimension
+      ['width', 'minWidth', 'maxWidth'].forEach(name => {
+        const value = innerStyle[name]
+
+        if (value !== undefined){
+          style[name] = value
+          delete innerStyle[name]
+        }
+      })
+    }
+
+    return style
+  }
+
+  render(){
+
+    const props = assign({}, this.props, {
+      focused: this.state.focused
+    })
+
+    const { index } = props
+
+    const className = this.prepareClassName(props)
+    const innerClassName = this.prepareInnerClassName(props)
+    const children = this.prepareChildren(props)
 
     const {
       innerSize,
       innerHiddenSize
     } = this.state
 
-    let innerStyle = (
-      typeof tabStyle == 'function'?
-        tabStyle(props):
-        tabStyle
-      ) || {}
-
-    let style = props.style
+    let innerStyle = this.prepareInnerStyle(props)
+    let style = this.prepareStyle(props, innerStyle)
 
     let verticalFix
     let notifier
@@ -114,9 +155,10 @@ export default class TabTitle extends Component {
       }
     }
 
-    const tabIndex = props.active && props.tabIndex != null?
+    const tabIndex = props.active && props.tabIndex != -1?
                       props.tabIndex:
                       null
+
     const renderProps = assign({}, props, {
       onFocus: this.onFocus,
       onBlur: this.onBlur,
@@ -127,6 +169,8 @@ export default class TabTitle extends Component {
       className,
       [this.props.activateEvent || 'onClick']: this.onActivate
     })
+
+
 
 
     return <div {...renderProps} >
@@ -210,7 +254,7 @@ export default class TabTitle extends Component {
   }
 
   componentDidUpdate(prevProps){
-    if (this.props.active && !prevProps.active && this.props.tabIndex != null){
+    if (this.props.active && !prevProps.active && this.props.tabIndex != -1){
       this.focus()
     }
   }

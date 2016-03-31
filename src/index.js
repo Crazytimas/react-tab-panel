@@ -92,7 +92,7 @@ export default class TabPanel extends Component {
 
     const tabStripFirst = tabPosition == 'top' || tabPosition == 'left'
 
-    return <div {...props} className={className}>
+    return <div {...props} tabIndex={null} className={className}>
       {tabStripFirst && this.renderTabStrip()}
       {this.renderBody()}
       {!tabStripFirst && this.renderTabStrip()}

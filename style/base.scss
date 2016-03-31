@@ -99,14 +99,16 @@
 
 .react-tab-panel__tab-strip--tab-align-stretch {
   .react-tab-panel__tab-strip-before,
-  .react-tab-panel__tab-strip-after,
+  .react-tab-panel__tab-strip-after {
+    flex: 1;
+  }
   .react-tab-panel__tab-strip-between {
     // flex: 1 0 0;
     flex: none;
   }
   .react-tab-panel__tab-title,
   .react-tab-panel__tab-title-inner {
-    flex: 1 0 auto; //0 for no shrink
+    flex: 100 0 auto; //0 for no shrink
     display: inline-flex;
     flex-flow: column;
     align-items: stretch;

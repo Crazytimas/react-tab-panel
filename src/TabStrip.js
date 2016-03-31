@@ -75,7 +75,7 @@ export default class TabStrip extends Component {
 
     const row = tabPosition == 'top' || tabPosition == 'bottom'
 
-    return <Flex alignItems="stretch" row wrap={false} {...props} className={className}>
+    return <Flex alignItems="stretch" row wrap={false} {...props} className={className} tabIndex={null}>
       {/*// <NotifyResize onResize={this.onResize} />*/}
       <Flex className="react-tab-panel__tab-strip-inner" alignItems="stretch" row={row} column={!row} wrap={false}>
         <Item className={beforeClassName} />
