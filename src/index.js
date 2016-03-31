@@ -65,6 +65,7 @@ export default class TabPanel extends Component {
       tabPosition = 'bottom'
     }
 
+    p.vertical = p.vertical && (tabPosition == 'left' || tabPosition == 'right')
     p.tabPosition = tabPosition
 
     p.tabStrip = tabStrip
@@ -124,6 +125,7 @@ export default class TabPanel extends Component {
 
     const {
       activeIndex,
+      activateEvent,
       tabFactory,
       tabStripFactory,
       theme,
@@ -131,11 +133,12 @@ export default class TabPanel extends Component {
       tabStyle,
       tabPosition,
       tabEllipsis,
+      tabIndex,
       vertical
     } = this.p
 
     const newTabStripProps = {
-      //call both this.onActive AND the tabStrip provided one
+      activateEvent,
       onActivate: this.onActivate,
       activeIndex,
       tabFactory,
@@ -149,7 +152,8 @@ export default class TabPanel extends Component {
     assignDefined(newTabStripProps, {
       vertical,
       tabStyle,
-      tabEllipsis
+      tabEllipsis,
+      tabIndex
     })
 
     const tabStripProps = assign(
@@ -189,9 +193,7 @@ export default class TabPanel extends Component {
 
 TabPanel.propTypes = {
   tabStripFactory: PropTypes.func,
-  tabFactory: PropTypes.func,
-  tabStyle: PropTypes.object,
-  tabEllipsis: PropTypes.bool
+  tabFactory: PropTypes.func
 }
 
 TabPanel.defaultProps = {

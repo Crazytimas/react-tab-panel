@@ -1,6 +1,6 @@
 $BG_COLOR: #428bca !default;
 $PADDING: 10px !default;
-$BORDER_RADIUS: 3px !default;
+$BORDER_RADIUS: 5px !default;
 $THEME_NAME: 'default' !default;
 
 .react-tab-panel--theme-#{$THEME_NAME} {
@@ -233,6 +233,16 @@ $THEME_NAME: 'default' !default;
       .react-tab-panel__tab-title--before-active,
       .react-tab-panel__tab-title--after-active {
         border-radius: 0px;
+      }
+    }
+
+    &.react-tab-panel__tab-strip--vertical {
+      .react-tab-panel__tab-title-inner--active {
+        border-top-left-radius: $BORDER_RADIUS;
+        border-top-right-radius: $BORDER_RADIUS;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        background: white;
       }
     }
   }
