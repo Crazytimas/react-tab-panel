@@ -65,40 +65,18 @@ export default class App extends Component {
   render(){
     return <div>
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
-      <TabStrip
-        defaultActiveIndex={2}
-        tabs={[
-          {title: 'a', disabled: true},
-          { title: 'b', disabled: true},
-          'c',
-          {title: 'd', disabled: false},
-          {title: 'e', disabled: false}
-        ]}
-        style={{ marginBottom: 20 }}
-      />
-      <TabStrip
-        scroller={'auto'}
-        defaultActiveIndex={2}
-        theme="red"
-        tabs={this.state.tabs}
-        style={{ border: '1px solid black', maxWidth: '50%' }}
-      />
-
-      <p>
-        <button onClick={this.addTab}>add tab</button>
-        <button onClick={this.removeTab}>remove tab</button>
-      </p>
       <TabPanel
         activeIndex={this.state.index}
         onActivate={this.onActivate}
 
         tabPosition="left"
-        vertical
-        tabIndex={-1}
-        tabAlign="stretch"
+
+        tabIndex
+        tabAlign="center"
         tabEllipsis
-        xtabStyle={{maxWidth: 200, minWidth: 200}}
-        style={{maxWidth: '100%', minHeight: 700}}
+        vertical
+        tabStyle={{xmaxWidth: 200, xminHeight: 100}}
+        style={{top: 20, left: 0, minHeight: '90%', position: 'absolute'}}
       >
 
         <div tabProps={{ title: firstTabTitle }}>

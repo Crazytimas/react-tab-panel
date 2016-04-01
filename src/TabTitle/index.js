@@ -7,6 +7,7 @@ import join from '../join'
 import assignDefined from '../assignDefined'
 
 import bemFactory from '../bemFactory'
+import FlexiBox from './FlexiBox'
 
 const CLASS_NAME = 'react-tab-panel__tab-title'
 const bem = bemFactory(CLASS_NAME)
@@ -23,8 +24,14 @@ const HIDDEN_STYLE = {
   position: 'absolute',
   visibility: 'hidden',
   width: 'auto',
-  height: 'auto'
+  minWidth: 'auto',
+  maxWidth: 'auto',
+  height: 'auto',
+  minHeight: 'auto',
+  maxHeight: 'auto'
 }
+
+const DivFactory = (props) => <div {...props} />
 
 export default class TabTitle extends Component {
 
@@ -35,8 +42,8 @@ export default class TabTitle extends Component {
       focused: false,
       style: {},
       size: {},
-      innerSize: {},
-      innerHiddenSize: {}
+      hiddenSize: {},
+      innerSize: {}
     }
   }
 
@@ -95,7 +102,18 @@ export default class TabTitle extends Component {
       //if we are in stretch mode, the size (more exactly, width)
       //dimensions should be set on the style object (if they are specified)
       //not on the innerStyle, since the main div will now give the dimension
-      ['width', 'minWidth', 'maxWidth'].forEach(name => {
+      [
+        'width',
+        'minWidth',
+        'maxWidth'
+      ].concat(
+        props.vertical? [
+          'height',
+          'minHeight',
+          'maxWeight'
+        ]: []
+      )
+      .forEach(name => {
         const value = innerStyle[name]
 
         if (value !== undefined){
@@ -121,8 +139,9 @@ export default class TabTitle extends Component {
     const children = this.prepareChildren(props)
 
     const {
+      size,
       innerSize,
-      innerHiddenSize
+      hiddenSize
     } = this.state
 
     let innerStyle = this.prepareInnerStyle(props)
@@ -131,35 +150,37 @@ export default class TabTitle extends Component {
     let verticalFix
     let notifier
 
+    let Factory = DivFactory
+
     //HAIRY LOGIC - all needed for vertical tabs!
     if (props.vertical){
 
       //compute style
-      style = assign({}, props.style, {
+      style = assign(style, {
         width: innerSize.height
       })
 
-      //compute innerStyle
-
+      assign(innerStyle, { width: hiddenSize.height })
 
       if (props.tabAlign != 'stretch'){
-        innerStyle = assign(innerStyle, { width: innerHiddenSize.width })
         style.height = innerSize.width
       } else {
-        style.height = innerHiddenSize.height
+        style.height = hiddenSize.width
       }
 
-      notifier = <NotifyResize onResize={this.onResize} />
+      notifier = <NotifyResize onResize={this.onInnerResize} notifyOnMount />
 
       if (props.tabAlign === 'stretch'){
 
+        Factory = FlexiBox
         verticalFix = <div
-          ref="innerHidden"
+          key="innerHidden"
+          ref={(c) => this.innerHidden = c}
           className={join(innerClassName, bem('inner','hidden'))}
           style={assign({}, innerStyle, HIDDEN_STYLE)}
         >
           {children}
-          {notifier}
+          <NotifyResize notifyOnMount onResize={this.onHiddenResize} />
         </div>
       }
     }
@@ -179,7 +200,30 @@ export default class TabTitle extends Component {
       [this.props.activateEvent || 'onClick']: this.onActivate
     })
 
-    return <div {...renderProps} >
+    if (props.vertical && props.tabAlign === 'stretch'){
+      return <Factory {...renderProps}>
+      {({ width, height }) => {
+
+        height = Math.max(height, hiddenSize.width)
+
+        return [
+          <div
+            key="inner"
+            ref={(c) => this.inner = c}
+            className={innerClassName}
+            style={assign(innerStyle, { width: height })}
+          >
+            {children}
+            {notifier}
+          </div>,
+
+          verticalFix
+        ]
+      }}
+      </Factory>
+    }
+
+    return <Factory {...renderProps}>
       <div
         ref="inner"
         className={innerClassName}
@@ -190,7 +234,19 @@ export default class TabTitle extends Component {
       </div>
 
       {verticalFix}
-    </div>
+    </Factory>
+  }
+
+  onInnerResize({ width, height }){
+    this.setState({
+      innerSize: { width, height }
+    })
+  }
+
+  onHiddenResize({ width, height }){
+    this.setState({
+      hiddenSize: { width, height }
+    })
   }
 
   onKeyDown(event){
@@ -239,60 +295,9 @@ export default class TabTitle extends Component {
     this.props.onBlur(event)
   }
 
-  getNodeSize(node){
-    if (!node){
-      return {}
-    }
-    const rect = node.getBoundingClientRect()
-
-    return {
-      width: rect.width,
-      height: rect.height
-    }
-  }
-
-  getInnerSize(){
-    return this.getNodeSize(findDOMNode(this.refs.inner))
-  }
-
-  getInnerHiddenSize(){
-    return this.getNodeSize(findDOMNode(this.refs.innerHidden))
-  }
-
-  componentDidMount(){
-    this.computeSize()
-  }
-
   componentDidUpdate(prevProps){
     if (this.props.active && !prevProps.active && this.props.tabIndex != -1){
       this.focus()
-    }
-  }
-
-  componentWillReceiveProps(newProps){
-    if (newProps.vertical != this.props.vertical
-      ||
-      newProps.tabAlign != this.props.tabAlign
-    ){
-      setTimeout(() => this.computeSize())
-    }
-  }
-
-  onResize(){
-    this.computeSize()
-  }
-
-  computeSize(){
-    if (this.props.vertical){
-
-      const innerSize = invert(this.getInnerSize())
-      const innerHiddenSize = invert(this.getInnerHiddenSize())
-
-      this.setState({
-        innerSize,
-        innerHiddenSize
-      })
-
     }
   }
 
@@ -310,7 +315,11 @@ export default class TabTitle extends Component {
 TabTitle.propTypes = {
   disabled: PropTypes.bool,
   tabEllipsis: PropTypes.bool,
-  activateEvent: PropTypes.oneOf(['onClick', 'onMouseEnter', 'onMouseDown']),
+  activateEvent: PropTypes.oneOf([
+    'onClick',
+    'onMouseEnter',
+    'onMouseDown'
+  ]),
   onActivate: PropTypes.func
 }
 
