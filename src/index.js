@@ -10,6 +10,11 @@ import Body from './Body'
 import assignDefined from './assignDefined'
 
 import TAB_POSITION_MAP from './tabPositions'
+import bemFactory from './bemFactory'
+
+const CLASS_NAME = 'react-tab-panel'
+const bem = bemFactory(CLASS_NAME)
+const m = (name) => bem(null, name)
 
 export default class TabPanel extends Component {
 
@@ -21,10 +26,21 @@ export default class TabPanel extends Component {
     }
   }
 
-  render(){
+  prepareClassName(props){
+    return join(
+      props.className,
+      CLASS_NAME,
 
-    const { props } = this
-    const p = assign({}, props)
+      m(`theme-${props.theme}`),
+
+      m(`tab-align-${props.tabAlign}`),
+
+      m(`tab-position-${props.tabPosition}`)
+    )
+  }
+
+  prepareProps(thisProps){
+    const props = assign({}, thisProps)
 
     let tabStrip = {}
     let tabBody
@@ -54,6 +70,18 @@ export default class TabPanel extends Component {
       children = tabBody.children
     }
 
+    props.activeIndex = this.prepareActiveIndex(props)
+    props.tabPosition = this.prepareTabPosition(props, { tabStripIndex, tabBodyIndex })
+
+    props.vertical = props.vertical && (props.tabPosition == 'left' || props.tabPosition == 'right')
+    props.tabStrip = tabStrip
+    props.tabBody = tabBody
+    props.children = children
+
+    return props
+  }
+
+  prepareTabPosition(props, { tabStripIndex, tabBodyIndex }){
     let tabPosition = props.tabPosition in TAB_POSITION_MAP? props.tabPosition: 'top'
 
     if (
@@ -65,32 +93,22 @@ export default class TabPanel extends Component {
       tabPosition = 'bottom'
     }
 
-    p.vertical = p.vertical && (tabPosition == 'left' || tabPosition == 'right')
-    p.tabPosition = tabPosition
+    return tabPosition
+  }
 
-    p.tabStrip = tabStrip
-    p.tabBody = tabBody
-
-    p.children = children
-
-    p.activeIndex = props.activeIndex == null?
+  prepareActiveIndex(props){
+    return props.activeIndex == null?
                         this.state.activeIndex:
                         props.activeIndex
+  }
 
-    this.p = p
+  render(){
 
-    const className = join(
-      props.className,
-      'react-tab-panel',
+    const props = this.p = this.prepareProps(this.props)
 
-      `react-tab-panel--theme-${props.theme}`,
+    const className = this.prepareClassName(props)
 
-      `react-tab-panel--tab-align-${props.tabAlign}`,
-
-      `react-tab-panel--tab-position-${tabPosition}`
-    )
-
-    const tabStripFirst = tabPosition == 'top' || tabPosition == 'left'
+    const tabStripFirst = props.tabPosition == 'top' || props.tabPosition == 'left'
 
     return <div {...props} tabIndex={null} className={className}>
       {tabStripFirst && this.renderTabStrip()}
@@ -114,13 +132,17 @@ export default class TabPanel extends Component {
     const children = Array.isArray(this.p.children)? this.p.children: [this.p.children]
 
     const tabs = children.map(child => {
-      return child && child.props?
-              assign({
-                title: child.props.tabTitle || '',
-                disabled: child.props.disabled
-              }, child.props.tabProps)
-              :
-              null
+      const childProps = child && child.props? child.props: null
+
+      if (!childProps){
+        return null
+      }
+
+      return assign({
+        title: childProps.tabTitle || '',
+        disabled: childProps.disabled
+      }, childProps.tabProps)
+
     }).filter(x => !!x)
 
     const {
@@ -159,9 +181,7 @@ export default class TabPanel extends Component {
     })
 
     const tabStripProps = assign(
-      {
-        tabFactory,
-      },
+      { tabFactory },
       this.p.tabStrip,
       newTabStripProps
     )

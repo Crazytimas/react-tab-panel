@@ -14,9 +14,7 @@ import Scroller from './Scroller'
 const CLASS_NAME = 'react-tab-panel__tab-strip'
 
 const bem = bemFactory(CLASS_NAME)
-const m = (name) => {
-  return bem(null, name)
-}
+const m = (name) => bem(null, name)
 
 export default class TabStrip extends Component {
 

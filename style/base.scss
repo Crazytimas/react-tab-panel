@@ -206,7 +206,7 @@
   }
   .react-tab-panel__tab-title-inner--hidden {
     transform: none !important;
-    position: relative !important;
+    position: absolute !important;
     top: auto !important;
     left: auto !important;
   }

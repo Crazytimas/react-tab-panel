@@ -10,9 +10,7 @@ import bemFactory from '../bemFactory'
 
 const CLASS_NAME = 'react-tab-panel__tab-title'
 const bem = bemFactory(CLASS_NAME)
-const m = (name) => {
-  return bem(null, name)
-}
+const m = (name) => bem(null, name)
 
 const invert = ({width, height}) => {
   return {
@@ -141,12 +139,15 @@ export default class TabTitle extends Component {
         width: innerSize.height
       })
 
-      if (props.tabAlign != 'stretch'){
-        style.height = innerSize.width
-      }
-
       //compute innerStyle
-      innerStyle = assign({}, innerStyle, { width: innerHiddenSize.width })
+
+
+      if (props.tabAlign != 'stretch'){
+        innerStyle = assign(innerStyle, { width: innerHiddenSize.width })
+        style.height = innerSize.width
+      } else {
+        style.height = innerHiddenSize.height
+      }
 
       notifier = <NotifyResize onResize={this.onResize} />
 
