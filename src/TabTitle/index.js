@@ -6,6 +6,14 @@ import { NotifyResize } from 'react-notify-resize'
 import join from '../join'
 import assignDefined from '../assignDefined'
 
+import bemFactory from '../bemFactory'
+
+const CLASS_NAME = 'react-tab-panel__tab-title'
+const bem = bemFactory(CLASS_NAME)
+const m = (name) => {
+  return bem(null, name)
+}
+
 const invert = ({width, height}) => {
   return {
     height: width,
@@ -41,25 +49,25 @@ export default class TabTitle extends Component {
   prepareClassName(props){
     return join(
       props.className,
-      'react-tab-panel__tab-title',
+      CLASS_NAME,
 
-      props.focused && 'react-tab-panel__tab-title--focused',
-      props.vertical && 'react-tab-panel__tab-title--vertical',
-      props.active && 'react-tab-panel__tab-title--active',
+      props.focused && m('focused'),
+      props.vertical && m('vertical'),
+      props.active && m('active'),
 
-      props.beforeActive && 'react-tab-panel__tab-title--before-active',
-      props.afterActive && 'react-tab-panel__tab-title--after-active',
+      props.beforeActive && m('before-active'),
+      props.afterActive && m('after-active'),
 
-      props.disabled && 'react-tab-panel__tab-title--disabled',
-      props.tabEllipsis && 'react-tab-panel__tab-title--ellipsis'
+      props.disabled && m('disabled'),
+      props.tabEllipsis && m('ellipsis')
     )
   }
 
   prepareInnerClassName(props){
     return join(
-      'react-tab-panel__tab-title-inner',
-      props.active && 'react-tab-panel__tab-title-inner--active',
-      props.tabEllipsis && 'react-tab-panel__tab-title-inner--ellipsis'
+      bem('inner'),
+      props.active && bem('inner','active'),
+      props.tabEllipsis && bem('inner','ellipsis')
     )
   }
 
@@ -146,7 +154,7 @@ export default class TabTitle extends Component {
 
         verticalFix = <div
           ref="innerHidden"
-          className={join(innerClassName, 'react-tab-panel__tab-title-inner--hidden')}
+          className={join(innerClassName, bem('inner','hidden'))}
           style={assign({}, innerStyle, HIDDEN_STYLE)}
         >
           {children}
@@ -169,9 +177,6 @@ export default class TabTitle extends Component {
       className,
       [this.props.activateEvent || 'onClick']: this.onActivate
     })
-
-
-
 
     return <div {...renderProps} >
       <div
@@ -217,16 +222,20 @@ export default class TabTitle extends Component {
 
   }
 
-  onFocus(){
+  onFocus(event){
     this.setState({
       focused: true
     })
+
+    this.props.onFocus(event)
   }
 
   onBlur(){
     this.setState({
       focused: false
     })
+
+    this.props.onBlur(event)
   }
 
   getNodeSize(node){
@@ -305,6 +314,8 @@ TabTitle.propTypes = {
 }
 
 TabTitle.defaultProps = {
+  onBlur: () => {},
+  onFocus: () => {},
   onActivate: () => {},
   onNavigate: () => {},
   onNavigateFirst: () => {},

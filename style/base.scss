@@ -53,15 +53,21 @@
     }
   }
 }
-
+.react-tab-panel__tab-strip-scroll-wrap {
+  overflow: hidden;
+  position: relative;
+}
 .react-tab-panel__tab-strip-scroll-tool {
-  position: absolute;
-  height: 100%;
-  top: 0px;
-  bottom: 0px;
-  z-index: 100;
   background: blue;
   padding: 0px 10px;
+
+  &--auto {
+    position: absolute;
+    height: 100%;
+    top: 0px;
+    bottom: 0px;
+    z-index: 100;
+  }
 
   &--left {
     left: 0px;
@@ -74,6 +80,10 @@
 
   &--disabled {
     opacity: 0.3;
+  }
+
+  &--hidden {
+    display: none;
   }
 
   &--active {

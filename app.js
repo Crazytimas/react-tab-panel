@@ -77,6 +77,7 @@ export default class App extends Component {
         style={{ marginBottom: 20 }}
       />
       <TabStrip
+        scroller={'auto'}
         defaultActiveIndex={2}
         theme="red"
         tabs={this.state.tabs}

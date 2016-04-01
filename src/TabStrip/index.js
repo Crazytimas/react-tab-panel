@@ -4,13 +4,19 @@ import assign from 'object-assign'
 
 import { Flex, Item } from 'react-flex'
 
-import TAB_POSITION_MAP from './tabPositions'
-import join from './join'
-import TabTitle from './TabTitle'
+import TAB_POSITION_MAP from '../tabPositions'
+import join from '../join'
+import TabTitle from '../TabTitle'
+import bemFactory from '../bemFactory'
 
 import Scroller from './Scroller'
 
-// import { NotifyResize } from 'react-notify-resize'
+const CLASS_NAME = 'react-tab-panel__tab-strip'
+
+const bem = bemFactory(CLASS_NAME)
+const m = (name) => {
+  return bem(null, name)
+}
 
 export default class TabStrip extends Component {
 
@@ -22,80 +28,94 @@ export default class TabStrip extends Component {
     }
   }
 
-  render(){
+  prepareClassName(props){
+    return join(
+      props.className,
+      CLASS_NAME,
 
-    const { props } = this
+      m(`theme-${props.theme}`),
+      m(`tab-align-${props.tabAlign}`),
+      m(`tab-position-${props.tabPosition}`),
 
-    const p = assign({}, props)
+      props.vertical && m('vertical'),
+      props.firstActive && m('first-active'),
+      props.lastActive && m('last-active')
+    )
+  }
+
+  prepareProps(thisProps) {
+    const props = assign({}, thisProps)
 
     const activeIndex = props.activeIndex == null?
                         this.state.activeIndex:
                         props.activeIndex
 
-    p.activeIndex = activeIndex
-    p.tabs = props.defaultTabs || props.tabs
-    p.tabIndex = typeof p.tabIndex === 'boolean'?
-                    p.tabIndex? 0: -1
+    props.activeIndex = activeIndex
+    props.tabs = props.defaultTabs || props.tabs
+    props.tabIndex = typeof props.tabIndex === 'boolean'?
+                    props.tabIndex? 0: -1
                     :
-                    p.tabIndex
+                    props.tabIndex
 
-    this.p = p
+    props.firstActive = activeIndex === 0
+    props.lastActive = activeIndex === props.tabs.length - 1
+    props.allTabsProps = []
 
-    p.allTabsProps = []
+    return props
+  }
 
-    const {
-      tabs,
-      tabAlign,
-      tabPosition,
-      vertical
-    } = p
+  render(){
 
-    const firstActive = activeIndex === 0
-    const lastActive = activeIndex === tabs.length - 1
+    const props = this.p = this.prepareProps(this.props)
 
-    const className = join(
-      props.className,
-      'react-tab-panel__tab-strip',
-      `react-tab-panel__tab-strip--theme-${props.theme}`,
-      `react-tab-panel__tab-strip--tab-align-${props.tabAlign}`,
-      `react-tab-panel__tab-strip--tab-position-${props.tabPosition}`,
-
-      vertical && 'react-tab-panel__tab-strip--vertical',
-      firstActive && 'react-tab-panel__tab-strip--first-active',
-      lastActive && 'react-tab-panel__tab-strip--last-active'
-    )
+    const className = this.prepareClassName(props)
 
     const beforeClassName = join(
-      'react-tab-panel__tab-strip-before',
-      firstActive && 'react-tab-panel__tab-strip-before--before-active'
+      bem('before'),
+      props.firstActive && bem('before', 'before-active')
     )
 
     const afterClassName = join(
-      'react-tab-panel__tab-strip-after',
-      lastActive && 'react-tab-panel__tab-strip-after--after-active'
+      bem('after'),
+      props.lastActive && bem('after', 'after-active')
     )
+
+    const { tabPosition } = props
 
     const row = tabPosition == 'top' || tabPosition == 'bottom'
 
+    const renderProps = assign({}, props, {
+      alignItems: 'stretch',
+      row: true,
+      wrap: false,
+      className,
+      tabIndex: null
+    })
+
+    const childProps = {
+      className: bem('inner'),
+      alignItems: "stretch",
+      row: row,
+      column: !row,
+      wrap: false,
+      children: [
+        <Item className={beforeClassName} />,
+        props.tabs.map(this.renderTab),
+        <Item className={afterClassName} />
+      ]
+    }
+
+    let renderChildren = []
+
+    if (props.scroller === false){
+      return <Flex {...renderProps}>
+        <Flex {...childProps} />
+      </Flex>
+    }
+
     return <Scroller
-      alignItems="stretch"
-      row
-      wrap={false}
-      {...props}
-      className={className}
-      tabIndex={null}
-      childProps={{
-        className:"react-tab-panel__tab-strip-inner",
-        alignItems: "stretch",
-        row: row,
-        column:!row,
-        wrap: false,
-        children: [
-          <Item className={beforeClassName} />,
-          tabs.map(this.renderTab),
-          <Item className={afterClassName} />
-        ]
-      }}
+      {...renderProps}
+      childProps={childProps}
     />
   }
 
@@ -144,6 +164,8 @@ export default class TabStrip extends Component {
       tabStyle,
       tabEllipsis,
 
+      onFocus: this.onTabFocus.bind(this, index),
+
       key: index,
       onActivate: this.onActivate.bind(this, index),
       onNavigate: this.onNavigate.bind(this, index),
@@ -168,15 +190,20 @@ export default class TabStrip extends Component {
     const last = props.tabs.length - 1 === index
 
     const betweenClassName = join(
-      'react-tab-panel__tab-strip-between',
-      beforeActive && 'react-tab-panel__tab-strip-between--before-active',
-      active && 'react-tab-panel__tab-strip-between--after-active'
+      bem('between'),
+      beforeActive && bem('between','before-active'),
+      active && bem('between', 'after-active')
     )
 
     return [
       tabTitle,
       !last && <Item className={betweenClassName}/>
     ]
+  }
+
+  onTabFocus(index, event){
+    console.log('tab focus')
+    event.preventDefault()
   }
 
   onNavigate(index, dir){
@@ -263,6 +290,9 @@ TabStrip.propTypes = {
   ]),
 
   rotateNavigation: PropTypes.bool,
+
+  scroller: PropTypes.oneOf([true, false, 'auto']),
+
   tabIndex: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   tabEllipsis: PropTypes.bool,
   tabPosition: PropTypes.oneOf(['top','bottom','left','right']),
@@ -283,10 +313,13 @@ TabStrip.propTypes = {
     'space-between',
     'stretch'
   ]),
+
   tabPosition: PropTypes.oneOf(Object.keys(TAB_POSITION_MAP))
 }
 
 TabStrip.defaultProps = {
+  scroller: 'auto',
+  scrollAllVisible: true,
   rotateNavigation: true,
   tabIndex: true,
   tabAlign: 'start',
