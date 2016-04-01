@@ -31,8 +31,6 @@ const HIDDEN_STYLE = {
   maxHeight: 'auto'
 }
 
-const DivFactory = (props) => <div {...props} />
-
 export default class TabTitle extends Component {
 
   constructor(props){
@@ -98,22 +96,40 @@ export default class TabTitle extends Component {
 
     let style = assign({}, props.style)
 
+    if (props.vertical) {
+      //on vertical tabs - the name of the dimensions are inversed
+      const dimensionStyles = {
+        height: 'width',
+        minHeight: 'minWidth',
+        maxHeight: 'maxWidth'
+      }
+
+      Object.keys(dimensionStyles).forEach(name => {
+        //NOTE: inner is rotated!
+        const value = innerStyle[name]
+
+        if (value !== undefined){
+          style[name] = value
+          delete innerStyle[name]
+          innerStyle[dimensionStyles[name]] = value
+        }
+      })
+
+    }
+
     if (props.tabAlign === 'stretch'){
-      //if we are in stretch mode, the size (more exactly, width)
+
+      //if we are in stretch mode, the size
       //dimensions should be set on the style object (if they are specified)
       //not on the innerStyle, since the main div will now give the dimension
-      [
-        'width',
-        'minWidth',
-        'maxWidth'
-      ].concat(
-        props.vertical? [
-          'height',
-          'minHeight',
-          'maxWeight'
-        ]: []
-      )
-      .forEach(name => {
+
+
+      const dimensions = props.vertical?
+        [ 'height', 'minHeight', 'maxHeight' ]:
+        [ 'width', 'minWidth', 'maxWidth' ]
+
+
+      dimensions.forEach(name => {
         const value = innerStyle[name]
 
         if (value !== undefined){
@@ -138,56 +154,28 @@ export default class TabTitle extends Component {
     const innerClassName = this.prepareInnerClassName(props)
     const children = this.prepareChildren(props)
 
+    const tabIndex = props.active && props.tabIndex != -1?
+                      props.tabIndex:
+                      null
+
     const {
-      size,
       innerSize,
       hiddenSize
     } = this.state
 
-    let innerStyle = this.prepareInnerStyle(props)
-    let style = this.prepareStyle(props, innerStyle)
-
-    let verticalFix
-    let notifier
-
-    let Factory = DivFactory
+    const innerStyle = this.prepareInnerStyle(props)
+    const style = this.prepareStyle(props, innerStyle)
 
     //HAIRY LOGIC - all needed for vertical tabs!
     if (props.vertical){
-
-      //compute style
-      style = assign(style, {
-        width: innerSize.height
-      })
-
-      assign(innerStyle, { width: hiddenSize.height })
-
       if (props.tabAlign != 'stretch'){
+        style.width = innerSize.height
         style.height = innerSize.width
       } else {
+        style.width = innerSize.height
         style.height = hiddenSize.width
       }
-
-      notifier = <NotifyResize onResize={this.onInnerResize} notifyOnMount />
-
-      if (props.tabAlign === 'stretch'){
-
-        Factory = FlexiBox
-        verticalFix = <div
-          key="innerHidden"
-          ref={(c) => this.innerHidden = c}
-          className={join(innerClassName, bem('inner','hidden'))}
-          style={assign({}, innerStyle, HIDDEN_STYLE)}
-        >
-          {children}
-          <NotifyResize notifyOnMount onResize={this.onHiddenResize} />
-        </div>
-      }
     }
-
-    const tabIndex = props.active && props.tabIndex != -1?
-                      props.tabIndex:
-                      null
 
     const renderProps = assign({}, props, {
       onFocus: this.onFocus,
@@ -200,41 +188,44 @@ export default class TabTitle extends Component {
       [this.props.activateEvent || 'onClick']: this.onActivate
     })
 
+    const innerProps = {
+      key: 'inner',
+      className: innerClassName,
+      children: [
+        children,
+        props.vertical && <NotifyResize onResize={this.onInnerResize} notifyOnMount />
+      ]
+    }
+
     if (props.vertical && props.tabAlign === 'stretch'){
-      return <Factory {...renderProps}>
+      const verticalFix = <div
+        key="innerHidden"
+        className={join(innerClassName, bem('inner','hidden'))}
+        style={assign({}, innerStyle, HIDDEN_STYLE)}
+      >
+        {children}
+        <NotifyResize onResize={this.onHiddenResize} notifyOnMount/>
+      </div>
+
+      return <FlexiBox {...renderProps}>
       {({ width, height }) => {
 
-        height = Math.max(height, hiddenSize.width)
+        height = Math.max(height || 0, hiddenSize.width || 0)
 
         return [
           <div
-            key="inner"
-            ref={(c) => this.inner = c}
-            className={innerClassName}
+            {...innerProps}
             style={assign(innerStyle, { width: height })}
-          >
-            {children}
-            {notifier}
-          </div>,
-
+          />,
           verticalFix
         ]
       }}
-      </Factory>
+      </FlexiBox>
     }
 
-    return <Factory {...renderProps}>
-      <div
-        ref="inner"
-        className={innerClassName}
-        style={innerStyle}
-      >
-        {children}
-        {notifier}
-      </div>
-
-      {verticalFix}
-    </Factory>
+    return <div {...renderProps}>
+      <div {...innerProps} />
+    </div>
   }
 
   onInnerResize({ width, height }){

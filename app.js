@@ -69,14 +69,13 @@ export default class App extends Component {
         activeIndex={this.state.index}
         onActivate={this.onActivate}
 
-        tabPosition="left"
-
+        tabPosition="top"
         tabIndex
-        tabAlign="center"
+        tabAlign="stretch"
         tabEllipsis
-        vertical
-        tabStyle={{xmaxWidth: 200, xminHeight: 100}}
-        style={{top: 20, left: 0, minHeight: '90%', position: 'absolute'}}
+        // vertical
+        tabStyle={{xmaxWidth: 200, xheight: 400, xminHeight: 120}}
+        style={{top: 20, left: 0, xminHeight: '90%', position: 'absolute'}}
       >
 
         <div tabProps={{ title: firstTabTitle }}>
