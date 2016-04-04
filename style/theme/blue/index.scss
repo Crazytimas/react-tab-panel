@@ -9,9 +9,26 @@ $THEME_NAME: 'blue' !default;
   .react-tab-panel__body {
     padding: 5px 10px;
   }
+
 }
 
 .react-tab-panel__tab-strip--theme-#{$THEME_NAME} {
+
+  &.react-tab-panel__tab-strip--tab-position-top,
+  &.react-tab-panel__tab-strip--tab-position-bottom {
+    .react-tab-panel__tab-strip-before,
+    .react-tab-panel__tab-strip-after {
+      min-width: 10px;
+    }
+  }
+
+  &.react-tab-panel__tab-strip--tab-position-left,
+  &.react-tab-panel__tab-strip--tab-position-right {
+    .react-tab-panel__tab-strip-before,
+    .react-tab-panel__tab-strip-after {
+      min-height: 10px;
+    }
+  }
 
   .react-tab-panel__tab-title-inner {
     padding: 5px 10px;
