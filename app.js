@@ -65,17 +65,17 @@ export default class App extends Component {
   render(){
     return <div>
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
+      <br />
       <TabPanel
         activeIndex={this.state.index}
         onActivate={this.onActivate}
 
-        tabPosition="top"
+        tabPosition="bottom"
         tabIndex
-        tabAlign="stretch"
+        tabAlign="end"
         tabEllipsis
-        // vertical
         tabStyle={{xmaxWidth: 200, xheight: 400, xminHeight: 120}}
-        style={{top: 20, left: 0, xminHeight: '90%', position: 'absolute'}}
+        style={{top: 20, left: 0, margin: 20, width: '70%', xminHeight: '90%', xposition: 'absolute'}}
       >
 
         <div tabProps={{ title: firstTabTitle }}>
