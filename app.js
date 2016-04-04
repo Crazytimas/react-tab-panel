@@ -5,6 +5,7 @@ import TabPanel from './src'
 import './style/base.scss'
 import './style/theme/default/index.scss'
 import './style/theme/red/index.scss'
+import './style/theme/blue/index.scss'
 import './style/theme/flat/index.scss'
 
 import { TabStrip, TabBody } from './src'
@@ -69,8 +70,8 @@ export default class App extends Component {
       <TabPanel
         activeIndex={this.state.index}
         onActivate={this.onActivate}
-
-        tabPosition="bottom"
+        theme="blue"
+        tabPosition="top"
         tabIndex
         tabAlign="end"
         tabEllipsis

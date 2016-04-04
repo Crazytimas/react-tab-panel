@@ -4,7 +4,14 @@ $BORDER_RADIUS: 5px !default;
 $THEME_NAME: 'default' !default;
 
 $BORDER_COLOR: #ddd !default;
+$BORDER_WIDTH: 1px !default;
+
 $BG_FOCUSED: #f9f9f9 !default;
+
+$ACTIVE_BORDER_COLOR: #4d7496 !default;
+$ACTIVE_BORDER_WIDTH: 3px !default;
+
+$HOVER_BORDER_COLOR: #eee !default;
 
 .react-tab-panel--theme-#{$THEME_NAME} {
 
@@ -14,20 +21,35 @@ $BG_FOCUSED: #f9f9f9 !default;
 
   &.react-tab-panel--tab-position-top {
     .react-tab-panel__body {
-      border-right: 1px solid $BORDER_COLOR;
-      border-left: 1px solid $BORDER_COLOR;
-      border-bottom: 1px solid $BORDER_COLOR;
+      border-right: $BORDER_WIDTH solid $BORDER_COLOR;
+      border-left: $BORDER_WIDTH solid $BORDER_COLOR;
+      border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
     }
   }
 
   &.react-tab-panel--tab-position-bottom {
     .react-tab-panel__body {
-      border-right: 1px solid $BORDER_COLOR;
-      border-left: 1px solid $BORDER_COLOR;
-      border-top: 1px solid $BORDER_COLOR;
+      border-right: $BORDER_WIDTH solid $BORDER_COLOR;
+      border-left: $BORDER_WIDTH solid $BORDER_COLOR;
+      border-top: $BORDER_WIDTH solid $BORDER_COLOR;
     }
   }
 
+  &.react-tab-panel--tab-position-left {
+    .react-tab-panel__body {
+      border-top: $BORDER_WIDTH solid $BORDER_COLOR;
+      border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
+      border-right: $BORDER_WIDTH solid $BORDER_COLOR;
+    }
+  }
+
+  &.react-tab-panel--tab-position-right {
+    .react-tab-panel__body {
+      border-top: $BORDER_WIDTH solid $BORDER_COLOR;
+      border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
+      border-left: $BORDER_WIDTH solid $BORDER_COLOR;
+    }
+  }
 }
 
 .react-tab-panel__tab-strip--theme-#{$THEME_NAME} {
@@ -44,6 +66,10 @@ $BG_FOCUSED: #f9f9f9 !default;
     text-align: center;
   }
 
+  .react-tab-panel__tab-title:not(.react-tab-panel__tab-title--active){
+    color: $ACTIVE_BORDER_COLOR;
+  }
+
   .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
     background: $BG_FOCUSED;
   }
@@ -55,24 +81,97 @@ $BG_FOCUSED: #f9f9f9 !default;
   &.react-tab-panel__tab-strip--tab-position-top,
   &.react-tab-panel__tab-strip--tab-position-bottom {
 
-    .react-tab-panel__tab-title-inner--active {
+    .react-tab-panel__tab-strip-between {
+      width: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
+    }
+
+    .react-tab-panel__tab-title-inner {
 
       &:before,
       &:after {
         content: '';
         position: absolute;
         top: 0px;
-        height: 100%;
+        bottom: 0px;
       }
 
       &:before {
         left: 0px;
-        border-left: 1px solid $BORDER_COLOR;
       }
 
       &:after {
         right: 0px;
-        border-right: 1px solid $BORDER_COLOR;
+      }
+
+      &--active {
+        &:before {
+          border-left: $BORDER_WIDTH solid $BORDER_COLOR;
+        }
+
+        &:after {
+          border-right: $BORDER_WIDTH solid $BORDER_COLOR;
+        }
+      }
+    }
+
+    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
+
+      .react-tab-panel__tab-title-inner {
+        &:before {
+          border-left: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
+        }
+        &:after {
+          border-right: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
+        }
+      }
+    }
+  }
+
+  &.react-tab-panel__tab-strip--tab-position-left,
+  &.react-tab-panel__tab-strip--tab-position-right {
+
+    .react-tab-panel__tab-strip-between {
+      height: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
+    }
+
+    .react-tab-panel__tab-title-inner {
+
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0px;
+        right: 0px;
+      }
+
+      &:before {
+        top: 0px;
+      }
+
+      &:after {
+        bottom: 0px;
+      }
+
+      &--active {
+        &:before {
+          border-top: $BORDER_WIDTH solid $BORDER_COLOR;
+        }
+
+        &:after {
+          border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
+        }
+      }
+    }
+
+    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
+
+      .react-tab-panel__tab-title-inner {
+        &:before {
+          border-top: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
+        }
+        &:after {
+          border-bottom: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
+        }
       }
     }
   }
@@ -80,26 +179,37 @@ $BG_FOCUSED: #f9f9f9 !default;
   &.react-tab-panel__tab-strip--tab-position-top {
 
     .react-tab-panel__body {
-      border-top: 1px solid transparent;
+      border-top: $BORDER_WIDTH solid transparent;
     }
 
     .react-tab-panel__tab-strip-before,
     .react-tab-panel__tab-strip-after,
     .react-tab-panel__tab-strip-between,
     .react-tab-panel__tab-title-inner {
-      border-bottom: 1px solid $BORDER_COLOR;
+      border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
+    }
+
+    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
+      margin-top: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
+      border-top: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
+
+      .react-tab-panel__tab-title-inner {
+        &:before, &:after {
+          left: $BORDER_WIDTH;
+        }
+      }
     }
 
     .react-tab-panel__tab-title-inner--active {
-      border-bottom: 1px solid transparent;
+      border-bottom: $BORDER_WIDTH solid transparent;
     }
 
     .react-tab-panel__tab-title {
-      border-top: 3px solid transparent;
+      border-top: $ACTIVE_BORDER_WIDTH solid transparent;
     }
 
     .react-tab-panel__tab-title--active {
-      border-top: 3px solid #4d7496;
+      border-top: $ACTIVE_BORDER_WIDTH solid $ACTIVE_BORDER_COLOR;
     }
 
   }
@@ -107,28 +217,123 @@ $BG_FOCUSED: #f9f9f9 !default;
   &.react-tab-panel__tab-strip--tab-position-bottom {
 
     .react-tab-panel__body {
-      border-bottom: 1px solid transparent;
+      border-bottom: $BORDER_WIDTH solid transparent;
     }
 
     .react-tab-panel__tab-strip-before,
     .react-tab-panel__tab-strip-after,
     .react-tab-panel__tab-strip-between,
     .react-tab-panel__tab-title-inner {
-      border-top: 1px solid $BORDER_COLOR;
+      border-top: $BORDER_WIDTH solid $BORDER_COLOR;
+    }
+
+    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
+      margin-bottom: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
+      border-bottom: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
+
+      .react-tab-panel__tab-title-inner {
+        &:before, &:after {
+          top: $BORDER_WIDTH;
+        }
+      }
     }
 
     .react-tab-panel__tab-title-inner--active {
-      border-top: 1px solid transparent;
+      border-top: $BORDER_WIDTH solid transparent;
     }
 
     .react-tab-panel__tab-title {
-      border-bottom: 3px solid transparent;
+      border-bottom: $ACTIVE_BORDER_WIDTH solid transparent;
     }
 
     .react-tab-panel__tab-title--active {
-      border-bottom: 3px solid #4d7496;
+      border-bottom: $ACTIVE_BORDER_WIDTH solid $ACTIVE_BORDER_COLOR;
     }
 
+  }
+
+  &.react-tab-panel__tab-strip--orientation-horizontal {
+
+    &.react-tab-panel__tab-strip--tab-position-left,
+    &.react-tab-panel__tab-strip--tab-position-right {
+      .react-tab-panel__tab-title-inner {
+        padding: 8px 10px;
+      }
+    }
+
+    &.react-tab-panel__tab-strip--tab-position-left {
+
+      .react-tab-panel__body {
+        border-left: $BORDER_WIDTH solid transparent;
+      }
+
+      .react-tab-panel__tab-strip-before,
+      .react-tab-panel__tab-strip-after,
+      .react-tab-panel__tab-strip-between,
+      .react-tab-panel__tab-title-inner {
+        border-right: $BORDER_WIDTH solid $BORDER_COLOR;
+      }
+
+      .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
+        margin-left: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
+        border-left: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
+
+        .react-tab-panel__tab-title-inner {
+          &:before, &:after {
+            right: $BORDER_WIDTH;
+          }
+        }
+      }
+
+      .react-tab-panel__tab-title-inner--active {
+        border-right: $BORDER_WIDTH solid transparent;
+      }
+
+      .react-tab-panel__tab-title {
+        border-left: $ACTIVE_BORDER_WIDTH solid transparent;
+      }
+
+      .react-tab-panel__tab-title--active {
+        border-left: $ACTIVE_BORDER_WIDTH solid $ACTIVE_BORDER_COLOR;
+      }
+    }
+
+    &.react-tab-panel__tab-strip--tab-position-right {
+
+      .react-tab-panel__body {
+        border-right: $BORDER_WIDTH solid transparent;
+      }
+
+      .react-tab-panel__tab-strip-before,
+      .react-tab-panel__tab-strip-after,
+      .react-tab-panel__tab-strip-between,
+      .react-tab-panel__tab-title-inner {
+        border-left: $BORDER_WIDTH solid $BORDER_COLOR;
+      }
+
+      .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
+        margin-right: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
+        border-right: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
+
+        .react-tab-panel__tab-title-inner {
+          &:before, &:after {
+            left: $BORDER_WIDTH;
+          }
+        }
+      }
+
+      .react-tab-panel__tab-title-inner--active {
+        border-left: $BORDER_WIDTH solid transparent;
+      }
+
+      .react-tab-panel__tab-title {
+        border-right: $ACTIVE_BORDER_WIDTH solid transparent;
+      }
+
+      .react-tab-panel__tab-title--active {
+        border-right: $ACTIVE_BORDER_WIDTH solid $ACTIVE_BORDER_COLOR;
+      }
+    }
   }
 
 }

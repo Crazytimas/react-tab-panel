@@ -54,6 +54,9 @@ export default class TabTitle extends Component {
       props.className,
       CLASS_NAME,
 
+      props.first && m('first'),
+      props.last && m('last'),
+
       props.focused && m('focused'),
       props.vertical && m('vertical'),
       props.active && m('active'),

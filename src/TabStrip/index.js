@@ -35,6 +35,7 @@ export default class TabStrip extends Component {
       m(`tab-align-${props.tabAlign}`),
       m(`tab-position-${props.tabPosition}`),
 
+      m(`orientation-${props.vertical? 'vertical': 'horizontal'}`),
       props.vertical && m('vertical'),
       props.firstActive && m('first-active'),
       props.lastActive && m('last-active')
@@ -121,7 +122,7 @@ export default class TabStrip extends Component {
     console.log('RESIZE')
   }
 
-  renderTab(tab, index){
+  renderTab(tab, index, array){
 
     const props = this.p
     const {
@@ -141,6 +142,9 @@ export default class TabStrip extends Component {
       }
     }
 
+    const first = index === 0
+    const last = props.tabs.length - 1 === index
+
     const beforeActive = activeIndex - 1 === index
     const afterActive = activeIndex + 1 === index
     const active = index === activeIndex
@@ -150,6 +154,8 @@ export default class TabStrip extends Component {
       activateEvent,
       activeIndex,
       active,
+      first,
+      last,
       beforeActive,
       afterActive,
       tabAlign,
@@ -185,8 +191,6 @@ export default class TabStrip extends Component {
       tabTitle = <TabTitle {...tabProps} />
     }
 
-    const last = props.tabs.length - 1 === index
-
     const betweenClassName = join(
       bem('between'),
       beforeActive && bem('between','before-active'),
@@ -200,7 +204,6 @@ export default class TabStrip extends Component {
   }
 
   onTabFocus(index, event){
-    console.log('tab focus')
     event.preventDefault()
   }
 

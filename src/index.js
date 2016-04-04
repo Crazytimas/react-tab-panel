@@ -31,6 +31,8 @@ export default class TabPanel extends Component {
       props.className,
       CLASS_NAME,
 
+      m(`orientation-${props.vertical? 'vertical': 'horizontal'}`),
+
       m(`theme-${props.theme}`),
 
       m(`tab-align-${props.tabAlign}`),
