@@ -1,6 +1,6 @@
 {
   "name": "react-tab-panel",
-  "version": "2.0.12",
+  "version": "2.1.0",
   "description": "React TabPanel",
   "main": "lib/index.js",
   "dependencies": {
@@ -14,7 +14,8 @@
     "react-notify-resize": "^1.0.0"
   },
   "peerDependencies": {
-    "react": ">=0.14.0"
+    "react": ">=0.14.0 || >=15.0.0-0",
+    "react-dom": ">=0.14.0 || >=15.0.0-0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
