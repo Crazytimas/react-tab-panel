@@ -1,6 +1,6 @@
 {
   "name": "react-tab-panel",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "React TabPanel",
   "main": "lib/index.js",
   "dependencies": {
@@ -37,7 +37,7 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --progress --config build/dev.config.js",
-    "lib": "babel --out-dir lib src",
+    "lib": "rm -fr lib && babel --out-dir lib src",
     "styles": "node ./build/gen-styles.js",
     "build": "npm run lib && npm run styles",
     "prepublish": "npm run build"
