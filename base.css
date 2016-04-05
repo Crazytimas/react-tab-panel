@@ -797,10 +797,10 @@
 
 .react-tab-panel__tab-strip--tab-align-stretch .react-tab-panel__tab-title,
 .react-tab-panel__tab-strip--tab-align-stretch .react-tab-panel__tab-title-inner {
-  -webkit-box-flex: 100;
-  -webkit-flex: 100 0 auto;
-      -ms-flex: 100 0 auto;
-          flex: 100 0 auto;
+  -webkit-box-flex: 1000;
+  -webkit-flex: 1000 0 auto;
+      -ms-flex: 1000 0 auto;
+          flex: 1000 0 auto;
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -816,6 +816,12 @@
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center; }
+
+.react-tab-panel__tab-strip--tab-align-stretch .react-tab-panel__tab-title--active {
+  -webkit-box-flex: 1001;
+  -webkit-flex: 1001 0 auto;
+      -ms-flex: 1001 0 auto;
+          flex: 1001 0 auto; }
 
 .react-tab-panel__tab-title {
   cursor: pointer;

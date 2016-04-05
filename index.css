@@ -797,10 +797,10 @@
 
 .react-tab-panel__tab-strip--tab-align-stretch .react-tab-panel__tab-title,
 .react-tab-panel__tab-strip--tab-align-stretch .react-tab-panel__tab-title-inner {
-  -webkit-box-flex: 100;
-  -webkit-flex: 100 0 auto;
-      -ms-flex: 100 0 auto;
-          flex: 100 0 auto;
+  -webkit-box-flex: 1000;
+  -webkit-flex: 1000 0 auto;
+      -ms-flex: 1000 0 auto;
+          flex: 1000 0 auto;
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -816,6 +816,12 @@
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center; }
+
+.react-tab-panel__tab-strip--tab-align-stretch .react-tab-panel__tab-title--active {
+  -webkit-box-flex: 1001;
+  -webkit-flex: 1001 0 auto;
+      -ms-flex: 1001 0 auto;
+          flex: 1001 0 auto; }
 
 .react-tab-panel__tab-title {
   cursor: pointer;
@@ -905,7 +911,7 @@
 .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-title--focused {
   outline: none; }
 
-.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-strip-between, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-strip-between {
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--orientation-horizontal .react-tab-panel__tab-strip-between, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--orientation-horizontal .react-tab-panel__tab-strip-between {
   width: 2px; }
 
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-title-inner:after {
@@ -932,32 +938,41 @@
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after {
   border-right: 1px solid #eee; }
 
-.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-strip-between, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-strip-between {
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-strip-between, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-strip-between {
   height: 2px; }
 
-.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner:after {
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner:after {
   content: '';
   position: absolute;
   left: 0px;
   right: 0px; }
 
-.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner:before {
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner:before {
   top: 0px; }
 
-.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner:after {
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner:after {
   bottom: 0px; }
 
-.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner--active:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner--active:before {
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner--active:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner--active:before {
   border-top: 1px solid #ddd; }
 
-.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner--active:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner--active:after {
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner--active:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner--active:after {
   border-bottom: 1px solid #ddd; }
 
-.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:before {
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:before {
   border-top: 1px solid #eee; }
 
-.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after {
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after {
   border-bottom: 1px solid #eee; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-strip-between, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-strip-between {
+  height: 2px; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:before {
+  border-left: 1px solid #eee; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after {
+  border-right: 1px solid #eee; }
 
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__body {
   border-top: 1px solid transparent; }
@@ -1057,3 +1072,91 @@
 
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title--active {
   border-right: 3px solid #4d7496; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner {
+  padding: 8px 10px; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical .react-tab-panel__tab-title-inner:before, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical .react-tab-panel__tab-title-inner:after {
+  display: none; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical .react-tab-panel__tab-title:before {
+  content: '';
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 100;
+  position: absolute; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical .react-tab-panel__tab-title:after {
+  content: '';
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 100;
+  position: absolute; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-strip-before,
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-strip-after,
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-strip-between {
+  border-right: 1px solid #ddd; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title {
+  border-left: 3px solid transparent;
+  border-right: 1px solid #ddd; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner {
+  border-top: 1px solid transparent; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
+  background: none; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):before {
+    border-top: 1px solid #eee; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):after {
+    border-bottom: 1px solid #eee; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner {
+    border-top: 1px solid #eee;
+    background: #f9f9f9; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner--active {
+  border-bottom: 1px solid transparent; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title--active {
+  border-left: 3px solid #4d7496;
+  border-right: none; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title--active:before {
+    border-top: 1px solid #ddd; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title--active:after {
+    border-bottom: 1px solid #ddd; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-strip-before,
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-strip-after,
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-strip-between {
+  border-left: 1px solid #ddd; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title {
+  border-right: 3px solid transparent;
+  border-left: 1px solid #ddd; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner {
+  border-top: 1px solid transparent; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
+  background: none; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):before {
+    border-top: 1px solid #eee; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):after {
+    border-bottom: 1px solid #eee; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner {
+    border-top: 1px solid #eee;
+    background: #f9f9f9; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner--active {
+  border-bottom: 1px solid transparent; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title--active {
+  border-right: 3px solid #4d7496;
+  border-left: none; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title--active:before {
+    border-top: 1px solid #ddd; }
+  .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title--active:after {
+    border-bottom: 1px solid #ddd; }
