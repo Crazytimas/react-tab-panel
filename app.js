@@ -70,13 +70,13 @@ export default class App extends Component {
       <TabPanel
         activeIndex={this.state.index}
         onActivate={this.onActivate}
-        theme="blue"
-        tabPosition="top"
+        tabPosition="left"
         tabIndex
-        tabAlign="end"
+        vertical
+        tabAlign="stretch"
         tabEllipsis
-        tabStyle={{xmaxWidth: 200, xheight: 400, xminHeight: 120}}
-        style={{top: 20, left: 0, margin: 20, width: '70%', xminHeight: '90%', xposition: 'absolute'}}
+        tabStyle={{}}
+        style={{top: 20, left: 0, margin: 20, width: '70%', minHeight: 700, xposition: 'absolute'}}
       >
 
         <div tabProps={{ title: firstTabTitle }}>

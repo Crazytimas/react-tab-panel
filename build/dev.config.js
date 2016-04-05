@@ -15,7 +15,7 @@ module.exports = {
     poll: 1000
   },
   entry: [
-    'webpack-dev-server/client?http://localhost:' + PORT,
+    'webpack-dev-server/client?http://0.0.0.0:' + PORT,
     'webpack/hot/only-dev-server',
     './index.js'
   ],
@@ -37,7 +37,7 @@ module.exports = {
     publicPath: '/assets/',
     port: PORT,
     hot: true,
-    host: 'localhost',
+    host: '0.0.0.0',
     historyApiFallback: true
   }
 }

@@ -9,6 +9,19 @@ import assignDefined from '../assignDefined'
 import bemFactory from '../bemFactory'
 import FlexiBox from './FlexiBox'
 
+const toNumber = (n) => parseInt(n, 10)
+
+const getBorderPaddingSize = (node) => {
+  const computedStyle = global.getComputedStyle(node)
+
+  return {
+    left: toNumber(computedStyle.borderLeftWidth) + toNumber(computedStyle.paddingLeft),
+    right: toNumber(computedStyle.borderRightWidth) + toNumber(computedStyle.paddingRight),
+    top: toNumber(computedStyle.borderTopWidth) + toNumber(computedStyle.paddingTop),
+    bottom: toNumber(computedStyle.borderBottomWidth) + toNumber(computedStyle.paddingBottom)
+  }
+}
+
 const CLASS_NAME = 'react-tab-panel__tab-title'
 const bem = bemFactory(CLASS_NAME)
 const m = (name) => bem(null, name)
@@ -196,7 +209,7 @@ export default class TabTitle extends Component {
       className: innerClassName,
       children: [
         children,
-        props.vertical && <NotifyResize onResize={this.onInnerResize} notifyOnMount />
+        props.vertical && <NotifyResize measureSize={this.measureInnerSize} onResize={this.onInnerResize} notifyOnMount />
       ]
     }
 
@@ -218,7 +231,7 @@ export default class TabTitle extends Component {
         return [
           <div
             {...innerProps}
-            style={assign(innerStyle, { width: height })}
+            style={assign({}, innerStyle, { width: height })}
           />,
           verticalFix
         ]
@@ -229,6 +242,22 @@ export default class TabTitle extends Component {
     return <div {...renderProps}>
       <div {...innerProps} />
     </div>
+  }
+
+  measureInnerSize(node){
+
+    let height = node.offsetHeight
+    let width = node.offsetWidth
+
+    if (this.props.vertical){
+      const borderPaddingSize = getBorderPaddingSize(node.parentNode)
+      height += borderPaddingSize.left + borderPaddingSize.right
+    }
+
+    return {
+      width,
+      height
+    }
   }
 
   onInnerResize({ width, height }){
@@ -281,7 +310,7 @@ export default class TabTitle extends Component {
     this.props.onFocus(event)
   }
 
-  onBlur(){
+  onBlur(event){
     this.setState({
       focused: false
     })

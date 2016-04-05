@@ -151,11 +151,16 @@
   }
   .react-tab-panel__tab-title,
   .react-tab-panel__tab-title-inner {
-    flex: 100 0 auto; //0 for no shrink
+    flex: 1000 0 auto; //0 for no shrink
     display: inline-flex;
     flex-flow: column;
     align-items: stretch;
     justify-content: center;
+  }
+
+  .react-tab-panel__tab-title--active {
+    //needed in order to avoid a Chrome flex bug
+    flex: 1001 0 auto;
   }
 }
 
