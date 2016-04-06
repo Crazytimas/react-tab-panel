@@ -214,6 +214,7 @@ export default class TabPanel extends Component {
 
     const bodyProps = assign({}, this.p.tabBody, {
       activeIndex,
+      tabPosition: this.p.tabPosition,
       children: bodyChildren
     })
 

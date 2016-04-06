@@ -2,14 +2,38 @@ import React from 'react'
 import Component from 'react-class'
 
 import { Flex } from 'react-flex'
-import TabPanel from './src'
-import './style/base.scss'
-import './style/theme/default/index.scss'
-import './style/theme/red/index.scss'
-import './style/theme/blue/index.scss'
-import './style/theme/flat/index.scss'
+import TabPanel from '../src'
+import '../style/base.scss'
+import '../style/theme/default/index.scss'
+import '../style/theme/red/index.scss'
+import '../style/theme/blue/index.scss'
+import '../style/theme/flat/index.scss'
 
-import { TabStrip, TabBody } from './src'
+import { TabStrip, TabBody } from '../src'
+
+import Demo from './TabPositionDemo'
+
+const render = (position, props = {}) => {
+  const upper = position.toUpperCase()
+
+  const style = assign({}, props.style, {
+    height: 200
+  })
+
+  return <TabPanel tabPosition={position} {...props} style={style}>
+    <div tabTitle={`${upper} - first tab`}>
+      Lorem ipsum Exercitation ut dolore.
+    </div>
+
+    <div tabTitle={<div>{upper} <Icon name="lock_outline" /> with icon</div>}>
+      Lorem ipsum Exercitation ut dolore.
+    </div>
+
+    <div tabTitle={<Icon name="perm_identity" />}>
+      Lorem ipsum Exercitation ut dolore.
+    </div>
+  </TabPanel>
+}
 
 
 const firstTabTitle = <b> first tab
@@ -68,15 +92,18 @@ export default class App extends Component {
     return <Flex column>
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
       <br />
+
       <TabPanel
-      style={{width: '100%'}}
+        style={{width: '100%', margin: 20}}
         activeIndex={this.state.index}
         onActivate={this.onActivate}
+        tabPosition="right"
         tabIndex
         tabEllipsis
         tabStyle={{}}
         style={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
       >
+        <Demo tabTitle="demo"/>
 
         <div tabProps={{ title: firstTabTitle }}>
           first tabLorem ipsum In velit veniam elit officia sunt.

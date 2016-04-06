@@ -19,36 +19,28 @@ $HOVER_BORDER_COLOR: #eee !default;
     padding: 5px 10px;
   }
 
-  &.react-tab-panel--tab-position-top {
-    .react-tab-panel__body {
-      border-right: $BORDER_WIDTH solid $BORDER_COLOR;
-      border-left: $BORDER_WIDTH solid $BORDER_COLOR;
-      border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
-    }
+  .react-tab-panel__body--tab-position-top {
+    border-right: $BORDER_WIDTH solid $BORDER_COLOR;
+    border-left: $BORDER_WIDTH solid $BORDER_COLOR;
+    border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
   }
 
-  &.react-tab-panel--tab-position-bottom {
-    .react-tab-panel__body {
-      border-right: $BORDER_WIDTH solid $BORDER_COLOR;
-      border-left: $BORDER_WIDTH solid $BORDER_COLOR;
-      border-top: $BORDER_WIDTH solid $BORDER_COLOR;
-    }
+  .react-tab-panel__body--tab-position-bottom {
+    border-right: $BORDER_WIDTH solid $BORDER_COLOR;
+    border-left: $BORDER_WIDTH solid $BORDER_COLOR;
+    border-top: $BORDER_WIDTH solid $BORDER_COLOR;
   }
 
-  &.react-tab-panel--tab-position-left {
-    .react-tab-panel__body {
-      border-top: $BORDER_WIDTH solid $BORDER_COLOR;
-      border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
-      border-right: $BORDER_WIDTH solid $BORDER_COLOR;
-    }
+  .react-tab-panel__body--tab-position-left {
+    border-top: $BORDER_WIDTH solid $BORDER_COLOR;
+    border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
+    border-right: $BORDER_WIDTH solid $BORDER_COLOR;
   }
 
-  &.react-tab-panel--tab-position-right {
-    .react-tab-panel__body {
-      border-top: $BORDER_WIDTH solid $BORDER_COLOR;
-      border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
-      border-left: $BORDER_WIDTH solid $BORDER_COLOR;
-    }
+  .react-tab-panel__body--tab-position-right {
+    border-top: $BORDER_WIDTH solid $BORDER_COLOR;
+    border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
+    border-left: $BORDER_WIDTH solid $BORDER_COLOR;
   }
 }
 
