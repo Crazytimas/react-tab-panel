@@ -19,6 +19,16 @@ $HOVER_BORDER_COLOR: #eee !default;
     padding: 5px 10px;
   }
 
+  .react-tab-panel__tab-strip-scroll-tool {
+    background: $BG_FOCUSED;
+    border: 1px solid $BORDER_COLOR;
+    cursor: pointer;
+
+    &:hover {
+      background: $HOVER_BORDER_COLOR;
+    }
+  }
+
   .react-tab-panel__body--tab-position-top {
     border-right: $BORDER_WIDTH solid $BORDER_COLOR;
     border-left: $BORDER_WIDTH solid $BORDER_COLOR;

@@ -859,22 +859,22 @@
 .react-tab-panel--theme-default .react-tab-panel__body {
   padding: 5px 10px; }
 
-.react-tab-panel--theme-default.react-tab-panel--tab-position-top .react-tab-panel__body {
+.react-tab-panel--theme-default .react-tab-panel__body--tab-position-top {
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
   border-bottom: 1px solid #ddd; }
 
-.react-tab-panel--theme-default.react-tab-panel--tab-position-bottom .react-tab-panel__body {
+.react-tab-panel--theme-default .react-tab-panel__body--tab-position-bottom {
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
   border-top: 1px solid #ddd; }
 
-.react-tab-panel--theme-default.react-tab-panel--tab-position-left .react-tab-panel__body {
+.react-tab-panel--theme-default .react-tab-panel__body--tab-position-left {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   border-right: 1px solid #ddd; }
 
-.react-tab-panel--theme-default.react-tab-panel--tab-position-right .react-tab-panel__body {
+.react-tab-panel--theme-default .react-tab-panel__body--tab-position-right {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   border-left: 1px solid #ddd; }

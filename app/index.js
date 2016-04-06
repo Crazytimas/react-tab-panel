@@ -94,14 +94,14 @@ export default class App extends Component {
       <br />
 
       <TabPanel
-        style={{width: '100%', margin: 20}}
+        style={{width: 300, margin: 20}}
         activeIndex={this.state.index}
         onActivate={this.onActivate}
-        tabPosition="right"
+        tabPosition="top"
         tabIndex
         tabEllipsis
         tabStyle={{}}
-        style={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
+        xstyle={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
       >
         <Demo tabTitle="demo"/>
 
