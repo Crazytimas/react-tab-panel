@@ -15,7 +15,7 @@ export default class Body extends Component {
 
     const content = props.renderContent(props.children)
 
-    return <Flex row wrap={false} alignItems="start" flex="none" {...props} className={className} children={content} />
+    return <Flex column wrap={false} alignItems="start" flex="none" {...props} className={className} children={content} />
   }
 }
 

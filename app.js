@@ -69,21 +69,20 @@ export default class App extends Component {
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
       <br />
       <TabPanel
+      style={{width: '100%'}}
         activeIndex={this.state.index}
         onActivate={this.onActivate}
-        tabPosition="left"
         tabIndex
-        tabAlign="stretch"
         tabEllipsis
         tabStyle={{}}
-        style={{top: 20, left: 0, margin: 20, width: '70%', xminHeight: 700, xposition: 'absolute'}}
+        style={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
       >
 
         <div tabProps={{ title: firstTabTitle }}>
           first tabLorem ipsum In velit veniam elit officia sunt.
         </div>
 
-        <div tabTitle={this.state.secondTabTitle} >
+        <div tabTitle={<div>{this.state.secondTabTitle}<br />tst</div>} >
           secondLorem ipsum Qui ad aute labore elit eiusmod dolor dolor eiusmod commodo magna dolore quis ut ex dolor laborum pariatur dolore ullamco magna ex dolor anim consectetur magna cupidatat aliquip ea cupidatat elit eu labore in esse et.
         </div>
 

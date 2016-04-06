@@ -698,18 +698,6 @@
   display: inline-flex;
   width: 100%; }
 
-.react-tab-panel--tab-position-top,
-.react-tab-panel--tab-position-bottom {
-  -webkit-flex-flow: column;
-      -ms-flex-flow: column;
-          flex-flow: column; }
-
-.react-tab-panel--tab-position-left,
-.react-tab-panel--tab-position-right {
-  -webkit-flex-flow: row;
-      -ms-flex-flow: row;
-          flex-flow: row; }
-
 .react-tab-panel__body {
   -webkit-box-flex: 1;
   -webkit-flex: 1 1 auto;

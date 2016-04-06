@@ -213,7 +213,7 @@ $HOVER_BORDER_COLOR: #eee !default;
     .react-tab-panel__tab-strip-before,
     .react-tab-panel__tab-strip-after,
     .react-tab-panel__tab-strip-between,
-    .react-tab-panel__tab-title-inner {
+    .react-tab-panel__tab-title:not(.react-tab-panel__tab-title--active) {
       border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
     }
 
@@ -251,7 +251,7 @@ $HOVER_BORDER_COLOR: #eee !default;
     .react-tab-panel__tab-strip-before,
     .react-tab-panel__tab-strip-after,
     .react-tab-panel__tab-strip-between,
-    .react-tab-panel__tab-title-inner {
+    .react-tab-panel__tab-title:not(.react-tab-panel__tab-title--active) {
       border-top: $BORDER_WIDTH solid $BORDER_COLOR;
     }
 
