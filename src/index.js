@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import Component from 'react-class'
 import assign from 'object-assign'
+import { Flex } from 'react-flex'
 
 import join from './join'
 
@@ -111,12 +112,17 @@ export default class TabPanel extends Component {
     const className = this.prepareClassName(props)
 
     const tabStripFirst = props.tabPosition == 'top' || props.tabPosition == 'left'
+    const row = props.tabPosition == 'left' || props.tabPosition == 'right'
 
-    return <div {...props} tabIndex={null} className={className}>
+    const rowColConfig = {
+      [row? 'row': 'column']: true
+    }
+
+    return <Flex wrap={false} alignItems="stretch" {...rowColConfig} inline {...props} tabIndex={null} className={className}>
       {tabStripFirst && this.renderTabStrip()}
       {this.renderBody()}
       {!tabStripFirst && this.renderTabStrip()}
-    </div>
+    </Flex>
   }
 
   onActivate(activeIndex){

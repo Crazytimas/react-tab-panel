@@ -1,6 +1,7 @@
 import React from 'react'
 import Component from 'react-class'
 
+import { Flex } from 'react-flex'
 import TabPanel from './src'
 import './style/base.scss'
 import './style/theme/default/index.scss'
@@ -64,7 +65,7 @@ export default class App extends Component {
   }
 
   render(){
-    return <div>
+    return <Flex column>
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
       <br />
       <TabPanel
@@ -72,11 +73,10 @@ export default class App extends Component {
         onActivate={this.onActivate}
         tabPosition="left"
         tabIndex
-        vertical
         tabAlign="stretch"
         tabEllipsis
         tabStyle={{}}
-        style={{top: 20, left: 0, margin: 20, width: '70%', minHeight: 700, xposition: 'absolute'}}
+        style={{top: 20, left: 0, margin: 20, width: '70%', xminHeight: 700, xposition: 'absolute'}}
       >
 
         <div tabProps={{ title: firstTabTitle }}>
@@ -95,6 +95,6 @@ export default class App extends Component {
           thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
         </div>
       </TabPanel>
-    </div>
+    </Flex>
   }
 }

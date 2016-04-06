@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import Component from 'react-class'
 import assign from 'object-assign'
 
+import { Flex } from 'react-flex'
+
 import join from './join'
 
 export default class Body extends Component {
@@ -13,7 +15,7 @@ export default class Body extends Component {
 
     const content = props.renderContent(props.children)
 
-    return <div {...props} className={className} children={content} />
+    return <Flex row wrap={false} alignItems="start" flex="none" {...props} className={className} children={content} />
   }
 }
 
