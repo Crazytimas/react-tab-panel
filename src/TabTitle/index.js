@@ -50,16 +50,11 @@ export default class TabTitle extends Component {
     super(props)
 
     this.state = {
-      focused: false,
       style: {},
       size: {},
       hiddenSize: {},
       innerSize: {}
     }
-  }
-
-  focus(){
-    findDOMNode(this).focus()
   }
 
   prepareClassName(props){
@@ -71,7 +66,6 @@ export default class TabTitle extends Component {
       props.first && m('first'),
       props.last && m('last'),
 
-      props.focused && m('focused'),
       props.vertical && m('vertical'),
       props.active && m('active'),
 
@@ -161,9 +155,7 @@ export default class TabTitle extends Component {
 
   render(){
 
-    const props = assign({}, this.props, {
-      focused: this.state.focused
-    })
+    const props = assign({}, this.props)
 
     const { index } = props
 
@@ -195,9 +187,6 @@ export default class TabTitle extends Component {
     }
 
     const renderProps = assign({}, props, {
-      onFocus: this.onFocus,
-      onBlur: this.onBlur,
-      onKeyDown: this.onKeyDown,
       style,
       tabIndex,
       disabled: null,
@@ -274,66 +263,15 @@ export default class TabTitle extends Component {
     })
   }
 
-  onKeyDown(event){
-
-    const key = event.key
-
-    if (typeof this.props.onKeyDown == 'function'){
-      this.props.onKeyDown(event)
-    }
-
-    let dir = 0
-
-    if (key == 'ArrowLeft' || key == 'ArrowUp'){
-      dir = -1
-    } else if (key == 'ArrowRight' || key == 'ArrowDown'){
-      dir = 1
-    }
-
-    if (dir){
-      return this.props.onNavigate(dir)
-    }
-
-    if (key === 'Home'){
-      return this.props.onNavigateFirst()
-    }
-
-    if (key == 'End'){
-      return this.props.onNavigateLast()
-    }
-
-  }
-
-  onFocus(event){
-    this.setState({
-      focused: true
-    })
-
-    this.props.onFocus(event, findDOMNode(this))
-  }
-
-  onBlur(event){
-    this.setState({
-      focused: false
-    })
-
-    this.props.onBlur(event)
-  }
-
-  componentDidUpdate(prevProps){
-    if (this.props.active && !prevProps.active && this.props.tabIndex != -1){
-      this.focus()
-    }
-  }
-
   onActivate(event){
     const eventName = this.props.activateEvent || 'onClick'
+    const domNode = findDOMNode(this)
 
     if (typeof this.props[eventName] === 'function'){
       this.props[eventName](event)
     }
 
-    !this.props.disabled && this.props.onActivate()
+    !this.props.disabled && this.props.onActivate(domNode)
   }
 }
 
@@ -349,10 +287,5 @@ TabTitle.propTypes = {
 }
 
 TabTitle.defaultProps = {
-  onBlur: () => {},
-  onFocus: () => {},
-  onActivate: () => {},
-  onNavigate: () => {},
-  onNavigateFirst: () => {},
-  onNavigateLast: () => {}
+  onActivate: () => {}
 }

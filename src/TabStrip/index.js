@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 import assign from 'object-assign'
 
@@ -21,7 +22,9 @@ export default class TabStrip extends Component {
   constructor(props){
     super(props)
 
+    this.tabNodes = []
     this.state = {
+      focused,
       activeIndex: props.defaultActiveIndex || 0
     }
   }
@@ -31,11 +34,13 @@ export default class TabStrip extends Component {
       props.className,
       CLASS_NAME,
 
+
       m(`theme-${props.theme}`),
       m(`tab-align-${props.tabAlign}`),
       m(`tab-position-${props.tabPosition}`),
 
       m(`orientation-${props.vertical? 'vertical': 'horizontal'}`),
+      props.focused && m('focused'),
       props.vertical && m('vertical'),
       props.firstActive && m('first-active'),
       props.lastActive && m('last-active')
@@ -59,6 +64,11 @@ export default class TabStrip extends Component {
     props.firstActive = activeIndex === 0
     props.lastActive = activeIndex === props.tabs.length - 1
     props.allTabsProps = []
+
+    props.onFocus = this.onFocus
+    props.onBlur = this.onBlur
+    props.onKeyDown = this.onKeyDown
+    props.focused = this.state.focused
 
     return props
   }
@@ -88,8 +98,7 @@ export default class TabStrip extends Component {
       row,
       column: !row,
       wrap: false,
-      className,
-      tabIndex: null
+      className
     })
 
     const childProps = {
@@ -123,6 +132,52 @@ export default class TabStrip extends Component {
   onResize(){
   }
 
+  onFocus(event){
+    this.setState({
+      focused: true
+    })
+
+    this.props.onFocus(event, findDOMNode(this))
+  }
+
+  onBlur(event){
+    this.setState({
+      focused: false
+    })
+
+    this.props.onBlur(event)
+  }
+
+  onKeyDown(event){
+
+    const key = event.key
+
+    if (typeof this.props.onKeyDown == 'function'){
+      this.props.onKeyDown(event)
+    }
+
+    let dir = 0
+
+    if (key == 'ArrowLeft' || key == 'ArrowUp'){
+      dir = -1
+    } else if (key == 'ArrowRight' || key == 'ArrowDown'){
+      dir = 1
+    }
+
+    if (dir){
+      return this.onNavigate(dir)
+    }
+
+    if (key === 'Home'){
+      return this.onNavigateFirst()
+    }
+
+    if (key == 'End'){
+      return this.onNavigateLast()
+    }
+
+  }
+
   renderTab(tab, index, array){
 
     const props = this.p
@@ -133,8 +188,7 @@ export default class TabStrip extends Component {
       tabStyle,
       tabEllipsis,
       vertical,
-      tabAlign,
-      tabIndex
+      tabAlign
     } = props
 
     if (typeof tab == 'string'){
@@ -151,6 +205,7 @@ export default class TabStrip extends Component {
     const active = index === activeIndex
 
     const tabProps = assign({}, tab, {
+      ref: (b) => this.tabNodes[index] = findDOMNode(this),
       index,
       activateEvent,
       activeIndex,
@@ -160,7 +215,6 @@ export default class TabStrip extends Component {
       beforeActive,
       afterActive,
       tabAlign,
-      tabIndex,
 
       tabTitle: tab.title,
       children: tab.title,
@@ -169,13 +223,8 @@ export default class TabStrip extends Component {
       tabStyle,
       tabEllipsis,
 
-      onFocus: this.onTabFocus.bind(this, index),
-
       key: index,
-      onActivate: this.onActivate.bind(this, index),
-      onNavigate: this.onNavigate.bind(this, index),
-      onNavigateFirst: this.onNavigateFirst,
-      onNavigateLast: this.onNavigateLast
+      onActivate: this.onActivate.bind(this, index)
     })
 
     delete tabProps.title
@@ -204,13 +253,8 @@ export default class TabStrip extends Component {
     ]
   }
 
-  onTabFocus(index, event, domNode){
-    event.preventDefault()
-
-    this.scroller && this.scroller.scrollIntoView(domNode)
-  }
-
-  onNavigate(index, dir){
+  onNavigate(dir){
+    const index = this.p.activeIndex
     this.onActivate(this.getAvailableIndexFrom(index, dir, this.props.rotateNavigation))
   }
 
@@ -232,9 +276,14 @@ export default class TabStrip extends Component {
         activeIndex
       })
     }
+
     if (activeIndex != this.p.activeIndex){
       this.props.onActivate(activeIndex)
     }
+
+    const domNode = this.tabNodes[activeIndex]
+
+    domNode && this.scroller && this.scroller.scrollIntoView(domNode)
   }
 
   getAvailableIndexFrom(index, dir, rotate){
@@ -330,5 +379,7 @@ TabStrip.defaultProps = {
   tabPosition: 'top',
   theme: 'default',
   onActivate: () => {},
+  onBlur: () => {},
+  onFocus: () => {},
   isTabStrip: true
 }
