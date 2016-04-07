@@ -63,6 +63,7 @@ export default class TabTitle extends Component {
   }
 
   prepareClassName(props){
+
     return join(
       props.className,
       CLASS_NAME,
@@ -185,10 +186,10 @@ export default class TabTitle extends Component {
     //HAIRY LOGIC - all needed for vertical tabs!
     if (props.vertical){
       if (props.tabAlign != 'stretch'){
-        style.width = innerSize.height
+        style.minWidth = innerSize.height
         style.height = innerSize.width
       } else {
-        style.width = innerSize.height
+        style.minWidth = innerSize.height
         style.height = hiddenSize.width
       }
     }
@@ -206,6 +207,7 @@ export default class TabTitle extends Component {
 
     const innerProps = {
       key: 'inner',
+      style: innerStyle,
       className: innerClassName,
       children: [
         children,

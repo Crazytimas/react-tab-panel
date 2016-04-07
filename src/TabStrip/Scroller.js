@@ -30,6 +30,16 @@ const ARROWS = {
   left: <svg className={join(bem('arrow'), bem('arrow', 'left'))} height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
     <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
     <path d="M0-.5h24v24H0z" fill="none"/>
+  </svg>,
+
+  down: <svg className={join(bem('arrow'), bem('arrow', 'down'))} height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/>
+    <path d="M0-.75h24v24H0z" fill="none"/>
+  </svg>,
+
+  up: <svg className={join(bem('arrow'), bem('arrow', 'up'))} height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
   </svg>
 }
 
@@ -48,12 +58,12 @@ export default class Scroller extends Component {
       scrollPos: 0,
       adjustScroll: true,
 
-      hasLeftScroll: false,
-      hasRightScroll: false,
+      hasStartScroll: false,
+      hasEndScroll: false,
 
       scrollerSize: {
-        left: 0,
-        right: 0
+        start: 0,
+        end: 0
       }
     }
 
@@ -65,18 +75,28 @@ export default class Scroller extends Component {
     this.onResize = debounce(this.onResize, 50, { leading: false, trailing: true })
   }
 
+  getSizeName(){
+    const tabPosition = this.props.tabPosition
+
+    return tabPosition == 'top' || tabPosition == 'bottom'?
+      'offsetWidth':
+      'offsetHeight'
+  }
+
   componentDidMount(){
+    const name = this.getSizeName()
+
     this.scrollInfo.scrollerSize = {
-      left: findDOMNode(this.refs.left).offsetWidth,
-      right: findDOMNode(this.refs.right).offsetWidth
+      start: findDOMNode(this.refs.start)[name],
+      end: findDOMNode(this.refs.end)[name]
     }
 
-    this.syncScroll({ force: true})
+    this.syncScroll({ force: true })
   }
 
   onResize(){
-    delete this.currentListWidth
-    delete this.availableWidth
+    delete this.currentListSize
+    delete this.availableSize
 
     this.syncScroll({ force: true })
   }
@@ -103,7 +123,7 @@ export default class Scroller extends Component {
   }
 
   onClick(direction){
-    const offset = this.getAvailableWidth()
+    const offset = this.getAvailableSize()
 
     this.scrollBy(offset, direction)
   }
@@ -125,8 +145,8 @@ export default class Scroller extends Component {
 
     assign(scrollInfo, {
 
-      hasLeftScroll: scrollPos !== 0,
-      hasRightScroll: scrollPos < scrollInfo.maxScrollPos,
+      hasStartScroll: scrollPos !== 0,
+      hasEndScroll: scrollPos < scrollInfo.maxScrollPos,
 
       scrollPos
     });
@@ -136,22 +156,22 @@ export default class Scroller extends Component {
 
   updateScrollInfo(){
 
-    const availableWidth = this.getAvailableWidth();
-    const listWidth = this.getCurrentListWidth();
+    const availableSize = this.getAvailableSize();
+    const listSize = this.getCurrentListSize();
 
     const scrollInfo = assign(this.scrollInfo, {
-      availableWidth,
-      listWidth
+      availableSize,
+      listSize
     })
 
-    if (listWidth > availableWidth){
-      scrollInfo.maxScrollPos = listWidth - availableWidth + (this.props.scroller === 'auto'? scrollInfo.scrollerSize.right: 0);
+    if (listSize > availableSize){
+      scrollInfo.maxScrollPos = listSize - availableSize + (this.props.scroller === 'auto'? scrollInfo.scrollerSize.end: 0);
     } else {
       scrollInfo.maxScrollPos = 0;
     }
 
-    scrollInfo.hasLeftScroll = scrollInfo.scrollPos != 0
-    scrollInfo.hasRightScroll = scrollInfo.scrollPos < scrollInfo.maxScrollPos
+    scrollInfo.hasStartScroll = scrollInfo.scrollPos != 0
+    scrollInfo.hasEndScroll = scrollInfo.scrollPos < scrollInfo.maxScrollPos
   }
 
   handleScrollMax(direction, event){
@@ -164,7 +184,6 @@ export default class Scroller extends Component {
 
   startScroll(direction, event){
 
-    console.log('start scroll ', direction)
     stop(event);
 
     const eventName = hasTouch? 'touchend': 'mouseup';
@@ -199,11 +218,19 @@ export default class Scroller extends Component {
 
   renderScroller(direction){
 
-    const scroller = this.props.scroller
+    const { scroller, vertical, tabPosition } = this.props
 
     if (!scroller){
       return null
     }
+
+    const directionName = vertical?
+      (direction == -1? 'up': 'down'):
+      (direction == -1? 'left': 'right')
+
+    const arrowName = (tabPosition == 'top' || tabPosition == 'bottom')?
+      (direction == -1? 'left': 'right'):
+      (direction == -1? 'up': 'down')
 
     const behavior = typeof scroller === 'boolean'?
                       scroller? 'on': 'off'
@@ -212,25 +239,23 @@ export default class Scroller extends Component {
 
     const scrollInfo = this.scrollInfo
     const disabled = direction == -1?
-      !scrollInfo.hasLeftScroll:
-      !scrollInfo.hasRightScroll;
-
+      !scrollInfo.hasStartScroll:
+      !scrollInfo.hasEndScroll;
 
     const className = join(
       CLASS_NAME,
 
-      `${CLASS_NAME}--${behavior}`,
+      m(behavior),
 
-      direction == -1 ?
-        `${CLASS_NAME}--left`:
-        `${CLASS_NAME}--right`,
+      m(`direction-${arrowName}`),
+      m(`tab-position-${tabPosition}`),
 
       this.state.activeScroll == direction?
-        `${CLASS_NAME}--active`:
+        m('active'):
         '',
 
-      scroller === 'auto' && disabled && `${CLASS_NAME}--hidden`,
-      scroller === true && disabled && `${CLASS_NAME}--disabled`
+      scroller === 'auto' && disabled && m('hidden'),
+      scroller === true && disabled && m('disabled')
     );
 
     const onClick = !disabled && this.props.scrollAllVisible?
@@ -245,17 +270,15 @@ export default class Scroller extends Component {
                             this.handleScrollMax.bind(this, direction):
                             emptyFn;
 
-    const directionName = direction == -1? 'left': 'right'
-
     const scrollerProps = {
-      ref: directionName,
+      ref: direction == -1? 'start': 'end',
       disabled,
       className,
       onClick,
       onMouseDown: !hasTouch && onMouseDown,
       onTouchStart: hasTouch && onMouseDown,
       onDoubleClick: onDoubleClick,
-      children: ARROWS[directionName]
+      children: ARROWS[arrowName]
     };
 
     let result
@@ -278,8 +301,8 @@ export default class Scroller extends Component {
    *
    * @return {Number}
    */
-  getCurrentListWidth(){
-    return this.currentListWidth = this.currentListWidth || findDOMNode(this.strip).offsetWidth;
+  getCurrentListSize(){
+    return this.currentListSize = this.currentListSize || findDOMNode(this.strip)[this.getSizeName()];
   }
 
   /**
@@ -289,17 +312,18 @@ export default class Scroller extends Component {
    *
    * @return {Number}
    */
-  getAvailableWidth(){
-    return this.availableWidth = this.availableWidth || findDOMNode(this.wrapper || this).offsetWidth;
+  getAvailableSize(){
+    return this.availableSize = this.availableSize || findDOMNode(this.wrapper || this)[this.getSizeName()];
   }
 
   render(){
     const props = this.props
-    const { scroller } = props
+    const { scroller, tabPosition } = props
     const scrollInfo = this.scrollInfo
 
+    const scrollStyleName = (tabPosition == 'top' || tabPosition == 'bottom')? 'left': 'top'
     const style = {
-      left: spring(-scrollInfo.scrollPos, springConfig)
+      [scrollStyleName]: spring(-scrollInfo.scrollPos, springConfig)
     }
 
     const resizer = <NotifyResize key="resizer" onResize={this.onResize} />
@@ -314,8 +338,8 @@ export default class Scroller extends Component {
       {this.renderScroller(-1)}
 
       <Motion style={style}>
-        {({left}) => {
-          const contents = <Flex {...props.childProps} ref={(c) => this.strip = c} children={children} style={{left}}/>
+        {({[scrollStyleName]: scrollValue}) => {
+          const contents = <Flex {...props.childProps} ref={(c) => this.strip = c} children={children} style={{[scrollStyleName]: scrollValue}}/>
 
           if (scroller === true){
             //always show

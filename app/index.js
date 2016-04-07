@@ -94,15 +94,15 @@ export default class App extends Component {
       <br />
 
       <TabPanel
-        scroller={true}
         scrollAllVisible={false}
-        style={{width: 'auto', minWidth: 300, maxWidth: 400, margin: 20}}
+        style={{width: 'auto', xmaxHeight: 200, minWidth: 300, maxWidth: 400, margin: 20}}
         activeIndex={this.state.index}
         onActivate={this.onActivate}
-        tabPosition="top"
+        tabPosition="left"
         tabIndex
         tabEllipsis
-        tabStyle={{}}
+        vertical
+        tabStyle={{ padding: 30 }}
         xstyle={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
       >
         <Demo tabTitle="demo"/>

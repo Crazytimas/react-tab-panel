@@ -85,7 +85,8 @@ export default class TabStrip extends Component {
 
     const renderProps = assign({}, props, {
       alignItems: 'stretch',
-      row: true,
+      row,
+      column: !row,
       wrap: false,
       className,
       tabIndex: null

@@ -62,19 +62,37 @@
 
   &--auto {
     position: absolute;
-    height: 100%;
-    top: 0px;
-    bottom: 0px;
     z-index: 100;
   }
 
-  &--left {
+  &.react-tab-panel__tab-strip-scroll-tool--direction-left,
+  &.react-tab-panel__tab-strip-scroll-tool--direction-right {
+    top: 0px;
+    bottom: 0px;
+  }
+
+  &.react-tab-panel__tab-strip-scroll-tool--direction-up,
+  &.react-tab-panel__tab-strip-scroll-tool--direction-down {
+    left: 0px;
+    right: 0px;
+  }
+
+  &--direction-left {
     left: 0px;
     z-index: 200;
   }
 
-  &--right {
+  &--direction-right {
     right: 0px;
+  }
+
+  &--direction-up {
+    top: 0px;
+    z-index: 200;
+  }
+
+  &--direction-down {
+    bottom: 0px;
   }
 
   &--disabled {

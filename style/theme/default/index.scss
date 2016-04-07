@@ -54,11 +54,28 @@ $HOVER_BORDER_COLOR: #eee !default;
   }
 
   .react-tab-panel__tab-strip-scroll-tool {
-    background: $BG_FOCUSED;
-    border: $BORDER_WIDTH solid $BORDER_COLOR;
+    // background: $BG_FOCUSED;
+    background: white;
+    // border: $BORDER_WIDTH solid $BORDER_COLOR;
     fill: $BORDER_COLOR;
     padding: 0px;
     cursor: pointer;
+
+    &--tab-position-top {
+      bottom: $BORDER_WIDTH;
+    }
+
+    &--tab-position-bottom {
+      top: $BORDER_WIDTH;
+    }
+
+    &--tab-position-left {
+      right: $BORDER_WIDTH;
+    }
+
+    &--tab-position-right {
+      left: $BORDER_WIDTH;
+    }
 
     &--disabled {
       cursor: inherit;
@@ -69,6 +86,7 @@ $HOVER_BORDER_COLOR: #eee !default;
       display: inline-flex;
       flex-flow: row;
       align-items: center;
+      justify-content: center;
     }
 
     &:hover:not(.react-tab-panel__tab-strip-scroll-tool--disabled) {
@@ -440,7 +458,8 @@ $HOVER_BORDER_COLOR: #eee !default;
       }
 
       .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
-        background: none;
+        // background: none;
+        background: $BG_FOCUSED padding-box;
 
         &:before {
           border-top: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
@@ -452,7 +471,6 @@ $HOVER_BORDER_COLOR: #eee !default;
 
         .react-tab-panel__tab-title-inner {
           border-top: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
-          background: $BG_FOCUSED;
         }
       }
 
@@ -491,9 +509,9 @@ $HOVER_BORDER_COLOR: #eee !default;
         border-top: $BORDER_WIDTH solid transparent;
       }
 
-
       .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
-        background: none;
+        // background: none;
+        background: $BG_FOCUSED padding-box;
 
         &:before {
           border-top: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
@@ -505,7 +523,6 @@ $HOVER_BORDER_COLOR: #eee !default;
 
         .react-tab-panel__tab-title-inner {
           border-top: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
-          background: $BG_FOCUSED;
         }
       }
 
