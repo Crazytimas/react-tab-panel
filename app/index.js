@@ -94,7 +94,7 @@ export default class App extends Component {
       <br />
 
       <TabPanel
-        style={{width: 300, margin: 20}}
+        style={{width: 200, margin: 20}}
         activeIndex={this.state.index}
         onActivate={this.onActivate}
         tabPosition="top"
@@ -113,11 +113,11 @@ export default class App extends Component {
           secondLorem ipsum Qui ad aute labore elit eiusmod dolor dolor eiusmod commodo magna dolore quis ut ex dolor laborum pariatur dolore ullamco magna ex dolor anim consectetur magna cupidatat aliquip ea cupidatat elit eu labore in esse et.
         </div>
 
-        <div tabTitle="third tab title">
+        <div tabTitle="third tab title long title">
           thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
         </div>
 
-        <div tabTitle="Fourth ">
+        <div tabTitle="Fourth title">
           thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
         </div>
       </TabPanel>

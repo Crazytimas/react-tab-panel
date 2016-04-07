@@ -718,8 +718,7 @@
   position: relative; }
 
 .react-tab-panel__tab-strip-scroll-tool {
-  background: blue;
-  padding: 0px 10px; }
+  padding: 0px 6px; }
   .react-tab-panel__tab-strip-scroll-tool--auto {
     position: absolute;
     height: 100%;

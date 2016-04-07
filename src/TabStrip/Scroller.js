@@ -10,12 +10,28 @@ import { Flex, Item } from 'react-flex'
 import { Motion, spring } from 'react-motion';
 
 import join from '../join'
+import bemFactory from '../bemFactory'
 
 const springConfig = [400, 50];
 
 const CLASS_NAME = 'react-tab-panel__tab-strip-scroll-tool'
 
+const bem = bemFactory(CLASS_NAME)
+const m = (name) => bem(null, name)
+
 const styles = {}
+
+const ARROWS = {
+  right: <svg className={join(bem('arrow'), bem('arrow', 'right'))} height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
+    <path d="M0-.25h24v24H0z" fill="none"/>
+  </svg>,
+
+  left: <svg className={join(bem('arrow'), bem('arrow', 'left'))} height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
+    <path d="M0-.5h24v24H0z" fill="none"/>
+  </svg>
+}
 
 const emptyFn = () => {};
 const stop = (e) => {
@@ -229,14 +245,17 @@ export default class Scroller extends Component {
                             this.handleScrollMax.bind(this, direction):
                             emptyFn;
 
+    const directionName = direction == -1? 'left': 'right'
+
     const scrollerProps = {
-      ref: direction == -1? 'left': 'right',
+      ref: directionName,
       disabled,
       className,
       onClick,
       onMouseDown: !hasTouch && onMouseDown,
       onTouchStart: hasTouch && onMouseDown,
-      onDoubleClick: onDoubleClick
+      onDoubleClick: onDoubleClick,
+      children: ARROWS[directionName]
     };
 
     let result

@@ -22,9 +22,18 @@ $HOVER_BORDER_COLOR: #eee !default;
   .react-tab-panel__tab-strip-scroll-tool {
     background: $BG_FOCUSED;
     border: 1px solid $BORDER_COLOR;
+    fill: $BORDER_COLOR;
+    padding: 0px;
     cursor: pointer;
 
+    &:not(.react-tab-panel__tab-strip-scroll-tool--hidden) {
+      display: inline-flex;
+      flex-flow: row;
+      align-items: center;
+    }
+
     &:hover {
+      fill: $ACTIVE_BORDER_COLOR;
       background: $HOVER_BORDER_COLOR;
     }
   }

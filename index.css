@@ -718,8 +718,7 @@
   position: relative; }
 
 .react-tab-panel__tab-strip-scroll-tool {
-  background: blue;
-  padding: 0px 10px; }
+  padding: 0px 6px; }
   .react-tab-panel__tab-strip-scroll-tool--auto {
     position: absolute;
     height: 100%;
@@ -858,6 +857,13 @@
 
 .react-tab-panel--theme-default .react-tab-panel__body {
   padding: 5px 10px; }
+
+.react-tab-panel--theme-default .react-tab-panel__tab-strip-scroll-tool {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  cursor: pointer; }
+  .react-tab-panel--theme-default .react-tab-panel__tab-strip-scroll-tool:hover {
+    background: #eee; }
 
 .react-tab-panel--theme-default .react-tab-panel__body--tab-position-top {
   border-right: 1px solid #ddd;
