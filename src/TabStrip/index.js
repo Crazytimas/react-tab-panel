@@ -321,7 +321,7 @@ TabStrip.propTypes = {
 
 TabStrip.defaultProps = {
   scroller: 'auto',
-  scrollAllVisible: true,
+  scrollAllVisible: false,
   rotateNavigation: true,
   tabIndex: true,
   tabAlign: 'start',
