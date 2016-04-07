@@ -94,7 +94,8 @@ export default class App extends Component {
       <br />
 
       <TabPanel
-        style={{width: 200, margin: 20}}
+        scroller={true}
+        style={{width: 'auto', minWidth: 300, maxWidth: 400, margin: 20}}
         activeIndex={this.state.index}
         onActivate={this.onActivate}
         tabPosition="top"
@@ -106,7 +107,7 @@ export default class App extends Component {
         <Demo tabTitle="demo"/>
 
         <div tabProps={{ title: firstTabTitle }}>
-          first tabLorem ipsum In velit veniam elit officia sunt.
+          first tabLorem
         </div>
 
         <div tabTitle={<div>{this.state.secondTabTitle}<br />tst</div>} >
@@ -117,7 +118,7 @@ export default class App extends Component {
           thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
         </div>
 
-        <div tabTitle="Fourth title">
+        <div tabTitle="Fourth title is so so so long">
           thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
         </div>
       </TabPanel>

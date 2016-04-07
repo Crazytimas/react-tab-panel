@@ -19,25 +19,6 @@ $HOVER_BORDER_COLOR: #eee !default;
     padding: 5px 10px;
   }
 
-  .react-tab-panel__tab-strip-scroll-tool {
-    background: $BG_FOCUSED;
-    border: 1px solid $BORDER_COLOR;
-    fill: $BORDER_COLOR;
-    padding: 0px;
-    cursor: pointer;
-
-    &:not(.react-tab-panel__tab-strip-scroll-tool--hidden) {
-      display: inline-flex;
-      flex-flow: row;
-      align-items: center;
-    }
-
-    &:hover {
-      fill: $ACTIVE_BORDER_COLOR;
-      background: $HOVER_BORDER_COLOR;
-    }
-  }
-
   .react-tab-panel__body--tab-position-top {
     border-right: $BORDER_WIDTH solid $BORDER_COLOR;
     border-left: $BORDER_WIDTH solid $BORDER_COLOR;
@@ -69,6 +50,36 @@ $HOVER_BORDER_COLOR: #eee !default;
     .react-tab-panel__tab-strip-before,
     .react-tab-panel__tab-strip-after {
       flex: none;
+    }
+  }
+
+  .react-tab-panel__tab-strip-scroll-tool {
+    background: $BG_FOCUSED;
+    border: $BORDER_WIDTH solid $BORDER_COLOR;
+    fill: $BORDER_COLOR;
+    padding: 0px;
+    cursor: pointer;
+
+    &--disabled {
+      cursor: inherit;
+      opacity: inherit;
+    }
+
+    &:not(.react-tab-panel__tab-strip-scroll-tool--hidden) {
+      display: inline-flex;
+      flex-flow: row;
+      align-items: center;
+    }
+
+    &:hover:not(.react-tab-panel__tab-strip-scroll-tool--disabled) {
+      fill: $ACTIVE_BORDER_COLOR;
+      background: $HOVER_BORDER_COLOR;
+    }
+  }
+
+  &.react-tab-panel__tab-strip--tab-position-top {
+    .react-tab-panel__tab-strip-scroll-tool--disabled svg {
+      opacity: 0.5;
     }
   }
 
