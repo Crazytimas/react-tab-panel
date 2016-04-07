@@ -95,6 +95,7 @@ export default class App extends Component {
 
       <TabPanel
         scroller={true}
+        scrollAllVisible={false}
         style={{width: 'auto', minWidth: 300, maxWidth: 400, margin: 20}}
         activeIndex={this.state.index}
         onActivate={this.onActivate}
@@ -118,7 +119,7 @@ export default class App extends Component {
           thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
         </div>
 
-        <div tabTitle="Fourth title is so so so long">
+        <div tabTitle="Fourth title is so so so long that it doesnt even fit">
           thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
         </div>
       </TabPanel>
