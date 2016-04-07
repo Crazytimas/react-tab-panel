@@ -95,7 +95,7 @@ export default class App extends Component {
 
       <TabPanel
 
-        style={{width: 'auto', xmaxHeight: 200, minWidth: 300, maxWidth: 400, margin: 20}}
+        style={{width: 'auto', xmaxHeight: 200, minWidth: 300, maxWidth: 550, margin: 20}}
         activeIndex={this.state.index}
         onActivate={this.onActivate}
         xtabPosition="left"

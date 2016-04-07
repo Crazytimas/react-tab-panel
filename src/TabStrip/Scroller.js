@@ -75,7 +75,7 @@ export default class Scroller extends Component {
     this.onResize = debounce(this.onResize, 50, { leading: false, trailing: true })
   }
 
-  getSizeName(){
+  getOffsetSizeName(){
     const tabPosition = this.props.tabPosition
 
     return tabPosition == 'top' || tabPosition == 'bottom'?
@@ -83,8 +83,16 @@ export default class Scroller extends Component {
       'offsetHeight'
   }
 
+  getSizeName(){
+    const tabPosition = this.props.tabPosition
+
+    return tabPosition == 'top' || tabPosition == 'bottom'?
+      'width':
+      'height'
+  }
+
   componentDidMount(){
-    const name = this.getSizeName()
+    const name = this.getOffsetSizeName()
 
     this.scrollInfo.scrollerSize = {
       start: findDOMNode(this.refs.start)[name],
@@ -106,6 +114,32 @@ export default class Scroller extends Component {
   syncScroll({ force } = {}){
     this.updateScrollInfo()
     this.doScroll(0, null, { force })
+  }
+
+  scrollIntoView(domNode){
+    if (domNode){
+      const rect = domNode.getBoundingClientRect()
+      const mainRect = findDOMNode(this.wrapper || this).getBoundingClientRect()
+
+      const { tabPosition } = this.props
+      const startSideName = tabPosition == 'top' || tabPosition == 'bottom'?
+        'left':
+        'top'
+      const endSideName = tabPosition == 'top' || tabPosition == 'bottom'?
+        'right':
+        'bottom'
+
+      const startDiff = rect[startSideName] - mainRect[startSideName]
+      const endDiff = rect[endSideName] - mainRect[endSideName]
+
+      const scrollIntoViewOffset = this.props.scrollIntoViewOffset
+
+      if (startDiff < 0){
+        this.doScroll(-startDiff + scrollIntoViewOffset, -1)
+      } else if (endDiff > 0){
+        this.doScroll(endDiff + scrollIntoViewOffset, 1)
+      }
+    }
   }
 
   doScroll(direction, step, { force } = {}){
@@ -304,7 +338,7 @@ export default class Scroller extends Component {
    * @return {Number}
    */
   getCurrentListSize(){
-    return this.currentListSize = this.currentListSize || findDOMNode(this.strip)[this.getSizeName()];
+    return this.currentListSize = this.currentListSize || findDOMNode(this.strip)[this.getOffsetSizeName()];
   }
 
   /**
@@ -315,7 +349,7 @@ export default class Scroller extends Component {
    * @return {Number}
    */
   getAvailableSize(){
-    return this.availableSize = this.availableSize || findDOMNode(this.wrapper || this)[this.getSizeName()];
+    return this.availableSize = this.availableSize || findDOMNode(this.wrapper || this)[this.getOffsetSizeName()];
   }
 
   render(){
@@ -334,7 +368,7 @@ export default class Scroller extends Component {
       resizer
     ]
 
-    return <Flex {...props}>
+    return <Flex ref={null} {...props}>
       {resizer}
 
       {this.renderScroller(-1)}
@@ -376,6 +410,7 @@ Scroller.defaultProps = {
   onScrollEnd: () => {},
   scrollStep: 5,
   scrollSpeed: 5,
+  scrollIntoViewOffset: 50,
   onScrollerClick: () => {},
   onScrollEnd: () => {}
 }

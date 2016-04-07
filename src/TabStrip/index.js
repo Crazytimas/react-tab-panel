@@ -114,13 +114,13 @@ export default class TabStrip extends Component {
     }
 
     return <Scroller
+      ref={(c) => this.scroller = this.scroller || c}
       {...renderProps}
       childProps={childProps}
     />
   }
 
   onResize(){
-    console.log('RESIZE')
   }
 
   renderTab(tab, index, array){
@@ -204,8 +204,10 @@ export default class TabStrip extends Component {
     ]
   }
 
-  onTabFocus(index, event){
+  onTabFocus(index, event, domNode){
     event.preventDefault()
+
+    this.scroller && this.scroller.scrollIntoView(domNode)
   }
 
   onNavigate(index, dir){

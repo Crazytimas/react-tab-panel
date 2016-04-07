@@ -309,7 +309,7 @@ export default class TabTitle extends Component {
       focused: true
     })
 
-    this.props.onFocus(event)
+    this.props.onFocus(event, findDOMNode(this))
   }
 
   onBlur(event){

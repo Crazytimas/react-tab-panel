@@ -898,14 +898,22 @@
   fill: #ddd;
   padding: 0px;
   cursor: pointer; }
-  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--tab-position-top {
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--auto.react-tab-panel__tab-strip-scroll-tool--tab-position-top {
     bottom: 1px; }
-  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--tab-position-bottom {
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--auto.react-tab-panel__tab-strip-scroll-tool--tab-position-bottom {
     top: 1px; }
-  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--tab-position-left {
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--auto.react-tab-panel__tab-strip-scroll-tool--tab-position-left {
     right: 1px; }
-  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--tab-position-right {
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--auto.react-tab-panel__tab-strip-scroll-tool--tab-position-right {
     left: 1px; }
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--on.react-tab-panel__tab-strip-scroll-tool--tab-position-top {
+    border-bottom: 1px solid #ddd; }
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--on.react-tab-panel__tab-strip-scroll-tool--tab-position-bottom {
+    border-top: 1px solid #ddd; }
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--on.react-tab-panel__tab-strip-scroll-tool--tab-position-left {
+    border-right: 1px solid #ddd; }
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--on.react-tab-panel__tab-strip-scroll-tool--tab-position-right {
+    border-left: 1px solid #ddd; }
   .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--disabled {
     cursor: inherit;
     opacity: inherit; }
