@@ -99,8 +99,6 @@ export default class Scroller extends Component {
       end: findDOMNode(this.refs.end)[name]
     }
 
-    console.log(this.scrollInfo.scrollerSize)
-
     this.syncScroll({ force: true })
   }
 
