@@ -54,27 +54,45 @@ $HOVER_BORDER_COLOR: #eee !default;
   }
 
   .react-tab-panel__tab-strip-scroll-tool {
-    // background: $BG_FOCUSED;
     background: white;
-    // border: $BORDER_WIDTH solid $BORDER_COLOR;
     fill: $BORDER_COLOR;
     padding: 0px;
     cursor: pointer;
 
-    &--tab-position-top {
-      bottom: $BORDER_WIDTH;
+    &--auto {
+      &.react-tab-panel__tab-strip-scroll-tool--tab-position-top {
+        bottom: $BORDER_WIDTH;
+      }
+
+      &.react-tab-panel__tab-strip-scroll-tool--tab-position-bottom {
+        top: $BORDER_WIDTH;
+      }
+
+      &.react-tab-panel__tab-strip-scroll-tool--tab-position-left {
+        right: $BORDER_WIDTH;
+      }
+
+      &.react-tab-panel__tab-strip-scroll-tool--tab-position-right {
+        left: $BORDER_WIDTH;
+      }
     }
 
-    &--tab-position-bottom {
-      top: $BORDER_WIDTH;
-    }
+    &--on {
+      &.react-tab-panel__tab-strip-scroll-tool--tab-position-top {
+        border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
+      }
 
-    &--tab-position-left {
-      right: $BORDER_WIDTH;
-    }
+      &.react-tab-panel__tab-strip-scroll-tool--tab-position-bottom {
+        border-top: $BORDER_WIDTH solid $BORDER_COLOR;
+      }
 
-    &--tab-position-right {
-      left: $BORDER_WIDTH;
+      &.react-tab-panel__tab-strip-scroll-tool--tab-position-left {
+        border-right: $BORDER_WIDTH solid $BORDER_COLOR;
+      }
+
+      &.react-tab-panel__tab-strip-scroll-tool--tab-position-right {
+        border-left: $BORDER_WIDTH solid $BORDER_COLOR;
+      }
     }
 
     &--disabled {

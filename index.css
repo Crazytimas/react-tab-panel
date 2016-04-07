@@ -721,15 +721,23 @@
   padding: 0px 6px; }
   .react-tab-panel__tab-strip-scroll-tool--auto {
     position: absolute;
-    height: 100%;
-    top: 0px;
-    bottom: 0px;
     z-index: 100; }
-  .react-tab-panel__tab-strip-scroll-tool--left {
+  .react-tab-panel__tab-strip-scroll-tool.react-tab-panel__tab-strip-scroll-tool--direction-left, .react-tab-panel__tab-strip-scroll-tool.react-tab-panel__tab-strip-scroll-tool--direction-right {
+    top: 0px;
+    bottom: 0px; }
+  .react-tab-panel__tab-strip-scroll-tool.react-tab-panel__tab-strip-scroll-tool--direction-up, .react-tab-panel__tab-strip-scroll-tool.react-tab-panel__tab-strip-scroll-tool--direction-down {
+    left: 0px;
+    right: 0px; }
+  .react-tab-panel__tab-strip-scroll-tool--direction-left {
     left: 0px;
     z-index: 200; }
-  .react-tab-panel__tab-strip-scroll-tool--right {
+  .react-tab-panel__tab-strip-scroll-tool--direction-right {
     right: 0px; }
+  .react-tab-panel__tab-strip-scroll-tool--direction-up {
+    top: 0px;
+    z-index: 200; }
+  .react-tab-panel__tab-strip-scroll-tool--direction-down {
+    bottom: 0px; }
   .react-tab-panel__tab-strip-scroll-tool--disabled {
     opacity: 0.5; }
   .react-tab-panel__tab-strip-scroll-tool--hidden {
@@ -886,11 +894,18 @@
           flex: none; }
 
 .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool {
-  background: #f9f9f9;
-  border: 1px solid #ddd;
+  background: white;
   fill: #ddd;
   padding: 0px;
   cursor: pointer; }
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--tab-position-top {
+    bottom: 1px; }
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--tab-position-bottom {
+    top: 1px; }
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--tab-position-left {
+    right: 1px; }
+  .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--tab-position-right {
+    left: 1px; }
   .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool--disabled {
     cursor: inherit;
     opacity: inherit; }
@@ -905,7 +920,11 @@
     -webkit-box-align: center;
     -webkit-align-items: center;
         -ms-flex-align: center;
-            align-items: center; }
+            align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
   .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-strip-scroll-tool:hover:not(.react-tab-panel__tab-strip-scroll-tool--disabled) {
     fill: #4d7496;
     background: #eee; }
@@ -1123,14 +1142,13 @@
   border-top: 1px solid transparent; }
 
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
-  background: none; }
+  background: #f9f9f9 padding-box; }
   .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):before {
     border-top: 1px solid #eee; }
   .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):after {
     border-bottom: 1px solid #eee; }
   .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner {
-    border-top: 1px solid #eee;
-    background: #f9f9f9; }
+    border-top: 1px solid #eee; }
 
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-inner--active {
   border-bottom: 1px solid transparent; }
@@ -1156,14 +1174,13 @@
   border-top: 1px solid transparent; }
 
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
-  background: none; }
+  background: #f9f9f9 padding-box; }
   .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):before {
     border-top: 1px solid #eee; }
   .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):after {
     border-bottom: 1px solid #eee; }
   .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner {
-    border-top: 1px solid #eee;
-    background: #f9f9f9; }
+    border-top: 1px solid #eee; }
 
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-inner--active {
   border-bottom: 1px solid transparent; }

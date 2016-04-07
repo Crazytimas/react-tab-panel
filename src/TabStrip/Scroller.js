@@ -91,6 +91,8 @@ export default class Scroller extends Component {
       end: findDOMNode(this.refs.end)[name]
     }
 
+    console.log(this.scrollInfo.scrollerSize)
+
     this.syncScroll({ force: true })
   }
 
@@ -156,8 +158,8 @@ export default class Scroller extends Component {
 
   updateScrollInfo(){
 
-    const availableSize = this.getAvailableSize();
-    const listSize = this.getCurrentListSize();
+    const availableSize = this.getAvailableSize()
+    const listSize = this.getCurrentListSize()
 
     const scrollInfo = assign(this.scrollInfo, {
       availableSize,
@@ -165,9 +167,9 @@ export default class Scroller extends Component {
     })
 
     if (listSize > availableSize){
-      scrollInfo.maxScrollPos = listSize - availableSize + (this.props.scroller === 'auto'? scrollInfo.scrollerSize.end: 0);
+      scrollInfo.maxScrollPos = listSize - availableSize
     } else {
-      scrollInfo.maxScrollPos = 0;
+      scrollInfo.maxScrollPos = 0
     }
 
     scrollInfo.hasStartScroll = scrollInfo.scrollPos != 0
