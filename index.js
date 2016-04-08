@@ -1,6 +1,4 @@
-import React from 'react'
-import { render } from 'react-dom'
+import TabPanel from './src'
+export { TabBody, TabStrip } from './src'
 
-import App from './app'
-
-render(<App />, document.getElementById('content'))
+export default TabPanel

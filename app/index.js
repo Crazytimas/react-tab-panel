@@ -3,6 +3,7 @@ import Component from 'react-class'
 
 import { Flex } from 'react-flex'
 import TabPanel from '../src'
+
 import '../style/base.scss'
 import '../style/theme/default/index.scss'
 import '../style/theme/red/index.scss'
@@ -104,11 +105,11 @@ export default class App extends Component {
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
       <br />
 
-      <TabPanel defaultActiveIndex={1}>
+      <TabPanel defaultActiveIndex={1} transition theme="default">
         <TabPanel
           tabTitle="test"
           style={{xheight: 200, maxWidth: 600, xmaxWidth: 350, margin: 20}}
-          activeIndex={this.state.index}
+          xactiveIndex={this.state.index}
           onActivate={this.onActivate}
           xtabPosition="left"
           tabIndex

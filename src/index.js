@@ -119,6 +119,10 @@ export default class TabPanel extends Component {
 
     if (newActiveIndex != activeIndex && nextProps.transition){
 
+      if (!this.wrapper){
+        return
+      }
+
       const childHeight = () => {
         return this.wrapper.firstChild && this.wrapper.firstChild.offsetHeight
       }
@@ -143,6 +147,9 @@ export default class TabPanel extends Component {
         },
         oldActiveIndex: activeIndex
       }, () => {
+        if (!this.wrapper){
+          this.onBodyTransitionEnd()
+        }
         const otherChild = dir == 1? this.wrapper.lastChild: this.wrapper.firstChild
 
         const wrapperHeight = wrapperStyle.height

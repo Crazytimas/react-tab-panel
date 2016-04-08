@@ -707,21 +707,21 @@
   position: relative; }
   .react-tab-panel__body .react-tab-panel__transition-wrapper {
     position: relative;
-    -webkit-transition: height 1s;
-    transition: height 1s; }
+    -webkit-transition: height 0.3s;
+    transition: height 0.3s; }
   .react-tab-panel__body--transitioning,
   .react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper {
     overflow: hidden; }
   .react-tab-panel__body--transition-next .react-tab-panel__transition-wrapper > :first-child {
     -webkit-transform: translate3d(0px, 0px, 0px);
             transform: translate3d(0px, 0px, 0px);
-    -webkit-transition: -webkit-transform 1s;
-    transition: -webkit-transform 1s;
-    transition: transform 1s;
-    transition: transform 1s, -webkit-transform 1s; }
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    transition: transform 0.3s, -webkit-transform 0.3s; }
   .react-tab-panel__body--transition-next .react-tab-panel__transition-wrapper > :last-child {
-    -webkit-transition: left 1s;
-    transition: left 1s;
+    -webkit-transition: left 0.3s;
+    transition: left 0.3s;
     position: absolute;
     left: 100%;
     width: 100%;
@@ -736,13 +736,13 @@
   .react-tab-panel__body--transition-prev .react-tab-panel__transition-wrapper > :last-child {
     -webkit-transform: translate3d(0px, 0px, 0px);
             transform: translate3d(0px, 0px, 0px);
-    -webkit-transition: -webkit-transform 1s;
-    transition: -webkit-transform 1s;
-    transition: transform 1s;
-    transition: transform 1s, -webkit-transform 1s; }
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    transition: transform 0.3s, -webkit-transform 0.3s; }
   .react-tab-panel__body--transition-prev .react-tab-panel__transition-wrapper > :first-child {
-    -webkit-transition: right 1s;
-    transition: right 1s;
+    -webkit-transition: right 0.3s;
+    transition: right 0.3s;
     position: absolute;
     right: 100%;
     width: 100%;
