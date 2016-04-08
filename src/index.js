@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 import assign from 'object-assign'
 import { Flex } from 'react-flex'
@@ -17,12 +18,15 @@ const CLASS_NAME = 'react-tab-panel'
 const bem = bemFactory(CLASS_NAME)
 const m = (name) => bem(null, name)
 
+const transitionWrapperClassName = `${CLASS_NAME}__transition-wrapper`
+
 export default class TabPanel extends Component {
 
   constructor(props){
     super(props)
 
     this.state = {
+      oldActiveIndex: null,
       activeIndex: props.defaultActiveIndex || 0
     }
   }
@@ -81,7 +85,102 @@ export default class TabPanel extends Component {
     props.tabBody = tabBody
     props.children = children
 
+    if (props.transition){
+      props.strategy = this.transitionStrategy
+    }
+
     return props
+  }
+
+  componentDidMount(){
+    this.body.addEventListener('transitionend', this.onBodyTransitionEnd)
+  }
+
+  componentWillUnmount(){
+    this.body.removeEventListener('transitionend', this.onBodyTransitionEnd)
+  }
+
+  onBodyTransitionEnd(){
+    if (!this.state.transitioning){
+      return
+    }
+
+    this.setState({
+      transitioning: null,
+      transitionInProgress: false,
+      wrapperStyle: null,
+      oldActiveIndex: null
+    })
+  }
+
+  componentWillReceiveProps(nextProps){
+    const activeIndex = this.p.activeIndex
+
+    if (nextProps.activeIndex != activeIndex && nextProps.transition){
+
+      const childHeight = () => {
+        return this.wrapper.firstChild && this.wrapper.firstChild.offsetHeight
+      }
+
+      const dir = (nextProps.activeIndex > activeIndex)? 1: -1
+
+      //at this point only 1 child should be rendered
+      const currentChildHeight = (this.wrapper.firstChild && this.wrapper.firstChild.offsetHeight) || 0
+
+      const wrapperStyle = {
+        // width: this.wrapper.offsetWidth,
+        height: this.wrapper.offsetHeight
+      }
+
+      if (this.state.transitioning){
+        this.onBodyTransitionEnd()
+      }
+
+      this.setState({
+        transitioning: dir,
+        wrapperStyle: {
+          height: wrapperStyle.height
+        },
+        oldActiveIndex: activeIndex
+      }, () => {
+        const otherChild = dir == 1? this.wrapper.lastChild: this.wrapper.firstChild
+
+        const wrapperHeight = wrapperStyle.height
+            - currentChildHeight
+            + ((otherChild && otherChild.offsetHeight) || 0)
+
+        this.setState({
+          transitioning: dir,
+          transitionInProgress: true,
+          wrapperStyle: { height: wrapperHeight }
+        })
+      })
+    }
+  }
+
+  transitionStrategy(children, activeIndex){
+
+    if (this.state.oldActiveIndex != null){
+
+      const indexes = [
+        this.state.oldActiveIndex,
+        activeIndex
+      ]
+
+      //render them in the correct order
+      indexes.sort()
+
+      children = [
+        children[indexes[0]],
+        children[indexes[1]]
+      ]
+    } else {
+      children = children[activeIndex]
+    }
+
+    return <div ref={c=> this.wrapper = c} style={this.state.wrapperStyle} className={transitionWrapperClassName}>
+      {children}
+    </div>
   }
 
   prepareTabPosition(props, { tabStripIndex, tabBodyIndex }){
@@ -212,17 +311,26 @@ export default class TabPanel extends Component {
   }
 
   renderBody(){
-    const { children, activeIndex, strategy } = this.p
+    const { children, activeIndex, strategy, transition } = this.p
 
     const bodyChildren = strategy(children, activeIndex)
 
+    const tabBody = this.p.tabBody || {}
+
     const bodyProps = assign({}, this.p.tabBody, {
+      transition,
+      transitionInProgress: this.state.transitionInProgress,
       activeIndex,
       tabPosition: this.p.tabPosition,
       children: bodyChildren
     })
 
-    return <Body {...bodyProps} />
+    return <Body
+      ref={b => this.body = findDOMNode(b)}
+      transitioning={this.state.transitioning}
+      {...bodyProps}
+      {...this.state.bodyProps}
+    />
   }
 }
 

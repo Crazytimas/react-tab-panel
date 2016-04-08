@@ -1,5 +1,7 @@
 @import '~react-flex/index.css';
 
+$TRANSITION_DURATION: 0.3s;
+
 .react-tab-panel,
 .react-tab-panel__tab-strip {
   box-sizing: border-box;
@@ -29,6 +31,72 @@
 .react-tab-panel__body {
   flex: 1 1 auto;
   overflow: auto;
+  position: relative;
+
+  .react-tab-panel__transition-wrapper {
+    position: relative;
+    transition: height $TRANSITION_DURATION;
+  }
+
+  &--transitioning {
+    &,
+    .react-tab-panel__transition-wrapper {
+      overflow: hidden;
+    }
+  }
+
+  &--transition {
+
+    &-next {
+      .react-tab-panel__transition-wrapper > :first-child {
+        transform: translate3d(0px, 0px, 0px);
+        transition: transform $TRANSITION_DURATION;
+      }
+
+      .react-tab-panel__transition-wrapper > :last-child {
+        transition: left $TRANSITION_DURATION;
+        position: absolute;
+        left: 100%;
+        width: 100%;
+        top: 0px;
+        z-index: 100;
+      }
+
+      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > :first-child {
+        transform: translate3d(-100%, 0px, 0px);
+      }
+
+      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > :last-child {
+        top: 0px;
+        left: 0px;
+      }
+    }
+
+    &-prev {
+      .react-tab-panel__transition-wrapper > :last-child {
+        transform: translate3d(0px, 0px, 0px);
+        transition: transform $TRANSITION_DURATION;
+      }
+
+      .react-tab-panel__transition-wrapper > :first-child {
+        transition: right $TRANSITION_DURATION;
+        position: absolute;
+        right: 100%;
+        width: 100%;
+        top: 0px;
+        z-index: 100;
+      }
+
+      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > :last-child {
+        transform: translate3d(100%, 0px, 0px);
+      }
+
+      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > :first-child {
+        top: 0px;
+        right: 0px;
+      }
+    }
+  }
 }
 
 //tabstrip
