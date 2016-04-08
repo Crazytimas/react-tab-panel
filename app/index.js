@@ -104,34 +104,52 @@ export default class App extends Component {
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
       <br />
 
-      <TabPanel
-        style={{height: 200, maxWidth: 600, xmaxWidth: 350, margin: 20}}
-        activeIndex={this.state.index}
-        onActivate={this.onActivate}
-        xtabPosition="left"
-        tabIndex
-        tabEllipsis
-        xvertical
-        transition
-        tabStyle={{ padding: 30 }}
-        xstyle={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
-      >
-        <Demo tabTitle="demo"/>
+      <TabPanel defaultActiveIndex={1}>
+        <TabPanel
+          tabTitle="test"
+          style={{xheight: 200, maxWidth: 600, xmaxWidth: 350, margin: 20}}
+          activeIndex={this.state.index}
+          onActivate={this.onActivate}
+          xtabPosition="left"
+          tabIndex
+          tabEllipsis
+          xvertical
+          transition
+          tabStyle={{ padding: 30 }}
+          xstyle={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
+        >
+          <Demo tabTitle="demo"/>
 
-        <Test tabTitle="first tab" />
+          <Test tabTitle="first tab" />
 
-        <div tabTitle={<div>{this.state.secondTabTitle}<br />tst</div>} >
-          secondLorem ipsum Qui ad aute labore elit eiusmod dolor dolor eiusmod commodo magna dolore quis ut ex dolor laborum pariatur dolore ullamco magna ex dolor anim consectetur magna cupidatat aliquip ea cupidatat elit eu labore in esse et.
+          <div tabTitle={<div>{this.state.secondTabTitle}<br />tst</div>} >
+            secondLorem ipsum Qui ad aute labore elit eiusmod dolor dolor eiusmod commodo magna dolore quis ut ex dolor laborum pariatur dolore ullamco magna ex dolor anim consectetur magna cupidatat aliquip ea cupidatat elit eu labore in esse et.
+          </div>
+
+          <div tabTitle="third tab title long title">
+            thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
+          </div>
+
+          <div tabTitle="Fourth title is so so so long that it doesnt even fit">
+            thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
+  Lorem ipsum Officia eiusmod non labore occaecat sed ut laboris ut nostrud consectetur ex ut commodo sit laborum ut ut anim minim proident do veniam Duis Excepteur ea ut dolor cillum occaecat culpa enim.
+          </div>
+        </TabPanel>
+
+        <TabPanel  style={{width: 400}} tabTitle="ecnd" transition={true}>
+        <div tabTitle="First tab">
+          Lorem ipsum Qui eu cupidatat do exercitation consequat veniam mollit incididunt
         </div>
 
-        <div tabTitle="third tab title long title">
-          thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
+        <div tabTitle="Second title">
+          Lorem ipsum Id eiusmod labore commodo laboris Excepteur culpa magna cillum esse sed commodo non ut enim sit occaecat dolore aliqua cillum sunt consectetur magna pariatur dolore anim nostrud ut commodo culpa cillum.
         </div>
 
-        <div tabTitle="Fourth title is so so so long that it doesnt even fit">
-          thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
-Lorem ipsum Officia eiusmod non labore occaecat sed ut laboris ut nostrud consectetur ex ut commodo sit laborum ut ut anim minim proident do veniam Duis Excepteur ea ut dolor cillum occaecat culpa enim.
+        <div tabTitle="Third and last tab ">
+          Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit. Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit.
         </div>
+
+      </TabPanel>
       </TabPanel>
     </Flex>
   }

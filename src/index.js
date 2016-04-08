@@ -113,16 +113,17 @@ export default class TabPanel extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillUpdate(nextProps, nextState){
     const activeIndex = this.p.activeIndex
+    const newActiveIndex = this.prepareActiveIndex(nextProps, nextState)
 
-    if (nextProps.activeIndex != activeIndex && nextProps.transition){
+    if (newActiveIndex != activeIndex && nextProps.transition){
 
       const childHeight = () => {
         return this.wrapper.firstChild && this.wrapper.firstChild.offsetHeight
       }
 
-      const dir = (nextProps.activeIndex > activeIndex)? 1: -1
+      const dir = (newActiveIndex > activeIndex)? 1: -1
 
       //at this point only 1 child should be rendered
       const currentChildHeight = (this.wrapper.firstChild && this.wrapper.firstChild.offsetHeight) || 0
@@ -177,9 +178,12 @@ export default class TabPanel extends Component {
       children = children[activeIndex]
     }
 
-    return <div ref={c=> this.wrapper = c} style={this.state.wrapperStyle} className={transitionWrapperClassName}>
-      {children}
-    </div>
+    return <div
+      ref={c=> this.wrapper = c}
+      style={this.state.wrapperStyle}
+      className={transitionWrapperClassName}
+      children={children}
+    />
   }
 
   prepareTabPosition(props, { tabStripIndex, tabBodyIndex }){
@@ -197,9 +201,9 @@ export default class TabPanel extends Component {
     return tabPosition
   }
 
-  prepareActiveIndex(props){
+  prepareActiveIndex(props, state){
     return props.activeIndex == null?
-                        this.state.activeIndex:
+                        (state || this.state).activeIndex:
                         props.activeIndex
   }
 
