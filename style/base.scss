@@ -37,6 +37,10 @@
   flex: none;
   overflow: hidden;
 
+  &:focus {
+    outline: none
+  }
+
   &--tab-position-top,
   &--tab-position-bottom {
     .react-tab-panel__tab-strip-before,

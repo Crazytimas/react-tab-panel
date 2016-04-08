@@ -12,8 +12,6 @@ import { Motion, spring } from 'react-motion';
 import join from '../join'
 import bemFactory from '../bemFactory'
 
-const springConfig = [400, 50];
-
 const CLASS_NAME = 'react-tab-panel__tab-strip-scroll-tool'
 
 const bem = bemFactory(CLASS_NAME)
@@ -218,8 +216,6 @@ export default class Scroller extends Component {
 
   startScroll(direction, event){
 
-    stop(event);
-
     const eventName = hasTouch? 'touchend': 'mouseup';
 
     const mouseUpListener = () => {
@@ -292,11 +288,11 @@ export default class Scroller extends Component {
       scroller === true && disabled && m('disabled')
     );
 
-    const onClick = !disabled && this.props.scrollAllVisible?
+    const onClick = !disabled && this.props.scrollOnClick?
                       this.onClick.bind(this, direction):
                       emptyFn;
 
-    const onMouseDown = !disabled && !this.props.scrollAllVisible?
+    const onMouseDown = !disabled && !this.props.scrollOnClick?
                           this.startScroll.bind(this, direction):
                           emptyFn;
 
@@ -356,8 +352,9 @@ export default class Scroller extends Component {
     const scrollInfo = this.scrollInfo
 
     const scrollStyleName = (tabPosition == 'top' || tabPosition == 'bottom')? 'left': 'top'
+
     const style = {
-      [scrollStyleName]: spring(-scrollInfo.scrollPos, springConfig)
+      [scrollStyleName]: spring(-scrollInfo.scrollPos, props.scrollSpringConfig)
     }
 
     const resizer = <NotifyResize key="resizer" onResize={this.onResize} />
@@ -399,15 +396,19 @@ Scroller.propTypes = {
    *
    * @type {Boolean}
    */
-  scrollAllVisible: PropTypes.bool,
+  scrollOnClick: PropTypes.bool,
 
   scroller: PropTypes.oneOf(['auto', false, true])
 }
 
 Scroller.defaultProps = {
   onScrollEnd: () => {},
-  scrollStep: 5,
-  scrollSpeed: 5,
+  scrollStep: 15,
+  scrollSpeed: 10,
+  scrollSpringConfig: {
+    stiffness: 370,
+    damping: 60
+  },
   scrollIntoViewOffset: 50,
   onScrollerClick: () => {},
   onScrollEnd: () => {}

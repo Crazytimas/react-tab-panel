@@ -24,7 +24,7 @@ export default class TabStrip extends Component {
 
     this.tabNodes = []
     this.state = {
-      focused,
+      focused: false,
       activeIndex: props.defaultActiveIndex || 0
     }
   }
@@ -60,6 +60,8 @@ export default class TabStrip extends Component {
                     props.tabIndex? 0: -1
                     :
                     props.tabIndex
+
+    this.tabNodes.length = props.tabs.length
 
     props.firstActive = activeIndex === 0
     props.lastActive = activeIndex === props.tabs.length - 1
@@ -205,7 +207,7 @@ export default class TabStrip extends Component {
     const active = index === activeIndex
 
     const tabProps = assign({}, tab, {
-      ref: (b) => this.tabNodes[index] = findDOMNode(this),
+      ref: (b) => this.tabNodes[index] = findDOMNode(b),
       index,
       activateEvent,
       activeIndex,
@@ -372,7 +374,7 @@ TabStrip.propTypes = {
 
 TabStrip.defaultProps = {
   scroller: 'auto',
-  scrollAllVisible: false,
+  scrollOnClick: false,
   rotateNavigation: true,
   tabIndex: true,
   tabAlign: 'start',

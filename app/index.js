@@ -20,7 +20,8 @@ const render = (position, props = {}) => {
     height: 200
   })
 
-  return <TabPanel tabPosition={position} {...props} style={style}>
+  return <TabPanel
+  tabPosition={position} {...props} style={style}>
     <div tabTitle={`${upper} - first tab`}>
       Lorem ipsum Exercitation ut dolore.
     </div>
@@ -94,8 +95,7 @@ export default class App extends Component {
       <br />
 
       <TabPanel
-
-        style={{width: 'auto', xmaxHeight: 200, minWidth: 300, maxWidth: 550, margin: 20}}
+        style={{xmaxHeight: 200, minWidth: 300, xmaxWidth: 350, margin: 20}}
         activeIndex={this.state.index}
         onActivate={this.onActivate}
         xtabPosition="left"
@@ -109,6 +109,7 @@ export default class App extends Component {
 
         <div tabProps={{ title: firstTabTitle }}>
           first tabLorem
+Lorem ipsum Sed reprehenderit est anim qui irure in aliqua ullamco commodo ea Duis Ut velit nostrud ea Ut tempor sunt nostrud id minim mollit in ad in eiusmod minim consequat deserunt sunt et aute eiusmod dolor dolor dolore id pariatur enim est non dolore aliqua Ut exercitation irure irure ex deserunt labore Excepteur voluptate voluptate ut veniam elit enim eu Ut consequat sint id magna Ut laborum irure dolore elit dolor qui irure in voluptate culpa deserunt laborum id ex dolor cupidatat aliquip ea labore Ut pariatur ullamco esse nulla deserunt non ex Duis pariatur veniam aliqua nulla incididunt cillum sed veniam officia ut ea irure mollit ut ut do elit consequat Duis magna sit voluptate exercitation anim et ut cillum cillum irure laborum et irure eu sit irure adipisicing dolore dolore enim nostrud tempor mollit sed et mollit quis ex proident dolor sit pariatur qui aliqua voluptate tempor labore voluptate eu occaecat in labore magna minim aliquip est nisi pariatur Ut consequat cillum Excepteur cillum sunt consectetur Excepteur Ut sunt cupidatat ut cillum pariatur id elit eu aliqua adipisicing aliqua cillum magna dolore Excepteur proident irure amet in sit labore irure cillum nulla dolore aliquip fugiat sed do in Excepteur magna deserunt quis sint sit ut enim elit adipisicing Ut dolor aliqua pariatur irure laborum elit laborum sint veniam Duis aliqua culpa consectetur aute dolor dolore anim mollit Excepteur eu dolore consequat proident occaecat nisi nulla sit magna enim officia pariatur quis commodo quis sed quis consequat Ut mollit irure officia eiusmod magna sint proident Excepteur officia adipisicing qui dolore id sunt nisi sed exercitation fugiat.
         </div>
 
         <div tabTitle={<div>{this.state.secondTabTitle}<br />tst</div>} >

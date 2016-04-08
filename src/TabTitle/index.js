@@ -163,10 +163,6 @@ export default class TabTitle extends Component {
     const innerClassName = this.prepareInnerClassName(props)
     const children = this.prepareChildren(props)
 
-    const tabIndex = props.active && props.tabIndex != -1?
-                      props.tabIndex:
-                      null
-
     const {
       innerSize,
       hiddenSize
@@ -188,7 +184,6 @@ export default class TabTitle extends Component {
 
     const renderProps = assign({}, props, {
       style,
-      tabIndex,
       disabled: null,
       className,
       [this.props.activateEvent || 'onClick']: this.onActivate

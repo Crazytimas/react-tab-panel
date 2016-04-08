@@ -157,7 +157,8 @@ export default class TabPanel extends Component {
       activeIndex,
       activateEvent,
       scroller,
-      scrollAllVisible,
+      scrollSpringConfig,
+      scrollOnClick,
       tabFactory,
       tabStripFactory,
       theme,
@@ -183,7 +184,8 @@ export default class TabPanel extends Component {
 
     assignDefined(newTabStripProps, {
       scroller,
-      scrollAllVisible,
+      scrollSpringConfig,
+      scrollOnClick,
       vertical,
       tabStyle,
       tabEllipsis,
