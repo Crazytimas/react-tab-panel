@@ -128,7 +128,6 @@ export default class TabPanel extends Component {
       const currentChildHeight = (this.wrapper.firstChild && this.wrapper.firstChild.offsetHeight) || 0
 
       const wrapperStyle = {
-        // width: this.wrapper.offsetWidth,
         height: this.wrapper.offsetHeight
       }
 
