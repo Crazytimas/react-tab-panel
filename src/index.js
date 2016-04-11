@@ -5,6 +5,7 @@ import assign from 'object-assign'
 import { Flex } from 'react-flex'
 
 import join from './join'
+import getTransitionEnd from './getTransitionEnd'
 
 import TabStrip from './TabStrip'
 import Body from './Body'
@@ -13,6 +14,8 @@ import assignDefined from './assignDefined'
 
 import TAB_POSITION_MAP from './tabPositions'
 import bemFactory from './bemFactory'
+
+import normalize from 'react-style-normalizer'
 
 const CLASS_NAME = 'react-tab-panel'
 const bem = bemFactory(CLASS_NAME)
@@ -38,7 +41,10 @@ const cloneDisplayNone = (child) => clone(child, (childProps) => {
 
 const cloneWithClassName = (className, child) => clone(child, (childProps) => {
   return {
-    className: join(childProps? childProps.className: '', className)
+    className: join(
+      childProps && childProps.className,
+      className
+    )
   }
 })
 
@@ -134,11 +140,11 @@ export default class TabPanel extends Component {
   }
 
   componentDidMount(){
-    this.body.addEventListener('transitionend', this.onBodyTransitionEnd)
+    this.body.addEventListener(getTransitionEnd(), this.onBodyTransitionEnd)
   }
 
   componentWillUnmount(){
-    this.body.removeEventListener('transitionend', this.onBodyTransitionEnd)
+    this.body && this.body.removeEventListener(getTransitionEnd(), this.onBodyTransitionEnd)
   }
 
   onBodyTransitionEnd(){
@@ -205,6 +211,7 @@ export default class TabPanel extends Component {
         if (!this.wrapper){
           this.onBodyTransitionEnd()
         }
+        // debugger
         const otherChild = getOtherChild()
 
         const wrapperHeight = wrapperStyle.height
@@ -245,17 +252,34 @@ export default class TabPanel extends Component {
 
         const secondIndex = indexes[1]
 
+        const firstClassName = firstIn? IN_CLASS_NAME: OUT_CLASS_NAME
+        const secondClassName = firstIn? OUT_CLASS_NAME: IN_CLASS_NAME
+
         children = [
-          cloneWithClassName(
-            firstIn? IN_CLASS_NAME: OUT_CLASS_NAME,
-            children[firstIndex]
+
+          clone(
+            children[firstIndex],
+            (childProps) => ({
+              style: this.addTransitionDuration(childProps.style),
+              className: join(
+                childProps && childProps.className,
+                firstClassName
+              )
+            })
           ),
 
-          cloneWithClassName(
-            firstIn? OUT_CLASS_NAME: IN_CLASS_NAME,
-            children[secondIndex]
+          clone(
+            children[secondIndex],
+            (childProps) => ({
+              style: this.addTransitionDuration(childProps.style),
+              className: join(
+                childProps && childProps.className,
+                secondClassName
+              )
+            })
           )
         ]
+
       } else {
 
         //strategy == 'all'
@@ -263,13 +287,15 @@ export default class TabPanel extends Component {
           if (index != activeIndex && index != this.state.oldActiveIndex){
             child = cloneDisplayNone(child)
           } else {
-            child = cloneWithClassName(
-              index == activeIndex ?
-                IN_CLASS_NAME:
-                OUT_CLASS_NAME
-              ,
-              child
-            )
+            const className = index == activeIndex ? IN_CLASS_NAME: OUT_CLASS_NAME
+
+            child = clone(child, (childProps) => ({
+              className: join(
+                childProps && childProps.className,
+                className
+              ),
+              style: this.addTransitionDuration(childProps.style)
+            }))
           }
 
           return child
@@ -280,12 +306,24 @@ export default class TabPanel extends Component {
       children = strategyFn(children, activeIndex)
     }
 
+    const wrapperStyle = this.addTransitionDuration(this.state.wrapperStyle)
+
     return <div
       ref={c=> this.wrapper = c}
-      style={this.state.wrapperStyle}
+      style={wrapperStyle}
       className={join(transitionWrapperClassName, this.props.vertical? transitionWrapperClassName+'--vertical': '')}
       children={children}
     />
+  }
+
+  addTransitionDuration(style){
+    if (this.props.transitionDuration){
+      style = assign({}, style, normalize({
+        transitionDuration: this.props.transitionDuration
+      }))
+    }
+
+    return style
   }
 
   prepareTabPosition(props, { tabStripIndex, tabBodyIndex }){
@@ -360,6 +398,9 @@ export default class TabPanel extends Component {
     const {
       activeIndex,
       activateEvent,
+      onAddNew,
+      onCloseTab,
+      closeable,
       scroller,
       scrollSpringConfig,
       scrollOnClick,
@@ -387,6 +428,9 @@ export default class TabPanel extends Component {
     }
 
     assignDefined(newTabStripProps, {
+      onAddNew,
+      onCloseTab,
+      closeable,
       scroller,
       scrollSpringConfig,
       scrollOnClick,
@@ -427,13 +471,14 @@ export default class TabPanel extends Component {
   }
 
   renderBody(){
-    const { activeIndex, transition } = this.p
+    const { activeIndex, transition, vertical } = this.p
 
     const bodyChildren = this.applyRenderStrategy(this.p)
 
     const tabBody = this.p.tabBody || {}
 
     const bodyProps = assign({}, this.p.tabBody, {
+      vertical,
       transition,
       transitionInProgress: this.state.transitionInProgress,
       activeIndex,

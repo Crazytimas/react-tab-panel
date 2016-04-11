@@ -11,6 +11,8 @@ import FlexiBox from './FlexiBox'
 
 const toNumber = (n) => parseInt(n, 10)
 
+const stopPropagation = (e) => e.stopPropagation()
+
 const getBorderPaddingSize = (node) => {
   const computedStyle = global.getComputedStyle(node)
 
@@ -73,6 +75,7 @@ export default class TabTitle extends Component {
       props.afterActive && m('after-active'),
 
       props.disabled && m('disabled'),
+      props.closeable && m('closeable'),
       props.tabEllipsis && m('ellipsis')
     )
   }
@@ -86,9 +89,39 @@ export default class TabTitle extends Component {
   }
 
   prepareChildren(props){
-    return (props.tabTitle !== undefined?
+    const title = (props.tabTitle !== undefined?
       props.tabTitle:
       props.children) || '\u00a0'
+
+    if (props.closeable){
+      return [
+        title,
+        this.renderCloseIcon()
+      ]
+    }
+
+    return title
+  }
+
+  renderCloseIcon(){
+    const eventConfig = {
+      [this.p.activateEvent]: stopPropagation
+    }
+
+    return <div {...eventConfig} onClick={this.onClose} title="Close tab" className={bem('close-icon')}>
+      <svg className={bem('close-icon-svg')} height="14" width="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+    </div>
+  }
+
+  onClose(event){
+    if (this.p.activateEvent == 'onClick'){
+      event.stopPropagation()
+    }
+
+    this.props.onClose(event)
   }
 
   prepareInnerStyle(props){
@@ -155,7 +188,9 @@ export default class TabTitle extends Component {
 
   render(){
 
-    const props = assign({}, this.props)
+    const props = this.p = assign({}, this.props)
+
+    props.activateEvent = props.activateEvent || 'onClick'
 
     const { index } = props
 
@@ -186,7 +221,7 @@ export default class TabTitle extends Component {
       style,
       disabled: null,
       className,
-      [this.props.activateEvent || 'onClick']: this.onActivate
+      [props.activateEvent]: this.onActivate
     })
 
     const innerProps = {

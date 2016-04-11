@@ -48,59 +48,105 @@ $TRANSITION_DURATION: 0.3s;
 
   &--transition {
 
-    &-next {
-      .react-tab-panel__transition-wrapper > .react-tab-panel__content--out {
-        transform: translate3d(0px, 0px, 0px);
-        transition-property: transform;
-        transition-duration: $TRANSITION_DURATION;
-      }
+    .react-tab-panel__content--out {
+      transform: translate3d(0px, 0px, 0px);
+      transition-property: transform;
+      transition-duration: $TRANSITION_DURATION;
+    }
 
-      .react-tab-panel__transition-wrapper > .react-tab-panel__content--in {
-        transition-property: left;
-        transition-duration: $TRANSITION_DURATION;
-        position: absolute;
-        left: 100%;
-        width: 100%;
+    .react-tab-panel__content--in {
+      transition-duration: $TRANSITION_DURATION;
+      position: absolute;
+      width: 100%;
+      z-index: 100;
+    }
+
+    &.react-tab-panel__body--orientation-horizontal {
+
+      .react-tab-panel__content--in {
         top: 0px;
-        z-index: 100;
       }
 
-      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > .react-tab-panel__content--out {
-        transform: translate3d(-100%, 0px, 0px);
+      &.react-tab-panel__body--transition-next {
+
+        .react-tab-panel__content--in {
+          transition-property: left;
+          left: 100%;
+        }
+
+        &.react-tab-panel__body--transitioning {
+          .react-tab-panel__content--out {
+            transform: translate3d(-100%, 0px, 0px);
+          }
+          .react-tab-panel__content--in {
+            left: 0px;
+          }
+        }
       }
 
-      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > .react-tab-panel__content--in {
-        top: 0px;
+      &.react-tab-panel__body--transition-prev {
+
+        .react-tab-panel__content--in {
+          transition-property: right;
+          right: 100%;
+        }
+
+        &.react-tab-panel__body--transitioning {
+          .react-tab-panel__content--out {
+            transform: translate3d(100%, 0px, 0px);
+          }
+
+          .react-tab-panel__content--in {
+            right: 0px;
+          }
+        }
+
+      }
+    }
+
+    &.react-tab-panel__body--orientation-vertical {
+
+      .react-tab-panel__content--in {
         left: 0px;
       }
+
+      &.react-tab-panel__body--transition-next {
+
+        .react-tab-panel__content--in {
+          transition-property: top;
+          top: 100%;
+        }
+
+        &.react-tab-panel__body--transitioning {
+          .react-tab-panel__content--out {
+            transform: translate3d(0px, -100%, 0px);
+          }
+          .react-tab-panel__content--in {
+            top: 0px;
+          }
+        }
+      }
+
+      &.react-tab-panel__body--transition-prev {
+
+        .react-tab-panel__content--in {
+          transition-property: bottom;
+          bottom: 100%;
+        }
+
+        &.react-tab-panel__body--transitioning {
+          .react-tab-panel__content--out {
+            transform: translate3d(0px, 100%, 0px);
+          }
+
+          .react-tab-panel__content--in {
+            bottom: 0px;
+          }
+        }
+
+      }
     }
 
-    &-prev {
-      .react-tab-panel__transition-wrapper > .react-tab-panel__content--out {
-        transform: translate3d(0px, 0px, 0px);
-        transition-property: transform;
-        transition-duration: $TRANSITION_DURATION;
-      }
-
-      .react-tab-panel__transition-wrapper > .react-tab-panel__content--in {
-        transition-property: right;
-        transition-duration: $TRANSITION_DURATION;
-        position: absolute;
-        right: 100%;
-        width: 100%;
-        top: 0px;
-        z-index: 100;
-      }
-
-      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > .react-tab-panel__content--out {
-        transform: translate3d(100%, 0px, 0px);
-      }
-
-      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > .react-tab-panel__content--in {
-        top: 0px;
-        right: 0px;
-      }
-    }
   }
 }
 
@@ -309,6 +355,10 @@ $TRANSITION_DURATION: 0.3s;
     top: auto !important;
     left: auto !important;
   }
+}
+
+.react-tab-panel__tab-title-close-icon {
+  display: inline-block;
 }
 
 .react-tab-panel__tab-title--active {

@@ -7,9 +7,12 @@ $BORDER_COLOR: #ddd !default;
 $BORDER_WIDTH: 1px !default;
 
 $BG_FOCUSED: #f9f9f9 !default;
+$BG_DISABLED: #eaeaea !default;
 
 $ACTIVE_BORDER_COLOR: #4d7496 !default;
 $ACTIVE_BORDER_WIDTH: 3px !default;
+
+$COLOR_DISABLED: grey;
 
 $HOVER_BORDER_COLOR: #eee !default;
 
@@ -17,6 +20,14 @@ $HOVER_BORDER_COLOR: #eee !default;
 
   .react-tab-panel__body {
     padding: 5px 10px;
+  }
+
+  .react-tab-panel__tab-title-close-icon {
+    position: relative;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 
   .react-tab-panel__body--tab-position-top {
@@ -126,6 +137,7 @@ $HOVER_BORDER_COLOR: #eee !default;
 
   .react-tab-panel__tab-title:not(.react-tab-panel__tab-title--active){
     color: $ACTIVE_BORDER_COLOR;
+    fill: $ACTIVE_BORDER_COLOR;
   }
 
   .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
@@ -229,7 +241,7 @@ $HOVER_BORDER_COLOR: #eee !default;
       }
     }
 
-    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
+    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):not(.react-tab-panel__tab-title--disabled) {
 
       .react-tab-panel__tab-title-inner {
         &:before {
@@ -249,7 +261,7 @@ $HOVER_BORDER_COLOR: #eee !default;
       height: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
     }
 
-    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) {
+    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):not(.react-tab-panel__tab-title--disabled) {
 
       .react-tab-panel__tab-title-inner {
         &:before {
@@ -275,13 +287,13 @@ $HOVER_BORDER_COLOR: #eee !default;
       border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
     }
 
-    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
+    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):not(.react-tab-panel__tab-title--disabled){
       margin-top: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
       border-top: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
 
       .react-tab-panel__tab-title-inner {
         &:before, &:after {
-          left: $BORDER_WIDTH;
+          // left: $BORDER_WIDTH;
         }
       }
     }
@@ -313,13 +325,13 @@ $HOVER_BORDER_COLOR: #eee !default;
       border-top: $BORDER_WIDTH solid $BORDER_COLOR;
     }
 
-    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
+    .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):not(.react-tab-panel__tab-title--disabled){
       margin-bottom: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
       border-bottom: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
 
       .react-tab-panel__tab-title-inner {
         &:before, &:after {
-          top: $BORDER_WIDTH;
+          // top: $BORDER_WIDTH;
         }
       }
     }
@@ -360,7 +372,7 @@ $HOVER_BORDER_COLOR: #eee !default;
         border-right: $BORDER_WIDTH solid $BORDER_COLOR;
       }
 
-      .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
+      .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):not(.react-tab-panel__tab-title--disabled){
         margin-left: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
         border-left: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
 
@@ -397,7 +409,7 @@ $HOVER_BORDER_COLOR: #eee !default;
         border-left: $BORDER_WIDTH solid $BORDER_COLOR;
       }
 
-      .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
+      .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):not(.react-tab-panel__tab-title--disabled){
         margin-right: $ACTIVE_BORDER_WIDTH - $BORDER_WIDTH;
         border-right: $BORDER_WIDTH solid $HOVER_BORDER_COLOR;
 
@@ -527,7 +539,7 @@ $HOVER_BORDER_COLOR: #eee !default;
         border-top: $BORDER_WIDTH solid transparent;
       }
 
-      .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active){
+      .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active):not(.react-tab-panel__tab-title--disabled){
         // background: none;
         background: $BG_FOCUSED padding-box;
 
@@ -560,6 +572,14 @@ $HOVER_BORDER_COLOR: #eee !default;
           border-bottom: $BORDER_WIDTH solid $BORDER_COLOR;
         }
       }
+    }
+  }
+
+  .react-tab-panel__tab-title--disabled {
+    &.react-tab-panel__tab-title--disabled,
+    &.react-tab-panel__tab-title--disabled:hover {
+      background: $BG_DISABLED content-box;
+      color: $COLOR_DISABLED;
     }
   }
 

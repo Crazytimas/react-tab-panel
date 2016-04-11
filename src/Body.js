@@ -21,6 +21,7 @@ export default class Body extends Component {
       props.className,
       CLASS_NAME,
       m(`tab-position-${props.tabPosition}`),
+      m(`orientation-${props.vertical? 'vertical': 'horizontal'}`),
 
       props.transition && m('transition'),
       props.transitioning && props.transitioning !== true && m(`transition-${props.transitioning == -1? 'prev': 'next'}`),

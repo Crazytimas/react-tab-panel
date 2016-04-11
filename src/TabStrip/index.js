@@ -14,6 +14,11 @@ import Scroller from './Scroller'
 
 const CLASS_NAME = 'react-tab-panel__tab-strip'
 
+const NEW_TAB = <svg height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+  <path d="M0 0h24v24H0z" fill="none"/>
+</svg>
+
 const bem = bemFactory(CLASS_NAME)
 const m = (name) => bem(null, name)
 
@@ -56,6 +61,13 @@ export default class TabStrip extends Component {
 
     props.activeIndex = activeIndex
     props.tabs = props.defaultTabs || props.tabs
+
+    if (props.onAddNew){
+      props.tabs = [...props.tabs, {
+        title: NEW_TAB,
+        selectable: false
+      }]
+    }
     props.tabIndex = typeof props.tabIndex === 'boolean'?
                     props.tabIndex? 0: -1
                     :
@@ -190,7 +202,8 @@ export default class TabStrip extends Component {
       tabStyle,
       tabEllipsis,
       vertical,
-      tabAlign
+      tabAlign,
+      closeable
     } = props
 
     if (typeof tab == 'string'){
@@ -206,7 +219,7 @@ export default class TabStrip extends Component {
     const afterActive = activeIndex + 1 === index
     const active = index === activeIndex
 
-    const tabProps = assign({}, tab, {
+    const tabProps = assign({ closeable }, tab, {
       ref: (b) => this.tabNodes[index] = findDOMNode(b),
       index,
       activateEvent,
@@ -225,9 +238,11 @@ export default class TabStrip extends Component {
       tabStyle,
       tabEllipsis,
 
-      key: index,
-      onActivate: this.onActivate.bind(this, index)
+      key: index
     })
+
+    tabProps.onActivate = this.onActivate.bind(this, index)
+    tabProps.onClose = this.onClose.bind(this, index, tab)
 
     delete tabProps.title
 
@@ -268,9 +283,27 @@ export default class TabStrip extends Component {
     this.onActivate(this.getLastAvailableIndex())
   }
 
+  onClose(index, tabProps){
+    this.props.onCloseTab(index)
+
+    if (tabProps.onClose) {
+      tabProps.onClose()
+    }
+  }
+
   onActivate(activeIndex){
     if (!this.p.allTabsProps[activeIndex]){
       return
+    }
+
+    if (this.p.onAddNew && activeIndex === this.p.tabs.length - 1){
+      return this.p.onAddNew()
+    }
+
+    const tabProps = this.p.tabs[activeIndex]
+
+    if (tabProps && tabProps.onActivate){
+      tabProps.onActivate()
     }
 
     if (this.props.activeIndex == null){
@@ -317,7 +350,7 @@ export default class TabStrip extends Component {
     let currentIndex = adjustIndex(index + dir)
 
     while (currentTab = tabs[currentIndex]){
-      if (!currentTab.disabled){
+      if (this.isSelectableTab(currentTab)){
         return currentIndex
       }
 
@@ -325,6 +358,10 @@ export default class TabStrip extends Component {
     }
 
     return -1
+  }
+
+  isSelectableTab(tab){
+    return !tab.disabled && tab.selectable !== false
   }
 
   getFirstAvailableIndex(){
@@ -381,6 +418,7 @@ TabStrip.defaultProps = {
   tabPosition: 'top',
   theme: 'default',
   onActivate: () => {},
+  onCloseTab: () => {},
   onBlur: () => {},
   onFocus: () => {},
   isTabStrip: true

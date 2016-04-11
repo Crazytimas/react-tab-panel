@@ -25,7 +25,9 @@ const render = (position, props = {}) => {
 
   return <TabPanel
     tabTitle="First important tab"
-    tabPosition={position} {...props} style={style}>
+    tabPosition={position} {...props}
+    style={style}
+  >
 
     <TabPanel
       tabTitle="tab complex"
@@ -86,7 +88,7 @@ const firstTabTitle = <b> first tab
 class Test extends Component {
 
   render(){
-    return <div tabProps={{ title: firstTabTitle }}>
+    return <div {...this.props} tabProps={{ title: firstTabTitle }}>
     first tabLorem
 Lorem ipsum Sed reprehenderit est anim qui irure in aliqua ullamco commodo ea Duis Ut velit nostrud ea Ut tempor sunt nostrud id minim mollit in ad in eiusmod minim consequat deserunt sunt et aute eiusmod dolor dolor dolore id pariatur enim est non dolore aliqua Ut exercitation irure irure ex deserunt labore Excepteur voluptate voluptate ut veniam elit enim eu Ut consequat sint id magna Ut laborum irure dolore elit dolor qui irure in voluptate culpa deserunt laborum id ex dolor cupidatat aliquip ea labore Ut pariatur ullamco esse nulla deserunt non ex Duis pariatur veniam aliqua nulla incididunt cillum sed veniam officia ut ea irure mollit ut ut do elit consequat Duis magna sit voluptate exercitation anim et ut cillum cillum irure laborum et irure eu sit irure adipisicing dolore dolore enim nostrud tempor mollit sed et mollit quis ex proident dolor sit pariatur qui aliqua voluptate tempor labore voluptate eu occaecat in labore magna minim aliquip est nisi pariatur Ut consequat cillum Excepteur cillum sunt consectetur Excepteur Ut sunt cupidatat ut cillum pariatur id elit eu aliqua adipisicing aliqua cillum magna dolore Excepteur proident irure amet in sit labore irure cillum nulla dolore aliquip fugiat sed do in Excepteur magna deserunt quis sint sit ut enim elit adipisicing Ut dolor aliqua pariatur irure laborum elit laborum sint veniam Duis aliqua culpa consectetur aute dolor dolore anim mollit Excepteur eu dolore consequat proident occaecat nisi nulla sit magna enim officia pariatur quis commodo quis sed quis consequat Ut mollit irure officia eiusmod magna sint proident Excepteur officia adipisicing qui dolore id sunt nisi sed exercitation fugiat.
   </div>
@@ -100,7 +102,7 @@ export default class App extends Component {
     super(props)
 
     this.state = {
-      index: 2,
+      index: 0,
       tabs: [
         'first tab',
         'second tab',
@@ -143,7 +145,7 @@ export default class App extends Component {
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
       <br />
 
-      <TabPanel strategy={"one"} defaultActiveIndex={1} xtransition theme="default">
+      <TabPanel strategy={"one"} defaultActiveIndex={0} xtransition theme="default">
         <TabPanel
           tabTitle="test"
           style={{xheight: 200, maxWidth: 600, xmaxWidth: 350, margin: 20}}
@@ -153,11 +155,15 @@ export default class App extends Component {
           tabIndex
           tabEllipsis
           xvertical
-          tabStyle={{ padding: 30 }}
+          transition
+          transitionDuration="3s"
+          closeable
+          onCloseTab={(index) => console.log(index)}
+          xtabStyle={{ padding: 30 }}
           xstyle={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
         >
           {render('top')}
-          <Demo tabTitle="demo"/>
+          <Demo tabTitle="demo" tabProps={{onActivate: () => {console.log('close tab')} }}/>
 
           <Test tabTitle="first tab" />
 
@@ -170,13 +176,13 @@ export default class App extends Component {
           </div>
 
           <div tabTitle="Fourth title is so so so long that it doesnt even fit">
-            thirdLorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
+            fourth Lorem ipsum Excepteur magna adipisicing veniam ad Duis eu deserunt irure veniam ex deserunt sit dolor dolor veniam consequat veniam commodo aute laborum ad nisi eu aliquip ut amet occaecat velit incididunt.
   Lorem ipsum Officia eiusmod non labore occaecat sed ut laboris ut nostrud consectetur ex ut commodo sit laborum ut ut anim minim proident do veniam Duis Excepteur ea ut dolor cillum occaecat culpa enim.
           </div>
         </TabPanel>
 
-        <TabPanel  style={{width: 400}} tabTitle="ecnd" transition={true}>
-        <div tabTitle="First tab">
+        <TabPanel onAddNew={() => console.log('add new') } xvertical xtabPosition="left" style={{width: 400}} tabTitle="ecnd" transition={true}>
+        <div tabProps={{disabled: true, title: "First tab", className:'xxx'}}>
           Lorem ipsum Qui eu cupidatat do exercitation consequat veniam mollit incididunt
         </div>
 
