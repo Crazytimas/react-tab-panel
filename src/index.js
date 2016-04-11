@@ -463,7 +463,7 @@ TabPanel.defaultProps = {
   theme: 'default',
   tabAlign: 'start',
   onActivate: () => {},
-  strategy: 'all'
+  strategy: 'one'
 }
 
 export {

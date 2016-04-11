@@ -24,7 +24,7 @@ const render = (position, props = {}) => {
   })
 
   return <TabPanel
-    tabTitle="X"
+    tabTitle="First important tab"
     tabPosition={position} {...props} style={style}>
 
     <TabPanel
@@ -32,7 +32,7 @@ const render = (position, props = {}) => {
       tabPosition={position} {...props} style={style}>
 
       <TabPanel
-      tabTitle="tab complex"
+      tabTitle="tab complex child"
       tabPosition={position} {...props} style={style}>
       <div tabTitle={`${upper} - first tab`}>
         Lorem ipsum Exercitation ut dolore.
@@ -59,7 +59,7 @@ const render = (position, props = {}) => {
       </div>
     </TabPanel>
 
-    <div tabTitle={`${upper} - first tab`}>
+    <div tabTitle={`!!!${upper} - first tab`}>
       Lorem ipsum Exercitation ut dolore.
     </div>
 
@@ -153,7 +153,6 @@ export default class App extends Component {
           tabIndex
           tabEllipsis
           xvertical
-          transition
           tabStyle={{ padding: 30 }}
           xstyle={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
         >

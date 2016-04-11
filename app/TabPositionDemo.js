@@ -12,7 +12,7 @@ const render = (position, props = {}) => {
   })
 
   return <TabPanel tabPosition={position} {...props} style={style}>
-    <div tabTitle={`${upper} - first tab`}>
+    <div tabTitle={`yes ${upper} - first tab`}>
       Lorem ipsum Exercitation ut dolore.
     </div>
 
@@ -30,7 +30,7 @@ export default class TabPositionDemo extends Component{
 
   render(){
 
-    return <div>
+    return <div {...this.props}>
       <Flex row wrap={false} alignItems="start">
         {render('top', { style: {marginRight: 20} }  )}
         {render('right', { }  )}
