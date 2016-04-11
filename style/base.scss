@@ -35,7 +35,8 @@ $TRANSITION_DURATION: 0.3s;
 
   .react-tab-panel__transition-wrapper {
     position: relative;
-    transition: height $TRANSITION_DURATION;
+    transition-property: height;
+    transition-duration: $TRANSITION_DURATION;
   }
 
   &--transitioning {
@@ -48,13 +49,15 @@ $TRANSITION_DURATION: 0.3s;
   &--transition {
 
     &-next {
-      .react-tab-panel__transition-wrapper > :first-child {
+      .react-tab-panel__transition-wrapper > .react-tab-panel__content--out {
         transform: translate3d(0px, 0px, 0px);
-        transition: transform $TRANSITION_DURATION;
+        transition-property: transform;
+        transition-duration: $TRANSITION_DURATION;
       }
 
-      .react-tab-panel__transition-wrapper > :last-child {
-        transition: left $TRANSITION_DURATION;
+      .react-tab-panel__transition-wrapper > .react-tab-panel__content--in {
+        transition-property: left;
+        transition-duration: $TRANSITION_DURATION;
         position: absolute;
         left: 100%;
         width: 100%;
@@ -62,24 +65,26 @@ $TRANSITION_DURATION: 0.3s;
         z-index: 100;
       }
 
-      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > :first-child {
+      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > .react-tab-panel__content--out {
         transform: translate3d(-100%, 0px, 0px);
       }
 
-      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > :last-child {
+      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > .react-tab-panel__content--in {
         top: 0px;
         left: 0px;
       }
     }
 
     &-prev {
-      .react-tab-panel__transition-wrapper > :last-child {
+      .react-tab-panel__transition-wrapper > .react-tab-panel__content--out {
         transform: translate3d(0px, 0px, 0px);
-        transition: transform $TRANSITION_DURATION;
+        transition-property: transform;
+        transition-duration: $TRANSITION_DURATION;
       }
 
-      .react-tab-panel__transition-wrapper > :first-child {
-        transition: right $TRANSITION_DURATION;
+      .react-tab-panel__transition-wrapper > .react-tab-panel__content--in {
+        transition-property: right;
+        transition-duration: $TRANSITION_DURATION;
         position: absolute;
         right: 100%;
         width: 100%;
@@ -87,11 +92,11 @@ $TRANSITION_DURATION: 0.3s;
         z-index: 100;
       }
 
-      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > :last-child {
+      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > .react-tab-panel__content--out {
         transform: translate3d(100%, 0px, 0px);
       }
 
-      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > :first-child {
+      &.react-tab-panel__body--transitioning .react-tab-panel__transition-wrapper > .react-tab-panel__content--in {
         top: 0px;
         right: 0px;
       }

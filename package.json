@@ -11,7 +11,8 @@
     "react-class": "^2.0.0",
     "react-flex": "^1.2.3",
     "react-motion": "^0.4.2",
-    "react-notify-resize": "^1.0.3"
+    "react-notify-resize": "^1.0.3",
+    "react-style-normalizer": "^1.2.8"
   },
   "peerDependencies": {
     "react": ">=0.14.0 || >=15.0.0-0",

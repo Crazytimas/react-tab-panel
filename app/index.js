@@ -4,6 +4,8 @@ import Component from 'react-class'
 import { Flex } from 'react-flex'
 import TabPanel from '../src'
 
+import assign from 'object-assign'
+
 import '../style/base.scss'
 import '../style/theme/default/index.scss'
 import '../style/theme/red/index.scss'
@@ -22,18 +24,54 @@ const render = (position, props = {}) => {
   })
 
   return <TabPanel
-  tabPosition={position} {...props} style={style}>
+    tabTitle="X"
+    tabPosition={position} {...props} style={style}>
+
+    <TabPanel
+      tabTitle="tab complex"
+      tabPosition={position} {...props} style={style}>
+
+      <TabPanel
+      tabTitle="tab complex"
+      tabPosition={position} {...props} style={style}>
+      <div tabTitle={`${upper} - first tab`}>
+        Lorem ipsum Exercitation ut dolore.
+      </div>
+
+      <div tabTitle={<div>{upper} <div name="lock_outline" /> with div</div>}>
+        Lorem ipsum Exercitation ut dolore.
+      </div>
+
+      <div tabTitle={<div name="perm_identity" />}>
+        Lorem ipsum Exercitation ut dolore.
+      </div>
+
+      <div tabTitle={`${upper} - first tab`}>
+        Lorem ipsum Exercitation ut dolore.
+      </div>
+
+      <div tabTitle={<div>{upper} <div name="lock_outline" /> with div</div>}>
+        Lorem ipsum Exercitation ut dolore.
+      </div>
+
+      <div tabTitle={<div name="perm_identity" />}>
+        Lorem ipsum Exercitation ut dolore.
+      </div>
+    </TabPanel>
+
     <div tabTitle={`${upper} - first tab`}>
       Lorem ipsum Exercitation ut dolore.
     </div>
 
-    <div tabTitle={<div>{upper} <Icon name="lock_outline" /> with icon</div>}>
+    <div tabTitle={<div>{upper} <div name="lock_outline" /> with div</div>}>
       Lorem ipsum Exercitation ut dolore.
     </div>
 
-    <div tabTitle={<Icon name="perm_identity" />}>
+    <div tabTitle={<div name="perm_identity" />}>
       Lorem ipsum Exercitation ut dolore.
     </div>
+
+    </TabPanel>
   </TabPanel>
 }
 
@@ -105,7 +143,7 @@ export default class App extends Component {
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
       <br />
 
-      <TabPanel defaultActiveIndex={1} transition theme="default">
+      <TabPanel strategy={"one"} defaultActiveIndex={1} xtransition theme="default">
         <TabPanel
           tabTitle="test"
           style={{xheight: 200, maxWidth: 600, xmaxWidth: 350, margin: 20}}
@@ -119,6 +157,7 @@ export default class App extends Component {
           tabStyle={{ padding: 30 }}
           xstyle={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
         >
+          {render('top')}
           <Demo tabTitle="demo"/>
 
           <Test tabTitle="first tab" />

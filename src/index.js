@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, cloneElement } from 'react'
 import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 import assign from 'object-assign'
@@ -19,6 +19,46 @@ const bem = bemFactory(CLASS_NAME)
 const m = (name) => bem(null, name)
 
 const transitionWrapperClassName = `${CLASS_NAME}__transition-wrapper`
+
+const clone = (child, fn) => {
+  const childProps = child.props
+
+  child = cloneElement(child, assign({}, childProps, fn(childProps, child)))
+
+  return child
+}
+
+const cloneDisplayNone = (child) => clone(child, (childProps) => {
+  const childStyle = childProps? childProps.style: null
+
+  return {
+    style: assign({}, childStyle, { display: 'none' })
+  }
+})
+
+const cloneWithClassName = (className, child) => clone(child, (childProps) => {
+  return {
+    className: join(childProps? childProps.className: '', className)
+  }
+})
+
+const STRATEGIES = {
+
+  one: (children, activeIndex) => children[activeIndex],
+
+  all: (children, activeIndex) => {
+    return children.map((child, index) => {
+      if (index !== activeIndex){
+        child = cloneDisplayNone(child)
+      }
+
+      return child
+    })
+  }
+}
+
+const IN_CLASS_NAME = 'react-tab-panel__content--in'
+const OUT_CLASS_NAME = 'react-tab-panel__content--out'
 
 export default class TabPanel extends Component {
 
@@ -86,6 +126,7 @@ export default class TabPanel extends Component {
     props.children = children
 
     if (props.transition){
+      props.initialStrategy = props.strategy
       props.strategy = this.transitionStrategy
     }
 
@@ -123,14 +164,28 @@ export default class TabPanel extends Component {
         return
       }
 
-      const childHeight = () => {
-        return this.wrapper.firstChild && this.wrapper.firstChild.offsetHeight
-      }
-
       const dir = (newActiveIndex > activeIndex)? 1: -1
 
+      const getActiveChild = () => {
+        return this.p.initialStrategy == 'one'?
+                this.wrapper.firstChild:
+                this.wrapper.children[activeIndex]
+      }
+      const getOtherChild = () => {
+        return this.p.initialStrategy == 'one'?
+                (dir == 1? this.wrapper.lastChild: this.wrapper.firstChild):
+                this.wrapper.children[newActiveIndex]
+      }
+
+      const childHeight = () => {
+        const child = getActiveChild()
+        return child && child.offsetHeight
+      }
+
+      const activeChild = getActiveChild()
+
       //at this point only 1 child should be rendered
-      const currentChildHeight = (this.wrapper.firstChild && this.wrapper.firstChild.offsetHeight) || 0
+      const currentChildHeight = (activeChild && activeChild.offsetHeight) || 0
 
       const wrapperStyle = {
         height: this.wrapper.offsetHeight
@@ -150,7 +205,7 @@ export default class TabPanel extends Component {
         if (!this.wrapper){
           this.onBodyTransitionEnd()
         }
-        const otherChild = dir == 1? this.wrapper.lastChild: this.wrapper.firstChild
+        const otherChild = getOtherChild()
 
         const wrapperHeight = wrapperStyle.height
             - currentChildHeight
@@ -167,28 +222,68 @@ export default class TabPanel extends Component {
 
   transitionStrategy(children, activeIndex){
 
+    const strategy = this.p.initialStrategy
+    const strategyFn = STRATEGIES[strategy]
+
+    if (!strategyFn){
+      console.warn('Strategy not supported for transition')
+    }
+
     if (this.state.oldActiveIndex != null){
 
-      const indexes = [
-        this.state.oldActiveIndex,
-        activeIndex
-      ]
+      if (strategy == 'one'){
+        const indexes = [
+          this.state.oldActiveIndex,
+          activeIndex
+        ]
 
-      //render them in the correct order
-      indexes.sort()
+        //render them in the correct order
+        indexes.sort()
 
-      children = [
-        children[indexes[0]],
-        children[indexes[1]]
-      ]
+        const firstIndex = indexes[0]
+        const firstIn = firstIndex == activeIndex
+
+        const secondIndex = indexes[1]
+
+        children = [
+          cloneWithClassName(
+            firstIn? IN_CLASS_NAME: OUT_CLASS_NAME,
+            children[firstIndex]
+          ),
+
+          cloneWithClassName(
+            firstIn? OUT_CLASS_NAME: IN_CLASS_NAME,
+            children[secondIndex]
+          )
+        ]
+      } else {
+
+        //strategy == 'all'
+        children = children.map((child, index) => {
+          if (index != activeIndex && index != this.state.oldActiveIndex){
+            child = cloneDisplayNone(child)
+          } else {
+            child = cloneWithClassName(
+              index == activeIndex ?
+                IN_CLASS_NAME:
+                OUT_CLASS_NAME
+              ,
+              child
+            )
+          }
+
+          return child
+        })
+      }
+
     } else {
-      children = children[activeIndex]
+      children = strategyFn(children, activeIndex)
     }
 
     return <div
       ref={c=> this.wrapper = c}
       style={this.state.wrapperStyle}
-      className={transitionWrapperClassName}
+      className={join(transitionWrapperClassName, this.props.vertical? transitionWrapperClassName+'--vertical': '')}
       children={children}
     />
   }
@@ -320,10 +415,21 @@ export default class TabPanel extends Component {
     return tabStrip
   }
 
-  renderBody(){
-    const { children, activeIndex, strategy, transition } = this.p
+  applyRenderStrategy({ activeIndex, children, strategy }){
 
-    const bodyChildren = strategy(children, activeIndex)
+    let fn = STRATEGIES[strategy]
+
+    if (typeof fn != 'function'){
+      fn = typeof strategy == 'function'? strategy: STRATEGIES.all
+    }
+
+    return fn(children, activeIndex)
+  }
+
+  renderBody(){
+    const { activeIndex, transition } = this.p
+
+    const bodyChildren = this.applyRenderStrategy(this.p)
 
     const tabBody = this.p.tabBody || {}
 
@@ -346,14 +452,18 @@ export default class TabPanel extends Component {
 
 TabPanel.propTypes = {
   tabStripFactory: PropTypes.func,
-  tabFactory: PropTypes.func
+  tabFactory: PropTypes.func,
+  strategy: PropTypes.oneOfType([
+    PropTypes.oneOf(['one','all']),
+    PropTypes.func
+  ])
 }
 
 TabPanel.defaultProps = {
   theme: 'default',
   tabAlign: 'start',
   onActivate: () => {},
-  strategy: (children, activeIndex) => children[activeIndex]
+  strategy: 'all'
 }
 
 export {
