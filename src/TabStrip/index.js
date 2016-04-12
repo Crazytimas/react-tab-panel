@@ -38,7 +38,15 @@ export default class TabStrip extends Component {
     const oldIndex = this.prepareActiveIndex(prevProps, prevState)
 
     if (oldIndex != this.p.activeIndex){
-      this.scrollToTab(this.p.activeIndex)
+      const index = this.p.activeIndex
+
+      this.scrollToTab(index)
+
+      setTimeout(() => {
+        if (index === this.p.activeIndex){
+          this.scrollToTab(index)
+        }
+      }, 100)
     }
   }
 

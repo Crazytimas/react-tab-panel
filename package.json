@@ -1,6 +1,6 @@
 {
   "name": "react-tab-panel",
-  "version": "2.1.24",
+  "version": "2.1.26",
   "description": "React TabPanel",
   "main": "lib/index.js",
   "dependencies": {
