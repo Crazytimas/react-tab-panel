@@ -2,7 +2,7 @@ import React from 'react'
 import Component from 'react-class'
 
 import { Flex } from 'react-flex'
-import TabPanel, { Tab } from '../src'
+import TabPanel, { Tab, TabBody } from '../src'
 
 import assign from 'object-assign'
 
@@ -12,7 +12,7 @@ import '../style/theme/red/index.scss'
 import '../style/theme/blue/index.scss'
 import '../style/theme/flat/index.scss'
 
-import { TabStrip, TabBody } from '../src'
+import { TabStrip } from '../src'
 
 import Demo from './TabPositionDemo'
 
@@ -155,8 +155,6 @@ export default class App extends Component {
           tabIndex
           tabEllipsis
           xvertical
-          transition
-          transitionDuration="3s"
           closeable
           onCloseTab={(index) => console.log(index)}
           xtabStyle={{ padding: 30 }}
@@ -182,25 +180,26 @@ export default class App extends Component {
           </div>
         </TabPanel>
 
-        <TabPanel closeable onAddNew={() => console.log('add new') } vertical tabPosition="right" style={{width: 400}} tabTitle="ecnd" xtransition={true}>
-        <div tabProps={{xselectable: false, title: "First tab", className:'xxx'}}>
-          Lorem ipsum Qui eu cupidatat do exercitation consequat veniam mollit incididunt
-        </div>
-
-        <div tabTitle="Second title">
-          Lorem ipsum Id eiusmod labore commodo laboris Excepteur culpa magna cillum esse sed commodo non ut enim sit occaecat dolore aliqua cillum sunt consectetur magna pariatur dolore anim nostrud ut commodo culpa cillum.
-        </div>
-
-        <Tab title="Third and last!!!" selectable={false} onClick={() => console.log('clicked')}>
-          <div>
-            <h1>aaa</h1>
-            <div>
-              Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit. Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit.
+        <TabPanel tabEllipsis closeable onAddNew={() => console.log('add new') } tabStyle={{maxWidth: 80}} xvertical xtabPosition="right" style={{width: 400}} tabTitle="ecnd" xtransition={true}>
+          <TabBody>
+            <div tabProps={{xselectable: false, title: "First tab", className:'xxx'}}>
+              Lorem ipsum Qui eu cupidatat do exercitation consequat veniam mollit incididunt
             </div>
-          </div>
-        </Tab>
 
-      </TabPanel>
+            <div tabTitle="Second title">
+              Lorem ipsum Id eiusmod labore commodo laboris Excepteur culpa magna cillum esse sed commodo non ut enim sit occaecat dolore aliqua cillum sunt consectetur magna pariatur dolore anim nostrud ut commodo culpa cillum.
+            </div>
+
+            <Tab title="Third and last!!!" selectable={false} onClick={() => console.log('clicked')}>
+              <div>
+                <h1>aaa</h1>
+                <div>
+                  Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit. Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit.
+                </div>
+              </div>
+            </Tab>
+          </TabBody>
+        </TabPanel>
       </TabPanel>
     </Flex>
   }

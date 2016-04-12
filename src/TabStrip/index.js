@@ -325,9 +325,11 @@ export default class TabStrip extends Component {
       this.props.onActivate(activeIndex)
     }
 
-    const domNode = this.tabNodes[activeIndex]
+    setTimeout(() => {
+      const domNode = this.tabNodes[activeIndex]
 
-    domNode && this.scroller && this.scroller.scrollIntoView(domNode)
+      domNode && this.scroller && this.scroller.scrollIntoView(domNode)
+    }, 0)
   }
 
   getAvailableIndexFrom(index, dir, rotate){

@@ -123,50 +123,60 @@ export default class TabPanel extends Component {
           return
         }
 
-        const childProps = child.props || {}
+        const childProps = child.props
 
-        if (childProps.isTabStrip){
-          tabStrip = childProps
-          tabStripIndex = index
-          return
-        }
-
-        if (childProps.isTabBody){
-          tabBody = childProps
-          tabBodyIndex = index
-          return
-        }
-
-        if (childProps.isTabPanelTab){
-          children.push(childProps.children)
-
-          if (props.transition && child.props.children){
-            console.warn('You must only have one child in a Tab component when `transition` is true.')
+        if (childProps){
+          if (childProps.isTabStrip){
+            tabStrip = childProps
+            tabStripIndex = index
+            return
           }
-        } else {
-          children.push(child)
-        }
 
-        let tab
-        if (childProps.isTabPanelTab){
-          tab =  assign({}, childProps, {
-            children: null
-          })
-        } else {
-          tab = assign({
-            title: childProps.tabTitle || '',
-            disabled: childProps.disabled
-          }, childProps.tabProps)
+          if (childProps.isTabBody){
+            tabBody = childProps
+            tabBodyIndex = index
+            return
+          }
         }
-
-        tabs.push(tab)
       })
 
-    props.tabs = tabs
+    const addTab = (child) => {
+      if (!child){
+        return null
+      }
 
-    if (tabBody){
-      children = tabBody.children
+      const childProps = child.props || {}
+
+      if (childProps.isTabPanelTab){
+        children.push(childProps.children)
+
+        if (props.transition && child.props.children){
+          console.warn('You must only have one child in a Tab component when `transition` is true.')
+        }
+      } else {
+        children.push(child)
+      }
+
+      let tab
+      if (childProps.isTabPanelTab){
+        tab =  assign({}, childProps, {
+          children: null
+        })
+      } else {
+        tab = assign({
+          title: childProps.tabTitle || '',
+          disabled: childProps.disabled
+        }, childProps.tabProps)
+      }
+
+      tabs.push(tab)
     }
+
+    React.Children
+      .toArray(tabBody? tabBody.children: props.children)
+      .forEach(addTab)
+
+    props.tabs = tabs
 
     props.activeIndex = this.prepareActiveIndex(props)
     props.tabPosition = this.prepareTabPosition(props, { tabStripIndex, tabBodyIndex })
@@ -424,7 +434,6 @@ export default class TabPanel extends Component {
   }
 
   renderTabStrip(){
-    // const children = Array.isArray(this.p.children)? this.p.children: [this.p.children]
 
     const tabs = this.p.tabs
 

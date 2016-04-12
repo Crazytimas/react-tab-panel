@@ -6,6 +6,9 @@
   .react-tab-panel--theme-default .react-tab-panel__tab-title-close-icon:hover {
     opacity: 0.7; }
 
+.react-tab-panel--theme-default .react-tab-panel__tab-title-close-icon-svg {
+  vertical-align: middle; }
+
 .react-tab-panel--theme-default .react-tab-panel__body--tab-position-top {
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
@@ -94,6 +97,13 @@
 .react-tab-panel__tab-strip--theme-default .react-tab-panel__tab-title--focused {
   outline: none; }
 
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--orientation-horizontal .react-tab-panel__tab-title-close-icon, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--orientation-horizontal .react-tab-panel__tab-title-close-icon {
+  margin-left: 10px;
+  float: right; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--orientation-horizontal .react-tab-panel__tab-title-close-icon-svg, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--orientation-horizontal .react-tab-panel__tab-title-close-icon-svg {
+  vertical-align: middle; }
+
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top.react-tab-panel__tab-strip--orientation-horizontal .react-tab-panel__tab-strip-between, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-bottom.react-tab-panel__tab-strip--orientation-horizontal .react-tab-panel__tab-strip-between {
   width: 2px; }
 
@@ -120,6 +130,20 @@
 
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-top .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--tab-position-bottom .react-tab-panel__tab-title:hover:not(.react-tab-panel__tab-title--active) .react-tab-panel__tab-title-inner:after {
   border-right: 1px solid #eee; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-close-icon {
+  margin-right: 10px;
+  float: left; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-title-close-icon {
+  margin-left: 10px; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-close-icon {
+  margin-left: 10px;
+  float: right; }
+
+.react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-vertical.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-title-close-icon {
+  margin-left: 10px; }
 
 .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-left .react-tab-panel__tab-strip-between, .react-tab-panel__tab-strip--theme-default.react-tab-panel__tab-strip--orientation-horizontal.react-tab-panel__tab-strip--tab-position-right .react-tab-panel__tab-strip-between {
   height: 2px; }

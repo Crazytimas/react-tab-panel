@@ -932,3 +932,5 @@
 
 .react-tab-panel__tab-title-close-icon {
   display: inline-block; }
+  .react-tab-panel__tab-title-close-icon-svg {
+    vertical-align: middle; }
