@@ -34,6 +34,20 @@ export default class TabStrip extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState){
+    const oldIndex = this.prepareActiveIndex(prevProps, prevState)
+
+    if (oldIndex != this.p.activeIndex){
+      this.scrollToTab(this.p.activeIndex)
+    }
+  }
+
+  scrollToTab(index){
+    const domNode = this.tabNodes[index]
+
+    domNode && this.scroller && this.scroller.scrollIntoView(domNode)
+  }
+
   prepareClassName(props){
     return join(
       props.className,
@@ -52,12 +66,16 @@ export default class TabStrip extends Component {
     )
   }
 
+  prepareActiveIndex(props, state){
+    return props.activeIndex == null?
+                        (state || this.state).activeIndex:
+                        props.activeIndex
+  }
+
   prepareProps(thisProps) {
     const props = assign({}, thisProps)
 
-    const activeIndex = props.activeIndex == null?
-                        this.state.activeIndex:
-                        props.activeIndex
+    const activeIndex = this.prepareActiveIndex(props)
 
     props.activeIndex = activeIndex
     props.tabs = props.defaultTabs || props.tabs
@@ -324,12 +342,6 @@ export default class TabStrip extends Component {
     if (activeIndex != this.p.activeIndex){
       this.props.onActivate(activeIndex)
     }
-
-    setTimeout(() => {
-      const domNode = this.tabNodes[activeIndex]
-
-      domNode && this.scroller && this.scroller.scrollIntoView(domNode)
-    }, 0)
   }
 
   getAvailableIndexFrom(index, dir, rotate){
