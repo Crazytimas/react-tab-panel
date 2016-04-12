@@ -66,6 +66,16 @@ const STRATEGIES = {
 const IN_CLASS_NAME = 'react-tab-panel__content--in'
 const OUT_CLASS_NAME = 'react-tab-panel__content--out'
 
+class Tab extends Component {
+  render(){
+    return <div {...this.props} />
+  }
+}
+
+Tab.defaultProps = {
+  isTabPanelTab: true
+}
+
 export default class TabPanel extends Component {
 
   constructor(props){
@@ -101,23 +111,58 @@ export default class TabPanel extends Component {
     let tabStripIndex
     let tabBodyIndex
 
-    let children = React.Children
+    let children = []
+
+    let tabs = []
+
+    React.Children
       .toArray(props.children)
-      .filter((child, index) => {
-        if (child && child.props && child.props.isTabStrip){
-          tabStrip = child.props
+      .forEach((child, index) => {
+
+        if (!child){
+          return
+        }
+
+        const childProps = child.props || {}
+
+        if (childProps.isTabStrip){
+          tabStrip = childProps
           tabStripIndex = index
-          return false
+          return
         }
 
-        if (child && child.props && child.props.isTabBody){
-          tabBody = child.props
+        if (childProps.isTabBody){
+          tabBody = childProps
           tabBodyIndex = index
-          return false
+          return
         }
 
-        return true
+        if (childProps.isTabPanelTab){
+          children.push(childProps.children)
+
+          if (props.transition && child.props.children){
+            console.warn('You must only have one child in a Tab component when `transition` is true.')
+          }
+        } else {
+          children.push(child)
+        }
+
+        let tab
+        if (childProps.isTabPanelTab){
+          tab =  assign({}, childProps, {
+            children: null
+          })
+        } else {
+          tab = assign({
+            title: childProps.tabTitle || '',
+            disabled: childProps.disabled
+          }, childProps.tabProps)
+        }
+
+        tabs.push(tab)
       })
+
+    props.tabs = tabs
 
     if (tabBody){
       children = tabBody.children
@@ -260,7 +305,7 @@ export default class TabPanel extends Component {
           clone(
             children[firstIndex],
             (childProps) => ({
-              style: this.addTransitionDuration(childProps.style),
+              style: this.addTransitionDuration(childProps && childProps.style),
               className: join(
                 childProps && childProps.className,
                 firstClassName
@@ -271,7 +316,7 @@ export default class TabPanel extends Component {
           clone(
             children[secondIndex],
             (childProps) => ({
-              style: this.addTransitionDuration(childProps.style),
+              style: this.addTransitionDuration(childProps && childProps.style),
               className: join(
                 childProps && childProps.className,
                 secondClassName
@@ -379,21 +424,9 @@ export default class TabPanel extends Component {
   }
 
   renderTabStrip(){
-    const children = Array.isArray(this.p.children)? this.p.children: [this.p.children]
+    // const children = Array.isArray(this.p.children)? this.p.children: [this.p.children]
 
-    const tabs = children.map(child => {
-      const childProps = child && child.props? child.props: null
-
-      if (!childProps){
-        return null
-      }
-
-      return assign({
-        title: childProps.tabTitle || '',
-        disabled: childProps.disabled
-      }, childProps.tabProps)
-
-    }).filter(x => !!x)
+    const tabs = this.p.tabs
 
     const {
       activeIndex,
@@ -512,6 +545,7 @@ TabPanel.defaultProps = {
 }
 
 export {
+  Tab,
   TabStrip,
   Body as TabBody
 }

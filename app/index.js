@@ -2,7 +2,7 @@ import React from 'react'
 import Component from 'react-class'
 
 import { Flex } from 'react-flex'
-import TabPanel from '../src'
+import TabPanel, { Tab } from '../src'
 
 import assign from 'object-assign'
 
@@ -102,7 +102,7 @@ export default class App extends Component {
     super(props)
 
     this.state = {
-      index: 0,
+      index: 1,
       tabs: [
         'first tab',
         'second tab',
@@ -145,7 +145,7 @@ export default class App extends Component {
       <input type="text" value={this.state.secondTabTitle} onChange={this.setSecondTab}/>
       <br />
 
-      <TabPanel strategy={"one"} defaultActiveIndex={0} xtransition theme="default">
+      <TabPanel strategy={"one"} defaultActiveIndex={1} xtransition theme="default">
         <TabPanel
           tabTitle="test"
           style={{xheight: 200, maxWidth: 600, xmaxWidth: 350, margin: 20}}
@@ -163,6 +163,7 @@ export default class App extends Component {
           xstyle={{top: 20, left: 0, margin: 20, xwidth: '70%', xminHeight: 700, xposition: 'absolute'}}
         >
           {render('top')}
+
           <Demo tabTitle="demo" tabProps={{onActivate: () => {console.log('close tab')} }}/>
 
           <Test tabTitle="first tab" />
@@ -181,8 +182,8 @@ export default class App extends Component {
           </div>
         </TabPanel>
 
-        <TabPanel onAddNew={() => console.log('add new') } xvertical xtabPosition="left" style={{width: 400}} tabTitle="ecnd" transition={true}>
-        <div tabProps={{disabled: true, title: "First tab", className:'xxx'}}>
+        <TabPanel closeable onAddNew={() => console.log('add new') } vertical tabPosition="right" style={{width: 400}} tabTitle="ecnd" xtransition={true}>
+        <div tabProps={{xselectable: false, title: "First tab", className:'xxx'}}>
           Lorem ipsum Qui eu cupidatat do exercitation consequat veniam mollit incididunt
         </div>
 
@@ -190,9 +191,14 @@ export default class App extends Component {
           Lorem ipsum Id eiusmod labore commodo laboris Excepteur culpa magna cillum esse sed commodo non ut enim sit occaecat dolore aliqua cillum sunt consectetur magna pariatur dolore anim nostrud ut commodo culpa cillum.
         </div>
 
-        <div tabTitle="Third and last tab ">
-          Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit. Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit.
-        </div>
+        <Tab title="Third and last!!!" selectable={false} onClick={() => console.log('clicked')}>
+          <div>
+            <h1>aaa</h1>
+            <div>
+              Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit. Lorem ipsum Occaecat Ut Excepteur Duis incididunt fugiat qui tempor adipisicing dolore mollit.
+            </div>
+          </div>
+        </Tab>
 
       </TabPanel>
       </TabPanel>

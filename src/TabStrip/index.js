@@ -14,7 +14,7 @@ import Scroller from './Scroller'
 
 const CLASS_NAME = 'react-tab-panel__tab-strip'
 
-const NEW_TAB = <svg height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+const NEW_TAB = <svg height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
   <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
   <path d="M0 0h24v24H0z" fill="none"/>
 </svg>
@@ -63,10 +63,17 @@ export default class TabStrip extends Component {
     props.tabs = props.defaultTabs || props.tabs
 
     if (props.onAddNew){
-      props.tabs = [...props.tabs, {
-        title: NEW_TAB,
-        selectable: false
-      }]
+      props.tabs = [
+        ...props.tabs,
+        {
+          title: NEW_TAB,
+          selectable: false,
+          closeable: false,
+          onMouseDown(){
+            props.onAddNew()
+          }
+        }
+      ]
     }
     props.tabIndex = typeof props.tabIndex === 'boolean'?
                     props.tabIndex? 0: -1
@@ -296,14 +303,16 @@ export default class TabStrip extends Component {
       return
     }
 
-    if (this.p.onAddNew && activeIndex === this.p.tabs.length - 1){
-      return this.p.onAddNew()
-    }
-
     const tabProps = this.p.tabs[activeIndex]
 
+    if (!this.isSelectableTab(tabProps)){
+      return
+    }
+
     if (tabProps && tabProps.onActivate){
-      tabProps.onActivate()
+      if (tabProps.onActivate() === false){
+        return
+      }
     }
 
     if (this.props.activeIndex == null){
@@ -360,7 +369,11 @@ export default class TabStrip extends Component {
     return -1
   }
 
-  isSelectableTab(tab){
+  isSelectableTab(tabOrIndex){
+    let tab = tabOrIndex
+    if (typeof tabOrIndex == 'number'){
+      tab = this.p.allTabsProps[tabOrIndex]
+    }
     return !tab.disabled && tab.selectable !== false
   }
 

@@ -359,6 +359,10 @@ $TRANSITION_DURATION: 0.3s;
 
 .react-tab-panel__tab-title-close-icon {
   display: inline-block;
+
+  &-svg {
+    vertical-align: middle;
+  }
 }
 
 .react-tab-panel__tab-title--active {
