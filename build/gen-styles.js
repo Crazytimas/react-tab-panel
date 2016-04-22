@@ -1,38 +1,41 @@
-var fs = require('fs')
-var path = require('path')
-var assign = require('object-assign')
+var builder = require('zippyui-theme-builder')
 
-var webpack = require('webpack')
+builder();
+// var fs = require('fs')
+// var path = require('path')
+// var assign = require('object-assign')
 
-var buildTheme = require('./build-theme')
-var buildCss = require('./build-css')
+// var webpack = require('webpack')
 
-function getDirectories(srcpath) {
-  return fs.readdirSync(srcpath).filter(function(file) {
-    return fs.statSync(path.join(srcpath, file)).isDirectory();
-  });
-}
+// var buildTheme = require('./build-theme')
+// var buildCss = require('./build-css')
 
-var themes = getDirectories(path.resolve('./style/theme'))
+// function getDirectories(srcpath) {
+//   return fs.readdirSync(srcpath).filter(function(file) {
+//     return fs.statSync(path.join(srcpath, file)).isDirectory();
+//   });
+// }
 
-themes.forEach(theme => {
-  webpack(buildTheme(theme)).run(function(err, stats){
-    if (err){
-      console.error(err)
-      process.exit(1)
-    }
+// var themes = getDirectories(path.resolve('./style/theme'))
 
-    console.log('Built theme ' + theme + '.')
-  })
-})
+// themes.forEach(theme => {
+//   webpack(buildTheme(theme)).run(function(err, stats){
+//     if (err){
+//       console.error(err)
+//       process.exit(1)
+//     }
 
-;['base', 'index'].forEach(file => {
-  webpack(buildCss(file)).run((err, stats) => {
-    if (err){
-      console.error(err)
-      process.exit(1)
-    }
+//     console.log('Built theme ' + theme + '.')
+//   })
+// })
 
-    console.log('Built file ' + file + '.css')
-  })
-})
+// ;['base', 'index'].forEach(file => {
+//   webpack(buildCss(file)).run((err, stats) => {
+//     if (err){
+//       console.error(err)
+//       process.exit(1)
+//     }
+
+//     console.log('Built file ' + file + '.css')
+//   })
+// })
